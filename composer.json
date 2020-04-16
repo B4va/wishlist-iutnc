@@ -1,6 +1,7 @@
 {
     "name" : "wishlist",
     "type" : "project",
+    "description": "project php - iutnc",
 
     "require":{
 	    "illuminate/database": "5.5.*",
