@@ -8,8 +8,7 @@ use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Liste;
 
 /**
- * Classe modèle de l'objet User de la bdd
- * construite avec l'ORM Eloquent
+ * Modèle de l'objet user en bdd
  */
 class User extends Model {
 
@@ -18,7 +17,8 @@ class User extends Model {
     public $timestamps = false;  
 
     /**
-     * Définit l'association avec Liste
+     * Récupère les listes créées par l'utilisateur
+     * @return array tableau des listes créées par l'utilisateur
      */
     public function listes() : array {
         return $this->hasMany('\wishlist\models\Liste','user_id');

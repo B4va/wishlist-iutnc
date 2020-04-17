@@ -9,8 +9,7 @@ use \wishlist\models\Item;
 use \wishlist\models\User;
 
 /**
- * Classe modèle de l'objet Liste de la bdd
- * construite avec l'ORM Eloquent
+ * Modèle de la table liste en bdd
  */
 class Liste extends Model {
 
@@ -19,14 +18,16 @@ class Liste extends Model {
     public $timestamps = false;  
 
     /**
-     * Définit l'association avec Item
+     * Récupère les items associés à la liste
+     * @return array tableau des items associés à la liste
      */
     public function items() : array {
         return $this->hasMany('\wishlist\models\Item','liste_id');
     }
 
     /**
-     * Définit l'association avec User
+     * Récupère l'utilisateur auquel appartient la liste
+     * @return User utilisateur propriétaire de la liste
      */
     public function user() : User {
         return $this->belongsTo('\wishlist\models\User','user_id');
