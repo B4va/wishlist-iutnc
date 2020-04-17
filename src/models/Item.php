@@ -11,7 +11,10 @@ class Item extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
 
-    public function liste() {
+    /**
+     * Définit l'association avec Liste
+     */
+    public function liste() : Liste {
         return $this->belongsTo('\wishlist\models\Liste','liste_id');
     }
     
