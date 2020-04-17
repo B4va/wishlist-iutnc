@@ -16,7 +16,7 @@ class ConnectionFactory {
     private static $db = null;
 
     /**
-     * Etablit la connexion grâce aux paramètre du fichier conf.ini
+     * Etablit la connexion grâce aux paramètres du fichier conf.ini
      * @static
      */
     public static function makeConnection() {
