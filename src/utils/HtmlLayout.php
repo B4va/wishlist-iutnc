@@ -13,9 +13,10 @@ class HtmlLayout {
      * Génère un header html
      * @static
      * @param string[$titre] titre de la page
+     * @return string header
      */
-    public static function header(string $titre) : void {
-        echo <<<header
+    public static function header(string $titre) : string {
+        return <<<header
 <!DOCTYPE html>
 <html lang="fr" style="height: 100%;">
 <head>
@@ -53,6 +54,8 @@ class HtmlLayout {
 
     <div style="height: 100%;">
 
+    <!-- Début contenu -->
+
 header;
 
     }
@@ -60,9 +63,12 @@ header;
     /**
      * Génère un footer html
      * @static
+     * @return string footer
      */
-    public static function footer() : void {
-        echo <<<footer
+    public static function footer() : string {
+        return <<<footer
+
+    <!-- Fin contenu -->
 
     </div>
 
