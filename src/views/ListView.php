@@ -31,7 +31,7 @@ class ListView{
     /**
      * Affiche la vue en fonction du sélecteur
      */
-    public function render(){
+    public function render() : void {
         switch ($this->selector){
             case (LISTS_VIEW) : {
                 $content = $this->htmlLists();
@@ -48,7 +48,7 @@ class ListView{
     /**
      * Formate une liste de listes
      */
-    private function htmlLists(){
+    private function htmlLists() : string{
         return <<<html
 
         <div class="jumbotron">
