@@ -9,10 +9,6 @@ class ItemController {
     public function getItem() {
 
     }
-
-    public function render() {
-
-    }
 }
 
 
