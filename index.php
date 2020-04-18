@@ -16,7 +16,7 @@ $app->get('/', function(){
 });
 
 function test(){
-    $vue = new ListView(PUBLIC_LISTS_VIEW, ['title' => 'test view']);
+    $vue = new ListView(LISTS_VIEW, ['title' => 'test view']);
     $vue->render();
 }
 

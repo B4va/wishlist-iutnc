@@ -18,7 +18,7 @@ class HtmlLayout {
     public static function header(string $titre) : string {
         return <<<header
 <!DOCTYPE html>
-<html lang="fr" style="height: 100%;">
+<html lang="fr" style="min-height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,6 +43,7 @@ class HtmlLayout {
                         <li class="nav-item">
                             <a class="nav-link" href="#">Créer une liste</a>
                         </li>
+                        <!-- Vérifier si utilisateur conntecté -->
                         <li class="nav-item">
                             <a class="nav-link" href="#">Mes listes</a>
                         </li>
