@@ -4,62 +4,18 @@ namespace wishlist\views;
 
 require_once 'vendor/autoload.php';
 
-use wishlist\utils\HtmlLayout;
-
-define ('LIST_VIEW', 0);
-define ('EDIT_VIEW', 1);
-define ('NEW_VIEW', 2);
+use wishlist\views\View;
 
 /**
  * Vues associées aux listes
  */
-class ListView{
-
-    private $selector;
-    private $var;
-
-    /**
-     * Construit la vue en fonction du sélecteur précisé
-     * et enregistre les variables nécessaire au rendu, sous la
-     * forme d'un tableau associatif
-     * @param int[$selector] sélecteur de la vue parmis les constantes disponibles
-     * @param array[$var] variables passées à la vue sous la forme d'un tableau associatif
-     */
-    public function __construct($selector, $var){
-        $this->selector = $selector;
-        $this->var = $var;
-    }
-
-    /**
-     * Affiche la vue en fonction du sélecteur
-     */
-    public function render() : void {
-        switch ($this->selector){
-            case (LIST_VIEW) : {
-                $content = $this->htmlList();
-                break;
-            }
-            case (EDIT_VIEW) : {
-                $content = $this->htmlEdit();
-                break;
-            }
-            case (NEW_VIEW) : {
-                $content = $this->htmlNew();
-                break;
-            }
-        }
-        echo (
-            HtmlLayout::header($this->var['title']) . 
-            $content . 
-            HtmlLayout::footer()
-        );
-    }
+class ListView extends View {
 
     /**
      * Formate une liste de liste
      * @return string code html
      */
-    private function htmlList() : string{
+    protected function list() : string{
         return <<<html
 
         <div class="jumbotron">
@@ -227,7 +183,7 @@ html;
      * Formatte un formulaire d'édition de liste
      * @return string code html
      */
-    private function htmlEdit() : string {
+    protected function edit() : string {
         return <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -271,7 +227,7 @@ html;
      * Formatte un formulaire de création de liste
      * @return string code html
      */
-    private function htmlNew() : string {
+    protected function new() : string {
         return <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -310,5 +266,11 @@ html;
 html;
 
     }
+
+    /**
+     * Formatte l'affichage d'une liste en particulier
+     * @return string code html
+     */
+    protected function show() : string { }
 
 }
