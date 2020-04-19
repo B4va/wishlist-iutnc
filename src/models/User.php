@@ -17,11 +17,18 @@ class User extends Model {
     public $timestamps = false;  
 
     /**
+     * Définit l'association avec Liste
+     */
+    public function listes() {
+        return $this->hasMany('\wishlist\models\Liste','user_id');
+    }
+
+    /**
      * Récupère les listes créées par l'utilisateur
      * @return array tableau des listes créées par l'utilisateur
      */
-    public function listes() : array {
-        return $this->hasMany('\wishlist\models\Liste','user_id');
+    public function getAllListes() : array {
+        return $this->hasMany('\wishlist\models\Liste','user_id')->get();
     }
 }
 

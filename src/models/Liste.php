@@ -18,19 +18,33 @@ class Liste extends Model {
     public $timestamps = false;  
 
     /**
-     * Récupère les items associés à la liste
+     * Définit l'association avec Item
+     */
+    public function items(){
+        return $this->hasMany('\wishlist\models\Item','liste_id');
+    }
+
+    /**
+     * Récupère tous les items associés à la liste
      * @return array tableau des items associés à la liste
      */
-    public function items() : array {
-        return $this->hasMany('\wishlist\models\Item','liste_id');
+    public static function getAllItems() : array {
+        return $this->hasMany('\wishlist\models\Item','liste_id')->get();
+    }
+
+    /**
+     * Définit l'association avec User
+     */
+    public function user() {
+        return $this->belongsTo('\wishlist\models\User','user_id');
     }
 
     /**
      * Récupère l'utilisateur auquel appartient la liste
      * @return User utilisateur propriétaire de la liste
      */
-    public function user() : User {
-        return $this->belongsTo('\wishlist\models\User','user_id');
+    public static function getUser() : User {
+        return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
 }
 
