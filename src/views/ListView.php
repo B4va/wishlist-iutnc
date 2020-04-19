@@ -213,6 +213,7 @@ html;
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Valider</button>
+                        <a href="#" class="btn btn-danger ml-3">Supprimer</a>
                         <a href="#" class="btn btn-outline-secondary ml-3">Retour</a>
                     </div>
                 </form>
