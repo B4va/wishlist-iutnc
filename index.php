@@ -20,6 +20,10 @@ $app->get('/edit', function(){
 $app->get('/new', function(){
     testNew();
 });
+$app->get('/test', function(){
+    $ensemble = Liste::orderBy('expiration', 'DESC')->get();
+    var_dump($ensemble);
+});
 
 function testList(){
     $vue = new ListView(LIST_VIEW, ['title' => 'Test listView']);
