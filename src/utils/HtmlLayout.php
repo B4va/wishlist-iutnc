@@ -13,7 +13,7 @@ class HtmlLayout {
      * Génère un header html
      * @static
      * @param string[$titre] titre de la page
-     * @return string header
+     * @return string code htlm
      */
     public static function header(string $titre) : string {
         return <<<header
@@ -64,7 +64,7 @@ header;
     /**
      * Génère un footer html
      * @static
-     * @return string footer
+     * @return string code htlm
      */
     public static function footer() : string {
         return <<<footer
@@ -75,6 +75,7 @@ header;
 
     <footer class="p-3 ont-small bg-light text-center">
             <p class="m-0">Projet PHP - IUT Nancy-Charlemagne</p>
+            <small class="m-0 text-muted">Clément Dosda - Louis Friedrich - Loïc Steinmetz</small>
     </footer>
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

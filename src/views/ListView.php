@@ -6,7 +6,9 @@ require_once 'vendor/autoload.php';
 
 use wishlist\utils\HtmlLayout;
 
-define ('LISTS_VIEW', 0);
+define ('LIST_VIEW', 0);
+define ('EDIT_VIEW', 1);
+define ('NEW_VIEW', 2);
 
 /**
  * Vues associées aux listes
@@ -33,8 +35,16 @@ class ListView{
      */
     public function render() : void {
         switch ($this->selector){
-            case (LISTS_VIEW) : {
-                $content = $this->htmlLists();
+            case (LIST_VIEW) : {
+                $content = $this->htmlList();
+                break;
+            }
+            case (EDIT_VIEW) : {
+                $content = $this->htmlEdit();
+                break;
+            }
+            case (NEW_VIEW) : {
+                $content = $this->htmlNew();
                 break;
             }
         }
@@ -46,9 +56,10 @@ class ListView{
     }
 
     /**
-     * Formate une liste de listes
+     * Formate une liste de liste
+     * @return string code html
      */
-    private function htmlLists() : string{
+    private function htmlList() : string{
         return <<<html
 
         <div class="jumbotron">
@@ -61,6 +72,7 @@ class ListView{
 
         <!-- Boucler sur les listes passées en paramètre -->
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
+            <h1 class="text-center text-primary mb-5">Les dernières listes</h1>
             <div class="card my-4">
                 <div class="card-header">
                     <div class="row">
@@ -204,6 +216,94 @@ class ListView{
                     <!-- Insérer variable expiration -->
                     <p class="text-muted m-0">Expire le 03/04/2020</p>
                 </div>
+            </div>
+        </div>
+
+html;
+
+    }
+
+    /**
+     * Formatte un formulaire d'édition de liste
+     * @return string code html
+     */
+    private function htmlEdit() : string {
+        return <<<html
+
+        <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
+            <h1 class="text-center text-primary">Modifier ma liste</h1>
+            <div class="card my-4 p-4">
+                <form>
+                    <div class="form-group mb-3">
+                        <label for="list_name">Nom</label>
+                        <!-- Insérer l'ancien nom de la liste -->
+                        <input type="text" class="form-control" id="list_name" value="Ancien nom de la liste de souhait">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="list_description">Description</label>
+                        <!-- Insérer l'ancienne description de la liste -->
+                        <textarea class="form-control" id="list_description" rows="6" style="resize: none;">Ancienne description de la liste</textarea>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="expiration_date">Date d'expiration</label>
+                        <!-- Insérer l'ancienne date d'expiration de la liste -->
+                        <input type="date" class="form-control" id="expiration_date" value="2020-05-04">
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" value="public" id="public_check">
+                        <label class="form-check-label" for="public_check">
+                            Liste publique
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <a href="#" class="btn btn-outline-secondary ml-3">Retour</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+html;
+
+    }
+
+    /**
+     * Formatte un formulaire de création de liste
+     * @return string code html
+     */
+    private function htmlNew() : string {
+        return <<<html
+
+        <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
+            <h1 class="text-center text-primary">Créer une liste</h1>
+            <div class="card my-4 p-4">
+                <form>
+                    <div class="form-group mb-3">
+                        <label for="list_name">Nom</label>
+                        <!-- Insérer l'ancien nom de la liste -->
+                        <input type="text" class="form-control" id="list_name" placeholder="Nom de ma liste">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="list_description">Description</label>
+                        <!-- Insérer l'ancienne description de la liste -->
+                        <textarea class="form-control" id="list_description" rows="6" style="resize: none;" placeholder="Description de ma liste"></textarea>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="expiration_date">Date d'expiration</label>
+                        <!-- Insérer l'ancienne date d'expiration de la liste -->
+                        <input type="date" class="form-control" id="expiration_date">
+                    </div>
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" value="public" id="public_check">
+                        <label class="form-check-label" for="public_check">
+                            Liste publique
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                        <a href="#" class="btn btn-outline-secondary ml-3">Retour</a>
+                    </div>
+                </form>
             </div>
         </div>
 
