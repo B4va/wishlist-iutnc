@@ -6,33 +6,48 @@ require_once './vendor/autoload.php';
 
 abstract class ListController {
 
+    /* 
+             _______________________
+            |                       |
+            |    Gestion des vues   |
+            |_______________________|            
+    */
+
     /**
      * Créé une vue affichant le formulaire de création d'un objet
      */
-    abstract function displayCreator();
+    abstract protected function displayCreator() : void;
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un objet
      */
-    abstract function displayEditor();
+    abstract protected function displayEditor() : void;
 
     /**
      * Créé une vue affichant un objet choisi par son id
+     * @param [$id] identifiant de l'objet
      */
-    abstract function displayObject($id);
+    abstract protected function displayObject($id) : void;
+
+    /* 
+             _________________________
+            |                         |
+            |    Gestion de la bdd    |
+            |_________________________|              
+    */
 
     /**
      * Gère la création d'un objet
      */
-    abstract function create();
+    abstract protected function create() : void;
 
     /**
      * Gère l'édition d'un objet
      */
-    abstract function edit();
+    abstract protected function edit();
 
     /**
      * Gère la suppression d'un objet
      */
-    abstract function delete();
+    abstract protected function delete();
 }
