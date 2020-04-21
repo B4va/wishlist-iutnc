@@ -15,6 +15,8 @@ $db = ConnectionFactory::makeConnection();
 /**
  * Général
  */
+
+// Affichage de toutes les listes publiques non expirées
 $app->get('/', function(){
     ListController::displayLists();
 })->name('home');
@@ -22,14 +24,20 @@ $app->get('/', function(){
 /**
  * Listes
  */
+
+// Affichage d'une liste
 $app->get('/lists', function(){
     $slim = \Slim\Slim::getInstance();
     $token = $slim->request->get()['token'];
     ListController::displayObject($token);
-})->name('/list/new');
+})->name('showList');
+
+// Affichage du formulaire de création de liste
 $app->get('/', function(){
     ListController::displayCreator();
 })->name('newList');
+
+// Création d'une liste
 $app->post('/', function(){
     $slim = \Slim\Slim::getInstance();
     $attr = [
@@ -40,11 +48,15 @@ $app->post('/', function(){
     ];
     ListController::create($attr);
 })->name('createList');
+
+// Affichage du formulaire d'édition de liste
 $app->get('list/edit', function(){
     $slim = \Slim\Slim::getInstance();
     $token = $slim->request->get()['token'];
     ListController::displayEditor($token);
 })->name('editList');
+
+// Mise à jour d'une liste
 $app->put('/list/update', function(){
     $attr = [
         $slim->request->put()['titre'],
@@ -54,11 +66,17 @@ $app->put('/list/update', function(){
     ];
     ListController::update($attr);
 })->name('udpateList');
-$app->get('/', function(){
+
+// Suppression d'une liste
+$app->delete('/', function(){
     $slim = \Slim\Slim::getInstance();
     $token = $slim->request->get()['token'];
     ListController::delete($token);
 })->name('deleteList');
+
+
+
+// ======================================================
     
 // TESTS
 
