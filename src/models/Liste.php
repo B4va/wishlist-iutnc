@@ -46,6 +46,46 @@ class Liste extends Model {
     public static function getUser() : User {
         return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
+
+    /**
+     *  Récupère la liste en finction de l'id
+     *  @return Liste d'id $id
+     */
+    public static function getById($id) : Liste{
+        return Liste::where('no', '=',$id)->first();
+    }
+
+    /**
+     *  Récupère la liste en finction de son token
+     *  @return Liste de token $token
+     */
+    public static function getByToken($token) : Liste{
+        return Liste::where('token', '=',$token)->first();
+    }
+
+    public static function create($titre){
+        $liste = new Liste;
+        $liste->titre = $titre;
+        $liste->save();
+    }
+
+    public static function recupererTest() : array{
+        $date = date("Y-m-d");
+        return array(Liste::where('expiration','>',$date)->get());
+    }
+
+    public static function updateListe($id,$tab){
+        $liste = Liste::getById($id);
+        foreach ($tab as $key => $value) {
+            $liste->$key = $value;
+        }
+        $liste->save();
+    }
+
+    public static function suppListe($token){
+        Liste::where('token','=',$token)->delete();
+    }
+
 }
 
 ?>
