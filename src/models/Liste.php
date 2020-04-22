@@ -63,9 +63,10 @@ class Liste extends Model {
         return Liste::where('token', '=',$token)->first();
     }
 
-    public static function create($titre){
+    public static function create($titre,$description){
         $liste = new Liste;
         $liste->titre = $titre;
+        $Liste->description = $description;
         $liste->save();
     }
 
@@ -82,7 +83,7 @@ class Liste extends Model {
         $liste->save();
     }
 
-    public static function suppListe($token){
+    public static function deleteListe($token){
         Liste::where('token','=',$token)->delete();
     }
 
