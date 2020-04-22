@@ -21,8 +21,12 @@ echo "\n";
 $tab = Liste::recupererTest();
 
 $tab2 = array("titre"=>"test2","token"=>"secure1");
-Liste::updateListe(5,$tab2);
-Liste::suppListe('secure1');
+$tab3 = array("titre"=>"test2","description"=>"test test test");
+$l2 = Liste::create($tab3);
+$l2->updateListe($tab2);
+$l2->deleteListe();
+
+
 
 
 

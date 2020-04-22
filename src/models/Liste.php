@@ -63,11 +63,13 @@ class Liste extends Model {
         return Liste::where('token', '=',$token)->first();
     }
 
-    public static function create($titre,$description){
+    public static function create($tab) : Liste{
         $liste = new Liste;
-        $liste->titre = $titre;
-        $Liste->description = $description;
+        foreach ($tab as $key => $value) {
+            $liste->$key = $value;
+        }
         $liste->save();
+        return $liste;
     }
 
     public static function recupererTest() : array{
@@ -75,16 +77,15 @@ class Liste extends Model {
         return array(Liste::where('expiration','>',$date)->get());
     }
 
-    public static function updateListe($id,$tab){
-        $liste = Liste::getById($id);
+    public function updateListe($tab){
         foreach ($tab as $key => $value) {
-            $liste->$key = $value;
+            $this->$key = $value;
         }
-        $liste->save();
+        $this->save();
     }
 
-    public static function deleteListe($token){
-        Liste::where('token','=',$token)->delete();
+    public function deleteListe(){
+        Liste::where('token','=',$this->token)->delete();
     }
 
 }
