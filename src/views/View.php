@@ -16,8 +16,8 @@ define ('SHOW_VIEW', 3);
 
 abstract class View{
 
-    private $selector;
-    private $var;
+    protected $selector;
+    protected $var;
 
     /**
      * Construit la vue en fonction du sélecteur précisé

@@ -16,6 +16,8 @@ class HtmlLayout {
      * @return string code htlm
      */
     public static function header(string $titre) : string {
+        $slim = \Slim\Slim::getInstance();
+        $createList = $slim->urlFor('newList');
         return <<<header
 <!DOCTYPE html>
 <html lang="fr" style="min-height: 100%;">
@@ -41,7 +43,7 @@ class HtmlLayout {
                             <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Créer une liste</a>
+                            <a class="nav-link" href="$createList">Créer une liste</a>
                         </li>
                         <!-- Vérifier si utilisateur conntecté -->
                         <li class="nav-item">

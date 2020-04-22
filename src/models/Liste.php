@@ -72,16 +72,16 @@ class Liste extends Model {
         return $liste;
     }
 
-    public static function recupererTest() : array{
+    public static function getLists(){
         $date = date("Y-m-d");
-        return array(Liste::where('expiration','>',$date)->get());
+        return Liste::where('expiration','>',$date)->get();
     }
 
-    public function updateListe($tab){
+    public function edit($tab){
         foreach ($tab as $key => $value) {
             $this->$key = $value;
         }
-        $this->save();
+        $this->update();
     }
 
     public function deleteListe(){

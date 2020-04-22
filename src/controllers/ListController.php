@@ -6,7 +6,7 @@ require_once './vendor/autoload.php';
 
 use \wishlist\controllers\Controller;
 use \wishlist\models\Liste;
-use \wishlist\models\ListView;
+use \wishlist\views\ListView;
 
 class ListController extends Controller {
 
@@ -20,18 +20,17 @@ class ListController extends Controller {
     /**
      * Créé une vue affichant le formulaire de création d'une liste
      */
-    protected function displayCreator() : void {
-        $v = new View(NEW_VIEW, ['title' => 'ListCreator']);
+    public function displayCreator() : void {
+        $v = new ListView(NEW_VIEW, ['title' => 'ListCreator']);
         $v->render();
     }
 
     /**
      * Créé une vue affichant le formulaire d'édition d'une liste
      */
-    protected function displayEditor() : void {
-        // récupérer 'no' de la liste à modifier
-        $list = Liste::getById($no);
-        $v = new View(EDIT_VIEW, ['title' => 'ListEditor' , 'list' => $list]);
+    public function displayEditor($token) : void {
+        $list = Liste::getByToken($token);
+        $v = new ListView(EDIT_VIEW, ['title' => 'Editer la liste ' . $list->nom, 'list' => $list]);
         $v->render();
     }
 
@@ -39,7 +38,7 @@ class ListController extends Controller {
      * Créé une vue affichant une liste choisie par son id
      * @param [$id] identifiant de l'objet
      */
-    protected function displayObject($id) : void {
+    public function displayObject($id) : void {
     }
 
     /* 
@@ -52,22 +51,22 @@ class ListController extends Controller {
     /**
      * Gère la création d'une liste
      */
-    protected function create() : void {
-
+    public function create($attr) : void {
+        Liste::create($attr);
     }
 
     /**
      * Gère l'édition d'une liste
      */
-    protected function edit(){
-
+    public function edit($token, $newAttr){
+        Liste::getByToken($token)->edit($newAttr);
     }
 
     /**
      * Gère la suppression d'une liste
      */
-    protected function delete(){
-
+    public function delete($token) : void {
+        Liste::getByToken($token)->delete($token);
     }
 
     /*
@@ -81,8 +80,8 @@ class ListController extends Controller {
      * Créé une vue affichant toutes les listes publiques
      */
     public function displayLists() : void {
-        $ensemble = Liste::orderBy('expiration', 'DESC')->get();
-        $v = new View(LIST_VIEW, ['title' => 'Lists' , 'list' => $ensemble]);
+        $ensemble = Liste::getLists();
+        $v = new ListView(LIST_VIEW, ['title' => 'Lists', 'list' => $ensemble]);
         $v->render();
     }
 }

@@ -11,6 +11,11 @@ use wishlist\views\View;
  */
 class ListView extends View {
 
+    public function __construct($selector, $var){
+        $this->selector = $selector;
+        $this->var = $var;
+    }
+
     /**
      * Formate une liste de liste
      * @return string code html
@@ -30,10 +35,10 @@ class ListView extends View {
 
 html;
 
-        foreach($var['lists'] as $list){
-            $showList = $slim->urlFor('showList', $list->token);
-            $editList = $slim->urlFor('editList', $list->token);
-            $html += <<<html
+        foreach($this->var['list'] as $list){
+            $showList = $slim->urlFor('showList', ['token' => $list->token]);
+            $editList = $slim->urlFor('editList', ['token' => $list->token]);
+            $html = $html . <<<html
 
         <!-- Boucler sur les listes passées en paramètre -->
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -59,8 +64,9 @@ html;
         </div>
 
 html;
-        }
 
+        }
+        return $html;
     }
 
     /**
@@ -69,9 +75,9 @@ html;
      */
     protected function edit() : string {
         $slim = \Slim\Slim::getInstance();
-        $list = $var['list'];
-        $updateList = $slim->urlFor('updateList');
-        //$deleteList = $slim->urlFor('deleteList', $list);
+        $list = $this->var['list'];
+        $updateList = $slim->urlFor('updateList', ['token' => $list->token]);
+        $deleteList = $slim->urlFor('deleteList', ['token' => $list->token]);
         $home = $slim->urlFor('home');
         return <<<html
 
@@ -82,24 +88,17 @@ html;
                     <div class="form-group mb-3">
                         <label for="list_name">Nom</label>
                         <!-- Insérer l'ancien nom de la liste -->
-                        <input type="text" class="form-control" id="list_name" value="$list->titre">
+                        <input type="text" class="form-control" name='titre' id="list_name" value="$list->titre">
                     </div>
                     <div class="form-group mb-3">
                         <label for="list_description">Description</label>
                         <!-- Insérer l'ancienne description de la liste -->
-                        <textarea class="form-control" id="list_description" rows="6" style="resize: none;">$list->description</textarea>
+                        <textarea class="form-control" name='description' id="list_description" rows="6" style="resize: none;">$list->description</textarea>
                     </div>
                     <div class="form-group mb-4">
                         <label for="expiration_date">Date d'expiration</label>
                         <!-- Insérer l'ancienne date d'expiration de la liste -->
-                        <input type="date" class="form-control" id="expiration_date" value="$list->expiration">
-                    </div>
-                    <div class="form-check mb-4">
-                        <!-- Sélectionner l'ancienne visibilité de la liste -->
-                        <input class="form-check-input" type="checkbox" value="public" id="public_check">
-                        <label class="form-check-label" for="public_check">
-                            Liste publique
-                        </label>
+                        <input type="date" class="form-control" name='expiration' id="expiration_date" value="$list->expiration">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Valider</button>

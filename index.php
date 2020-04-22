@@ -18,7 +18,8 @@ $db = ConnectionFactory::makeConnection();
 
 // Affichage de toutes les listes publiques non expirées
 $app->get('/', function(){
-    ListController::displayLists();
+    $c = new ListController();
+    $c->displayLists();
 })->name('home');
 
 /**
@@ -26,19 +27,20 @@ $app->get('/', function(){
  */
 
 // Affichage d'une liste
-$app->get('/lists', function(){
-    $slim = \Slim\Slim::getInstance();
-    $token = $slim->request->get()['token'];
-    ListController::displayObject($token);
+$app->get('/lists/:token', function($token){
+    $c = new ListController();
+    $c->displayObject($token);
 })->name('showList');
 
 // Affichage du formulaire de création de liste
-$app->get('/', function(){
-    ListController::displayCreator();
+$app->get('/lists/new', function(){
+    $c = new ListController();
+    $c->displayCreator();
 })->name('newList');
 
 // Création d'une liste
 $app->post('/', function(){
+    $c = new ListController();
     $slim = \Slim\Slim::getInstance();
     $attr = [
         $slim->request->post()['titre'],
@@ -46,32 +48,34 @@ $app->post('/', function(){
         //$slim->request->post()['visibility'],
         $slim->request->post()['expiration']
     ];
-    ListController::create($attr);
+    $c->create($attr);
 })->name('createList');
 
 // Affichage du formulaire d'édition de liste
-$app->get('list/edit', function(){
-    $slim = \Slim\Slim::getInstance();
-    $token = $slim->request->get()['token'];
-    ListController::displayEditor($token);
+$app->get('/list/edit/:token', function($token){
+    $c = new ListController();
+    $c->displayEditor($token);
 })->name('editList');
 
 // Mise à jour d'une liste
-$app->put('/list/update', function(){
+$app->post('/list/update/:token', function($token){
+    $slim = \Slim\Slim::getInstance();
+    $c = new ListController();
     $attr = [
-        $slim->request->put()['titre'],
-        $slim->request->put()['description'],
-        //$slim->request->put()['visibility'],
-        $slim->request->put()['expiration']
+        'titre' => $slim->request->post('titre'),
+        'description' => $slim->request->post('description'),
+        'expiration' => $slim->request->post('expiration')
     ];
-    ListController::update($attr);
-})->name('udpateList');
+    $c->edit($token, $attr);
+    $slim->redirect('../..');
+})->name('updateList');
 
 // Suppression d'une liste
-$app->delete('/', function(){
+$app->get('/', function(){
+    $c = new ListController();
     $slim = \Slim\Slim::getInstance();
     $token = $slim->request->get()['token'];
-    ListController::delete($token);
+    $c->delete($token);
 })->name('deleteList');
 
 
@@ -80,34 +84,34 @@ $app->delete('/', function(){
     
 // TESTS
 
-$app->get('/list', function(){
-    testList();
-});
-$app->get('/edit', function(){
-    testEdit();
-});
-$app->get('/new', function(){
-    testNew();
-});
-$app->get('/test', function(){
-    $ensemble = Liste::orderBy('expiration', 'DESC')->get();
-    var_dump($ensemble);
-});
+// $app->get('/list', function(){
+//     testList();
+// });
+// $app->get('/edit', function(){
+//     testEdit();
+// });
+// $app->get('/new', function(){
+//     testNew();
+// });
+// $app->get('/test', function(){
+//     $ensemble = Liste::orderBy('expiration', 'DESC')->get();
+//     var_dump($ensemble);
+// });
 
-function testList(){
-    $vue = new ListView(LIST_VIEW, ['title' => 'Test listView']);
-    $vue->render();
-}
+// function testList(){
+//     $vue = new ListView(LIST_VIEW, ['title' => 'Test listView']);
+//     $vue->render();
+// }
 
-function testEdit(){
-    $vue = new ListView(EDIT_VIEW, ['title' => 'Test editView']);
-    $vue->render();
-}
+// function testEdit(){
+//     $vue = new ListView(EDIT_VIEW, ['title' => 'Test editView']);
+//     $vue->render();
+// }
 
-function testNew(){
-    $vue = new ListView(NEW_VIEW, ['title' => 'Test newView']);
-    $vue->render();
-}
+// function testNew(){
+//     $vue = new ListView(NEW_VIEW, ['title' => 'Test newView']);
+//     $vue->render();
+// }
 
 $app->run();
 
