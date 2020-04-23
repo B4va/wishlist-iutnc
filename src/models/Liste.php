@@ -11,7 +11,7 @@ use \wishlist\models\User;
 /**
  * Modèle de la table liste en bdd
  */
-class Liste extends Model {
+class Liste extends Model implements modelOperations {
 
     protected $table = 'liste';
     protected $primaryKey = 'no';
@@ -97,9 +97,9 @@ class Liste extends Model {
     }
 
     /**
-     * Supprime une liste en fonction de son token s
+     * Supprime une liste en fonction de son token
      */
-    public function deleteListe(){
+    public function delete(){
         Liste::where('token','=',$this->token)->delete();
     }
 
