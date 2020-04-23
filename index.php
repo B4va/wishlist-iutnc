@@ -19,7 +19,7 @@ $db = ConnectionFactory::makeConnection();
 // Affichage de toutes les listes publiques non expirées
 $app->get('/', function(){
     $c = new ListController();
-    $c->displayLists();
+    $c->displayObjects();
 })->name('home');
 
 /**
@@ -30,13 +30,13 @@ $app->get('/', function(){
 $app->get('/list/:token', function($token){
     $c = new ListController();
     $c->displayObject($token);
-})->name('showList');
+})->name('list');
 
 // Affichage du formulaire de création de liste
 $app->get('/lists/new', function(){
     $c = new ListController();
     $c->displayCreator();
-})->name('newList');
+})->name('creatorList');
 
 // Création d'une liste
 $app->post('/list/create', function(){
@@ -55,7 +55,7 @@ $app->post('/list/create', function(){
 $app->get('/list/edit/:token', function($token){
     $c = new ListController();
     $c->displayEditor($token);
-})->name('editList');
+})->name('editorList');
 
 // Mise à jour d'une liste
 $app->post('/list/update/:token', function($token){
@@ -68,50 +68,15 @@ $app->post('/list/update/:token', function($token){
     ];
     $c->edit($token, $attr);
     $slim->redirect('../..');
-})->name('updateList');
+})->name('editList');
 
 // Suppression d'une liste
 $app->get('/', function(){
     $c = new ListController();
     $slim = \Slim\Slim::getInstance();
-    $token = $slim->request->get()['token'];
+    $token = $slim->request->get('token');
     $c->delete($token);
 })->name('deleteList');
-
-
-
-// ======================================================
-    
-// TESTS
-
-// $app->get('/list', function(){
-//     testList();
-// });
-// $app->get('/edit', function(){
-//     testEdit();
-// });
-// $app->get('/new', function(){
-//     testNew();
-// });
-// $app->get('/test', function(){
-//     $ensemble = Liste::orderBy('expiration', 'DESC')->get();
-//     var_dump($ensemble);
-// });
-
-// function testList(){
-//     $vue = new ListView(LIST_VIEW, ['title' => 'Test listView']);
-//     $vue->render();
-// }
-
-// function testEdit(){
-//     $vue = new ListView(EDIT_VIEW, ['title' => 'Test editView']);
-//     $vue->render();
-// }
-
-// function testNew(){
-//     $vue = new ListView(NEW_VIEW, ['title' => 'Test newView']);
-//     $vue->render();
-// }
 
 $app->run();
 
