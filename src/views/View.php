@@ -2,18 +2,18 @@
 
 namespace wishlist\views;
 
-/**
- * Gestion des vues
- */
 require_once 'vendor/autoload.php';
 
 use wishlist\utils\HtmlLayout;
 
-define ('LIST_VIEW', 0);
-define ('EDIT_VIEW', 1);
-define ('NEW_VIEW', 2);
-define ('SHOW_VIEW', 3);
+define ('OBJECT_VIEW', 0);
+define ('OBJECTS_VIEW', 1);
+define ('EDIT_VIEW', 2);
+define ('CREATE_VIEW', 3);
 
+/**
+ * Gestion des vues
+ */
 abstract class View{
 
     protected $selector;
@@ -36,20 +36,20 @@ abstract class View{
      */
     public function render() : void {
         switch ($this->selector){
-            case (LIST_VIEW) : {
-                $content = $this->list();
+            case (OBJECT_VIEW) : {
+                $content = $this->object();
                 break;
+            }
+            case (OBJECTS_VIEW) : {
+                $content = $this->objects();
+                break;
+            }
+            case (CREATE_VIEW) : {
+                $content = $this->create();
+            break;
             }
             case (EDIT_VIEW) : {
                 $content = $this->edit();
-                break;
-            }
-            case (NEW_VIEW) : {
-                $content = $this->new();
-                break;
-            }
-            case (SHOW_VIEW) : {
-                $content = $this->show();
                 break;
             }
         }
@@ -61,10 +61,16 @@ abstract class View{
     }
 
     /**
-     * Formate une liste de modèles
+     * Formatte l'affichage d'un modèle en particulier
      * @return string code html
      */
-    abstract protected function list() : string;
+    abstract protected function object() : string;
+
+    /**
+     * Formate l'affichage d'un ensemble de modèles
+     * @return string code html
+     */
+    abstract protected function objects() : string;
 
     /**
      * Formatte un formulaire d'édition du modèle
@@ -76,12 +82,6 @@ abstract class View{
      * Formatte un formulaire de création du modèle
      * @return string code html
      */
-    abstract protected function new() : string;
-
-    /**
-     * Formatte l'affichage d'un modèle en particulier
-     * @return string code html
-     */
-    abstract protected function show() : string;
+    abstract protected function create() : string;
 
 }
