@@ -73,6 +73,8 @@ class Liste extends Model {
         foreach ($tab as $key => $value) {
             $liste->$key = $value;
         }
+        // ajouter le user id
+        $liste->token = uniqid();
         $liste->save();
         return $liste;
     }

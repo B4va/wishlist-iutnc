@@ -27,7 +27,7 @@ $app->get('/', function(){
  */
 
 // Affichage d'une liste
-$app->get('/lists/:token', function($token){
+$app->get('/list/:token', function($token){
     $c = new ListController();
     $c->displayObject($token);
 })->name('showList');
@@ -39,16 +39,16 @@ $app->get('/lists/new', function(){
 })->name('newList');
 
 // Création d'une liste
-$app->post('/', function(){
+$app->post('/list/create', function(){
     $c = new ListController();
     $slim = \Slim\Slim::getInstance();
     $attr = [
-        $slim->request->post()['titre'],
-        $slim->request->post()['description'],
-        //$slim->request->post()['visibility'],
-        $slim->request->post()['expiration']
+        'titre' => $slim->request->post('titre'),
+        'description' => $slim->request->post('description'),
+        'expiration' => $slim->request->post('expiration')
     ];
     $c->create($attr);
+    $slim->redirect('..');
 })->name('createList');
 
 // Affichage du formulaire d'édition de liste

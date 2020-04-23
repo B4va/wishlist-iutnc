@@ -12,8 +12,7 @@ use wishlist\views\View;
 class ListView extends View {
 
     public function __construct($selector, $var){
-        $this->selector = $selector;
-        $this->var = $var;
+        parent::__construct($selector, $var);
     }
 
     /**
@@ -32,6 +31,7 @@ class ListView extends View {
                 <a href='$newList' class="btn btn-primary" id="btn">Créer une liste</a>
             </div>
         </div>
+        <h1 class="text-center text-primary mb-5">Les dernières listes</h1>
 
 html;
 
@@ -42,7 +42,6 @@ html;
 
         <!-- Boucler sur les listes passées en paramètre -->
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
-            <h1 class="text-center text-primary mb-5">Les dernières listes</h1>
             <div class="card my-4">
                 <div class="card-header bg-white">
                     <div class="row">
@@ -129,21 +128,15 @@ html;
                 <form method='POST' action='$createList'>
                     <div class="form-group mb-3">
                         <label for="list_name">Nom</label>
-                        <input type="text" class="form-control" id="list_name" placeholder="Nom de ma liste">
+                        <input type="text" class="form-control" id="list_name" name='titre' placeholder="Nom de ma liste">
                     </div>
                     <div class="form-group mb-3">
                         <!-- Insérer l'ancienne description de la liste -->
-                        <textarea class="form-control" id="list_description" rows="6" style="resize: none;" placeholder="Description de ma liste"></textarea>
+                        <textarea class="form-control" id="list_description" name='description' rows="6" style="resize: none;" placeholder="Description de ma liste"></textarea>
                     </div>
                     <div class="form-group mb-4">
                         <label for="expiration_date">Date d'expiration</label>
-                        <input type="date" class="form-control" id="expiration_date">
-                    </div>
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" value="public" id="public_check">
-                        <label class="form-check-label" for="public_check">
-                            Liste publique
-                        </label>
+                        <input name='expiration' type="date" class="form-control" id="expiration_date">
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Valider</button>
