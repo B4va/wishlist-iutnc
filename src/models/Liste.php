@@ -63,6 +63,11 @@ class Liste extends Model {
         return Liste::where('token', '=',$token)->first();
     }
 
+
+    /**
+     *  Créer une liste avec un tableau associatif $tab
+     *  @return la Liste créer
+     */
     public static function create($tab) : Liste{
         $liste = new Liste;
         foreach ($tab as $key => $value) {
@@ -72,11 +77,18 @@ class Liste extends Model {
         return $liste;
     }
 
+    /**
+     *  Récupère les listes non expirées
+     *  @return Liste non expirées
+     */
     public static function getLists(){
         $date = date("Y-m-d");
         return Liste::where('expiration','>',$date)->get();
     }
 
+    /**
+     *  modifie une liste avec un tableau associatif $tab
+     */
     public function edit($tab){
         foreach ($tab as $key => $value) {
             $this->$key = $value;
@@ -84,6 +96,9 @@ class Liste extends Model {
         $this->update();
     }
 
+    /**
+     * Supprime une liste en fonction de son token s
+     */
     public function deleteListe(){
         Liste::where('token','=',$this->token)->delete();
     }
