@@ -20,7 +20,7 @@ class HtmlLayout {
         $createList = $slim->urlFor('newList');
         return <<<header
 <!DOCTYPE html>
-<html lang="fr" style="min-height: 100%;">
+<html lang="fr" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
