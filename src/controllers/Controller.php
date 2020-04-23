@@ -4,7 +4,7 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-abstract class Controller {
+interface Controller {
 
     /* 
              _______________________
@@ -16,18 +16,24 @@ abstract class Controller {
     /**
      * Créé une vue affichant le formulaire de création d'un objet
      */
-    abstract protected function displayCreator() : void;
+    public function displayCreator() : void;
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un objet
+     * @param [$id] identifiant de l'objet
      */
-    abstract protected function displayEditor($id) : void;
+    public function displayEditor($id) : void;
 
     /**
      * Créé une vue affichant un objet choisi par son id
      * @param [$id] identifiant de l'objet
      */
-    abstract protected function displayObject($id) : void;
+    public function displayObject($id) : void;
+
+    /**
+     * Créé une vue affichant tous les objets
+     */
+    public function displayObjects() : void;
 
     /* 
              _________________________
@@ -39,15 +45,15 @@ abstract class Controller {
     /**
      * Gère la création d'un objet
      */
-    abstract protected function create($attr) : void;
+    public function create($attr) : void;
 
     /**
      * Gère l'édition d'un objet
      */
-    abstract protected function edit($id, $attr);
+    public function edit($id, $attr);
 
     /**
      * Gère la suppression d'un objet
      */
-    abstract protected function delete($id);
+    public function delete($id);
 }

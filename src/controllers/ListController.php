@@ -8,7 +8,7 @@ use \wishlist\controllers\Controller;
 use \wishlist\models\Liste;
 use \wishlist\views\ListView;
 
-class ListController extends Controller {
+class ListController implements Controller {
 
     /* 
              _______________________
@@ -21,7 +21,7 @@ class ListController extends Controller {
      * Créé une vue affichant le formulaire de création d'une liste
      */
     public function displayCreator() : void {
-        $v = new ListView(NEW_VIEW, ['title' => 'ListCreator']);
+        $v = new ListView(CREATE_VIEW, ['title' => 'Nouvelle liste']);
         $v->render();
     }
 
@@ -30,7 +30,7 @@ class ListController extends Controller {
      */
     public function displayEditor($token) : void {
         $list = Liste::getByToken($token);
-        $v = new ListView(EDIT_VIEW, ['title' => 'Editer la liste ' . $list->nom, 'list' => $list]);
+        $v = new ListView(EDIT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
         $v->render();
     }
 
@@ -39,6 +39,18 @@ class ListController extends Controller {
      * @param [$id] identifiant de l'objet
      */
     public function displayObject($id) : void {
+        $list = Liste::getById($id);
+        $v = new ListView(OBJECT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
+        $v->render();
+    }
+
+    /**
+     * Créé une vue affichant toutes les listes publiques
+     */
+    public function displayObjects() : void {
+        $ensemble = Liste::getLists();
+        $v = new ListView(OBJECTS_VIEW, ['title' => 'Lists', 'objects' => $ensemble]);
+        $v->render();
     }
 
     /* 
@@ -66,7 +78,7 @@ class ListController extends Controller {
      * Gère la suppression d'une liste
      */
     public function delete($token) : void {
-        Liste::getByToken($token)->delete($token);
+        Liste::getByToken($token)->delete();
     }
 
     /*
@@ -76,14 +88,6 @@ class ListController extends Controller {
         |_____________________________________|
     */
 
-    /**
-     * Créé une vue affichant toutes les listes publiques
-     */
-    public function displayLists() : void {
-        $ensemble = Liste::getLists();
-        $v = new ListView(LIST_VIEW, ['title' => 'Lists', 'list' => $ensemble]);
-        $v->render();
-    }
 }
 
 
