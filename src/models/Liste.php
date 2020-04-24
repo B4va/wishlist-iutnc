@@ -7,6 +7,7 @@ require_once './vendor/autoload.php';
 use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Item;
 use \wishlist\models\User;
+use \wishlist\models\modelOperations;
 
 /**
  * Modèle de la table liste en bdd
@@ -28,7 +29,7 @@ class Liste extends Model implements modelOperations {
      * Récupère tous les items associés à la liste
      * @return array tableau des items associés à la liste
      */
-    public static function getAllItems() : array {
+    public static function getAll() : array {
         return $this->hasMany('\wishlist\models\Item','liste_id')->get();
     }
 

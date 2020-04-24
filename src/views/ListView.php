@@ -83,7 +83,7 @@ html;
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Modifier ma liste</h1>
             <div class="card my-4 p-4">
-                <form method='POST' action='$deleteList'>
+                <form method='POST' action='$editList'>
                     <div class="form-group mb-3">
                         <label for="list_name">Nom</label>
                         <!-- Insérer l'ancien nom de la liste -->

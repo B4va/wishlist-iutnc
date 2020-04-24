@@ -1,5 +1,7 @@
 <?php
 
+namespace wishlist\models;
+
 interface modelOperations{
 	
 	public static function getById($id);
@@ -10,6 +12,6 @@ interface modelOperations{
 
 	public function edit($attributs);
 
-	public function delete()
+	public function delete();
 
 }

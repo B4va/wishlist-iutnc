@@ -71,7 +71,7 @@ $app->post('/list/update/:token', function($token){
 })->name('editList');
 
 // Suppression d'une liste
-$app->get('/', function(){
+$app->get('/list/delete/:token', function($token){
     $c = new ListController();
     $slim = \Slim\Slim::getInstance();
     $token = $slim->request->get('token');
