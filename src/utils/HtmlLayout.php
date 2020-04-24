@@ -13,11 +13,14 @@ class HtmlLayout {
      * Génère un header html
      * @static
      * @param string[$titre] titre de la page
+     * @return string code htlm
      */
-    public static function header(string $titre) : void {
-        echo <<<header
+    public static function header(string $titre) : string {
+        $slim = \Slim\Slim::getInstance();
+        $creatorList = $slim->urlFor('creatorList');
+        return <<<header
 <!DOCTYPE html>
-<html lang="fr" style="height: 100%;">
+<html lang="fr" style="min-height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,8 +43,9 @@ class HtmlLayout {
                             <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Créer une liste</a>
+                            <a class="nav-link" href="$creatorList">Créer une liste</a>
                         </li>
+                        <!-- Vérifier si utilisateur conntecté -->
                         <li class="nav-item">
                             <a class="nav-link" href="#">Mes listes</a>
                         </li>
@@ -52,6 +56,8 @@ class HtmlLayout {
     </header>
 
     <div style="height: 100%;">
+          
+    <!-- Début contenu -->
 
 header;
 
@@ -60,14 +66,18 @@ header;
     /**
      * Génère un footer html
      * @static
+     * @return string code htlm
      */
-    public static function footer() : void {
-        echo <<<footer
+    public static function footer() : string {
+        return <<<footer
+
+    <!-- Fin contenu -->
 
     </div>
 
     <footer class="p-3 ont-small bg-light text-center">
             <p class="m-0">Projet PHP - IUT Nancy-Charlemagne</p>
+            <small class="m-0 text-muted">Clément Dosda - Louis Friedrich - Loïc Steinmetz</small>
     </footer>
     
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

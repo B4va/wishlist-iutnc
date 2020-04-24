@@ -1,3 +1,6 @@
 vendor/*
 /src/conf/*.ini
 composer.lock
+*.html
+test.php
+composer.lock

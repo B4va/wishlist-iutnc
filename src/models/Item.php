@@ -15,11 +15,18 @@ class Item extends Model {
     public $timestamps = false;
 
     /**
+     * Définit l'association avec Liste
+     */
+    public function liste() {
+        return $this->belongsTo('\wishlist\models\Liste','liste_id');
+    }
+
+    /**
      * Récupère la liste à laquelle appartient l'item
      * @return Liste liste à laquelle appartient l'item
      */
-    public function liste() : Liste {
-        return $this->belongsTo('\wishlist\models\Liste','liste_id');
+    public static function getListe() : Liste {
+        return $this->belongsTo('\wishlist\models\Liste','liste_id')->first();
     }
     
 }
