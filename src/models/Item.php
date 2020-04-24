@@ -26,7 +26,7 @@ class Item extends Model {
      * @return Liste liste à laquelle appartient l'item
      */
     public static function getListe() : Liste {
-        return $this->belongsTo('\wishlist\models\Liste','liste_id')->first();;
+        return $this->belongsTo('\wishlist\models\Liste','liste_id')->first();
     }
     
 }

@@ -56,7 +56,7 @@ class HtmlLayout {
     </header>
 
     <div style="height: 100%;">
-
+          
     <!-- Début contenu -->
 
 header;

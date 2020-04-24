@@ -8,9 +8,9 @@ use \wishlist\models\User;
 
 use wishlist\controllers\ListController;
 
+
 $app = new \Slim\Slim();
 $db = ConnectionFactory::makeConnection();
-
 
 /**
  * Général
@@ -77,6 +77,7 @@ $app->get('/list/delete/:token', function($token){
     $token = $slim->request->get('token');
     $c->delete($token);
 })->name('deleteList');
+
 
 $app->run();
 

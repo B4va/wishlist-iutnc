@@ -105,7 +105,6 @@ class Liste extends Model implements modelOperations {
     public function delete(){
         Liste::where('token','=',$this->token)->delete();
     }
-
 }
 
 ?>

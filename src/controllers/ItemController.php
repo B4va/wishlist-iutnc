@@ -6,9 +6,6 @@ use \wishlist\models\Item;
 
 class ItemController {
 
-    public function getItem() {
-
-    }
 }
 
 
