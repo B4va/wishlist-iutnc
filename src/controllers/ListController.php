@@ -48,7 +48,7 @@ class ListController implements Controller {
      * Créé une vue affichant toutes les listes publiques
      */
     public function displayObjects() : void {
-        $ensemble = Liste::getLists();
+        $ensemble = Liste::getAll();
         $v = new ListView(OBJECTS_VIEW, ['title' => 'Lists', 'objects' => $ensemble]);
         $v->render();
     }

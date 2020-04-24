@@ -18,20 +18,15 @@ class Liste extends Model implements modelOperations {
     protected $primaryKey = 'no';
     public $timestamps = false;  
 
-    /**
-     * Définit l'association avec Item
-     */
-    public function items(){
-        return $this->hasMany('\wishlist\models\Item','liste_id');
-    }
-
+    
     /**
      * Récupère tous les items associés à la liste
      * @return array tableau des items associés à la liste
      */
-    public static function getAll() : array {
+    public function getItems(){
         return $this->hasMany('\wishlist\models\Item','liste_id')->get();
     }
+
 
     /**
      * Définit l'association avec User
@@ -84,7 +79,7 @@ class Liste extends Model implements modelOperations {
      *  Récupère les listes non expirées
      *  @return Liste non expirées
      */
-    public static function getLists(){
+    public static function getAll(){
         $date = date("Y-m-d");
         return Liste::where('expiration','>',$date)->get();
     }
