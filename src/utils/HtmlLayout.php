@@ -18,6 +18,7 @@ class HtmlLayout {
     public static function header(string $titre) : string {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
+        $home = $slim->urlFor('home');
         return <<<header
 <!DOCTYPE html>
 <html lang="fr" style="min-height: 100%;">
@@ -32,7 +33,7 @@ class HtmlLayout {
     <header class="bg-light">
         <div class="container">
             <nav class="navbar navbar-light bg-light navbar-expand-md">
-                <a class="navbar-brand" href="#">Wishlist</a>
+                <a class="navbar-brand" href="$home">Wishlist</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -40,7 +41,7 @@ class HtmlLayout {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Accueil<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="$home">Accueil<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="$creatorList">Créer une liste</a>
