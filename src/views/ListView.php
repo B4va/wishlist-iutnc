@@ -195,7 +195,7 @@ html
         $html = $html . <<<html
             </div>
                 <div class="card-footer">
-                <p class="text-muted m-0">$l->expiration</p>
+                <p class="text-muted m-0">Expire le $l->expiration</p>
             </div>
         </div>
         </div>
