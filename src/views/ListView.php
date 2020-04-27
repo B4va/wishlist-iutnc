@@ -180,20 +180,20 @@ html;
                     <hr>
                     <div class="pl-4 mt-3 row">
                         <div class="col-10">
-                            <p class="card-text font-weight-bold">$item</p>
+                            <p class="card-text font-weight-bold">$item->nom</p>
                         </div>
                         <div class="col">
-                            <a href="#"><img src="assets/img/edit.png" alt="edit" style="height: 20px;"></a>
-                            <a href="#"><img src="assets/img/delete.png" alt="delete" style="height: 20px;"></a>
+                            <a href="#"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
+                            <a href="#"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
                         </div>
                     </div>
-                </div>
 html
 ;   
 
         }
 
         $html = $html . <<<html
+            </div>
                 <div class="card-footer">
                 <p class="text-muted m-0">$l->expiration</p>
             </div>
