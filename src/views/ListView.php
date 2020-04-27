@@ -156,7 +156,7 @@ html;
         $html = <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
-            <div class="card my-4">
+            <div class="card my-5">
                 <div class="card-header bg-white">
                     <div class="row">
                         <div class="col-8">

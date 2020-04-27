@@ -21,14 +21,14 @@ class HtmlLayout {
         $home = $slim->urlFor('home');
         return <<<header
 <!DOCTYPE html>
-<html lang="fr" style="min-height: 100%;">
+<html lang="fr" style="height: 100%;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>$titre</title>
 </head>
-<body style="height: 100%; display: flex; flex-direction: column;">
+<body style="min-height: 100%; display: flex; flex-direction: column;">
 
     <header class="bg-light">
         <div class="container">
@@ -56,7 +56,7 @@ class HtmlLayout {
         </div>
     </header>
 
-    <div style="height: 100%;">
+    <div>
           
     <!-- Début contenu -->
 
@@ -76,7 +76,7 @@ header;
 
     </div>
 
-    <footer class="p-3 ont-small bg-light text-center">
+    <footer class="p-3 ont-small bg-light text-center" style='margin-top: auto;'>
             <p class="m-0">Projet PHP - IUT Nancy-Charlemagne</p>
             <small class="m-0 text-muted">Clément Dosda - Louis Friedrich - Loïc Steinmetz</small>
     </footer>
