@@ -47,7 +47,7 @@ class Liste extends Model implements modelOperations {
      *  Récupère la liste en finction de l'id
      *  @return Liste d'id $id
      */
-    public static function getById($id) : Liste{
+    public static function getById($id) : object{
         return Liste::where('no', '=',$id)->first();
     }
 

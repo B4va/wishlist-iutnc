@@ -40,7 +40,8 @@ class ListController implements Controller {
      */
     public function displayObject($id) : void {
         $list = Liste::getById($id);
-        $v = new ListView(OBJECT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
+        $items = $list->getItems();
+        $v = new ListView(OBJECT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list, 'items' => $items]);
         $v->render();
     }
 

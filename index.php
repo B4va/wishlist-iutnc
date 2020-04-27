@@ -27,9 +27,9 @@ $app->get('/', function(){
  */
 
 // Affichage d'une liste
-$app->get('/list/:token', function($token){
+$app->get('/list/:id', function($id){
     $c = new ListController();
-    $c->displayObject($token);
+    $c->displayObject($id);
 })->name('list');
 
 // Affichage du formulaire de création de liste
