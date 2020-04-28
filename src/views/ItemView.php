@@ -47,7 +47,7 @@ class ItemView extends View {
                     </div>
                     <div class="form-group">
                         <label for="tarif">Tarif</label>
-                        <input type="text" name='tarif' class="form-control" id="tarif" value='$i->tarif'>
+                        <input type="number" name='tarif' class="form-control" id="tarif" value='$i->tarif'>
                     </div>
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -86,7 +86,7 @@ html;
                     </div>
                     <div class="form-group">
                         <label for="tarif">Tarif</label>
-                        <input type="text" name='tarif' class="form-control" id="tarif">
+                        <input type="number" name='tarif' class="form-control" id="tarif" placeholder='0.00'>
                     </div>
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary">Ajouter</button>
