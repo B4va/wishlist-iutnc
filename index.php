@@ -78,6 +78,55 @@ $app->get('/list/delete/:token', function($token){
     $slim->redirect('../..');
 })->name('deleteList');
 
+/**
+ * Items
+ */
+
+// Affichage du formulaire de création d'item
+$app->get('/list/:token/item/new', function(){
+    $c = new ItemController();
+    $c->displayCreator();
+})->name('creatorItem');
+
+// Création d'un item
+$app->post('/list/:token/item/create', function(){
+    $c = new ItemController();
+    $slim = \Slim\Slim::getInstance();
+    $attr = [
+        'nom' => $slim->request->post('nom'),
+        'description' => $slim->request->post('description'),
+        'tarif' => $slim->request->post('tarif')
+    ];
+    $c->create($attr);
+    $slim->redirect('..');
+})->name('createItem');
+
+// Affichage du formulaire d'édition d'item
+$app->get('/list/:token/item/edit/:id', function($token){
+    $c = new ItemController();
+    $c->displayEditor($token);
+})->name('editorItem');
+
+// Mise à jour d'un item
+$app->post('/list/:token/item/update/:id', function($token){
+    $slim = \Slim\Slim::getInstance();
+    $c = new ItemController();
+    $attr = [
+        'nom' => $slim->request->post('nom'),
+        'description' => $slim->request->post('description'),
+        'tarif' => $slim->request->post('tarif')
+    ];
+    $c->edit($token, $attr);
+    $slim->redirect('../..');
+})->name('editItem');
+
+// Suppression d'un item
+$app->get('/list/:token/item/delete/:id', function($token){
+    $c = new ItemController();
+    $slim = \Slim\Slim::getInstance();
+    $c->delete($token);
+    $slim->redirect('../..');
+})->name('deleteItem');
 
 $app->run();
 
