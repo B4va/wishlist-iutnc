@@ -37,15 +37,15 @@ class Liste extends Model implements modelOperations {
 
     /**
      * Récupère l'utilisateur auquel appartient la liste
-     * @return User utilisateur propriétaire de la liste
+     * @return object utilisateur propriétaire de la liste
      */
-    public static function getUser() : User {
+    public static function getUser() : object {
         return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
 
     /**
      *  Récupère la liste en finction de l'id
-     *  @return Liste d'id $id
+     *  @return object d'id $id
      */
     public static function getById($id) : object{
         return Liste::where('no', '=',$id)->first();
@@ -53,18 +53,18 @@ class Liste extends Model implements modelOperations {
 
     /**
      *  Récupère la liste en finction de son token
-     *  @return Liste de token $token
+     *  @return object de token $token
      */
-    public static function getByToken($token) : Liste{
+    public static function getByToken($token) : object{
         return Liste::where('token', '=',$token)->first();
     }
 
 
     /**
      *  Créer une liste avec un tableau associatif $tab
-     *  @return la Liste créer
+     *  @return object Liste créer
      */
-    public static function create($tab) : Liste{
+    public static function create($tab) : object{
         $liste = new Liste;
         foreach ($tab as $key => $value) {
             $liste->$key = $value;
@@ -77,7 +77,7 @@ class Liste extends Model implements modelOperations {
 
     /**
      *  Récupère les listes non expirées
-     *  @return Liste non expirées
+     *  @return array non expirées
      */
     public static function getAll(){
         $date = date("Y-m-d");
