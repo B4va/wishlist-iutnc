@@ -26,9 +26,37 @@ class ItemView extends View {
      * @return string code html
      */
     protected function edit() : string {
+        $slim = \Slim\Slim::getInstance();
+        $i = $this->var['object'];
+        $editItem = $slim->urlFor('editItem', ['id' => $i->id]);
+        $deleteItem = $slim->urlFor('deleteItem', ['id' => $i->id]);
+        $list = $slim->urlFor('list', ["id" => $this->var['listId']]);
         return <<<html
 
-        
+        <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
+            <h1 class="text-center text-primary">Modifier un souhait</h1>
+            <div class="card my-4 p-4">
+                <form method='post' action='$editItem'>
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" name='nom' id="nom" value="$i->nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" name='description' rows="6" style="resize: none;">$i->description</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tarif">Tarif</label>
+                        <input type="text" name='tarif' class="form-control" id="tarif" value='$i->tarif'>
+                    </div>
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <a href="$deleteItem" class="btn btn-danger ml-3">Supprimer</a>
+                        <a href="$list" class="btn btn-outline-secondary ml-3">Retour</a>
+                    </div>
+                </form>
+            </div>
+        </div>
 
 html;
 
