@@ -153,6 +153,7 @@ html;
         $l = $this->var['object'];
         $editorList = $slim->urlFor('editorList', ['token' => $l->token]);
         $deleteList = $slim->urlFor('deleteList', ['token' => $l->token]);
+        $creatorItem = $slim->urlFor('creatorItem');
         $html = <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -171,7 +172,7 @@ html;
                 </div>
                 <div class="card-body py-4">
                     <!-- insérer nom de l'auteur -->
-                    <p class="card-text text-muted">Auteur Delaliste</small>
+                    <p class="card-text text-muted">Auteur Delaliste</p>
                     <p class="card-text mb-4">$l->description</p>
 html;
 
@@ -193,11 +194,15 @@ html
         }
 
         $html = $html . <<<html
+                    <hr>
+                    <a href='$creatorItem' class='btn btn-sm btn-outline-dark mt-2 ml-4'>
+                        <span class='font-weight-bold'>Ajouter</span>
+                    </a>
+                </div>
+                    <div class="card-footer">
+                    <p class="text-muted m-0">Expire le $l->expiration</p>
+                </div>
             </div>
-                <div class="card-footer">
-                <p class="text-muted m-0">Expire le $l->expiration</p>
-            </div>
-        </div>
         </div>
 
 html;
