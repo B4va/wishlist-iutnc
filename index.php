@@ -83,13 +83,13 @@ $app->get('/list/delete/:token', function($token){
  */
 
 // Affichage du formulaire de création d'item
-$app->get('/list/:token/item/new', function(){
+$app->get('/list/:idList/item/new', function($idList){
     $c = new ItemController();
-    $c->displayCreator();
+    $c->displayCreator($idList);
 })->name('creatorItem');
 
 // Création d'un item
-$app->post('/list/:token/item/create', function(){
+$app->post('/list/:idList/item/create', function($idList){
     $c = new ItemController();
     $slim = \Slim\Slim::getInstance();
     $attr = [
@@ -97,18 +97,19 @@ $app->post('/list/:token/item/create', function(){
         'description' => $slim->request->post('description'),
         'tarif' => $slim->request->post('tarif')
     ];
-    $c->create($attr);
-    $slim->redirect('..');
+    $c->create($attr, $idList);
+    $back = $slim->urlFor('list', ['id' => $idList]);
+    $slim->redirect($back);
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
-$app->get('/list/:token/item/edit/:id', function($token){
+$app->get('/list/:idList/item/edit/:id', function($id, $idList){
     $c = new ItemController();
-    $c->displayEditor($token);
+    $c->displayEditor($id, $idList);
 })->name('editorItem');
 
 // Mise à jour d'un item
-$app->post('/list/:token/item/update/:id', function($token){
+$app->post('/list/:token/item/update/:id', function($id, $idList){
     $slim = \Slim\Slim::getInstance();
     $c = new ItemController();
     $attr = [
@@ -116,16 +117,18 @@ $app->post('/list/:token/item/update/:id', function($token){
         'description' => $slim->request->post('description'),
         'tarif' => $slim->request->post('tarif')
     ];
-    $c->edit($token, $attr);
-    $slim->redirect('../..');
+    $c->edit($id, $attr);
+    $back = $slim->urlFor('list', ['id' => $idList]);
+    $slim->redirect($back);
 })->name('editItem');
 
 // Suppression d'un item
-$app->get('/list/:token/item/delete/:id', function($token){
+$app->get('/list/:token/item/delete/:id', function($id, $idList){
     $c = new ItemController();
     $slim = \Slim\Slim::getInstance();
-    $c->delete($token);
-    $slim->redirect('../..');
+    $c->delete($id);
+    $back = $slim->urlFor('list', ['id' => $idList]);
+    $slim->redirect($back);
 })->name('deleteItem');
 
 $app->run();
