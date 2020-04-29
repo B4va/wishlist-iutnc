@@ -41,7 +41,7 @@ class ListController implements ControllerOperations {
     public function displayObject($id) : void {
         $list = Liste::getById($id);
         $items = $list->getItems();
-        $v = new ListView(OBJECT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list, 'items' => $items]);
+        $v = new ListView(OBJECT_VIEW, ['title' => 'Liste ' . $list->nom, 'object' => $list, 'items' => $items]);
         $v->render();
     }
 
@@ -50,7 +50,7 @@ class ListController implements ControllerOperations {
      */
     public function displayObjects() : void {
         $ensemble = Liste::getAll();
-        $v = new ListView(OBJECTS_VIEW, ['title' => 'Lists', 'objects' => $ensemble]);
+        $v = new ListView(OBJECTS_VIEW, ['title' => 'Listes', 'objects' => $ensemble]);
         $v->render();
     }
 
