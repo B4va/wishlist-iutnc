@@ -7,7 +7,7 @@ require_once './vendor/autoload.php';
 use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Item;
 use \wishlist\models\User;
-use \wishlist\models\modelOperations;
+use \wishlist\models\ModelOperations;
 
 /**
  * Modèle de la table liste en bdd
