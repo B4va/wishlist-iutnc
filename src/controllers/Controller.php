@@ -4,7 +4,7 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-interface Controller {
+interface ControllerOperations {
 
     /* 
              _______________________
