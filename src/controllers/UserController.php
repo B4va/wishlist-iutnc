@@ -29,8 +29,8 @@ class UserController implements ControllerOperations {
     /**
      * Créé une vue affichant le formulaire d'édition d'un user
      */
-    public function displayEditor($token) : void {
-        $user = User::getByToken($token);
+    public function displayEditor($id) : void {
+        $user = User::getById($id);
         $v = new UserView(EDIT_VIEW, ['title' => 'Edition de l\'user' . $user->login, 'object' => $user]);
         $v->render();
     }
@@ -71,15 +71,15 @@ class UserController implements ControllerOperations {
     /**
      * Gère l'édition d'un user
      */
-    public function edit($token, $newAttr){
-        User::getByToken($token)->edit($newAttr);
+    public function edit($id, $newAttr){
+        User::getById($id)->edit($newAttr);
     }
 
     /**
      * Gère la suppression d'un user
      */
-    public function delete($token) : void {
-        User::getByToken($token)->delete();
+    public function delete($id) : void {
+        User::getById($id)->delete();
     }
 
     /*
