@@ -19,7 +19,7 @@ class ItemController implements ControllerOperations {
     */
 
     /**
-     * Créé un vue affichant le formulaire de création d'un item
+     * Créé une vue affichant le formulaire de création d'un item
      */
     public function displayCreator() : void {
         $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item']);
