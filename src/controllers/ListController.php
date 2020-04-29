@@ -4,11 +4,11 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-use \wishlist\controllers\Controller;
+use \wishlist\controllers\ControllerOperations;
 use \wishlist\models\Liste;
 use \wishlist\views\ListView;
 
-class ListController implements Controller {
+class ListController implements ControllerOperations {
 
     /* 
              _______________________
