@@ -16,7 +16,7 @@ interface ControllerOperations {
     /**
      * Créé une vue affichant le formulaire de création d'un objet
      */
-    public function displayCreator() : void;
+    public function displayCreator($id = null) : void;
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un objet

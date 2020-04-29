@@ -28,9 +28,9 @@ class ItemView extends View {
     protected function edit() : string {
         $slim = \Slim\Slim::getInstance();
         $i = $this->var['object'];
-        $editItem = $slim->urlFor('editItem', ['id' => $i->id]);
-        $deleteItem = $slim->urlFor('deleteItem', ['id' => $i->id]);
-        $idList = $this->var['idList'];
+        $idList = $i->liste_id;
+        $editItem = $slim->urlFor('editItem', ['idList' => $idList, 'id' => $i->id]);
+        $deleteItem = $slim->urlFor('deleteItem', ['idList' => $idList, 'id' => $i->id]);
         $list = $slim->urlFor('list', ["id" => $idList]);
         return <<<html
 
@@ -44,14 +44,14 @@ class ItemView extends View {
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name='description' rows="6" style="resize: none;">$i->description</textarea>
+                        <textarea class="form-control" id="description" name='description' rows="6" style="resize: none;">$i->descr</textarea>
                     </div>
                     <div class="form-group">
                         <label for="tarif">Tarif</label>
                         <input type="number" name='tarif' class="form-control" id="tarif" value='$i->tarif'>
                     </div>
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
                         <a href="$deleteItem" class="btn btn-danger ml-3">Supprimer</a>
                         <a href="$list" class="btn btn-outline-secondary ml-3">Retour</a>
                     </div>
@@ -69,8 +69,8 @@ html;
      */
     protected function create() : string {
         $slim = \Slim\Slim::getInstance();
-        $createItem = $slim->urlFor('createItem', ['listId' => $this->var['idList']]);
         $idList = $this->var['idList'];
+        $createItem = $slim->urlFor('createItem', ['idList' => $idList]);
         $list = $slim->urlFor('list', ["id" => $idList]);
         return <<<html
 

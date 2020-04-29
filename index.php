@@ -96,27 +96,28 @@ $app->post('/list/:idList/item/create', function($idList){
     $slim = \Slim\Slim::getInstance();
     $attr = [
         'nom' => $slim->request->post('nom'),
-        'description' => $slim->request->post('description'),
-        'tarif' => $slim->request->post('tarif')
+        'descr' => $slim->request->post('description'),
+        'tarif' => $slim->request->post('tarif'),
+        'liste_id' => $slim->request->post('liste_id')
     ];
-    $c->create($attr, $idList);
+    $c->create($attr);
     $back = $slim->urlFor('list', ['id' => $idList]);
     $slim->redirect($back);
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
-$app->get('/list/:idList/item/edit/:id', function($id){
+$app->get('/list/:idList/item/edit/:id', function($idList, $id){
     $c = new ItemController();
     $c->displayEditor($id);
 })->name('editorItem');
 
 // Mise à jour d'un item
-$app->post('/list/:token/item/update/:id', function($id, $idList){
+$app->post('/list/:idList/item/update/:id', function($idList, $id){
     $slim = \Slim\Slim::getInstance();
     $c = new ItemController();
     $attr = [
         'nom' => $slim->request->post('nom'),
-        'description' => $slim->request->post('description'),
+        'descr' => $slim->request->post('description'),
         'tarif' => $slim->request->post('tarif')
     ];
     $c->edit($id, $attr);
@@ -125,7 +126,7 @@ $app->post('/list/:token/item/update/:id', function($id, $idList){
 })->name('editItem');
 
 // Suppression d'un item
-$app->get('/list/:token/item/delete/:id', function($id, $idList){
+$app->get('/list/:idList/item/delete/:id', function($idList, $id){
     $c = new ItemController();
     $slim = \Slim\Slim::getInstance();
     $c->delete($id);

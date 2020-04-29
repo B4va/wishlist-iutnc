@@ -20,7 +20,7 @@ class ListController implements ControllerOperations {
     /**
      * Créé une vue affichant le formulaire de création d'une liste
      */
-    public function displayCreator() : void {
+    public function displayCreator($idList = null) : void {
         $v = new ListView(CREATE_VIEW, ['title' => 'Nouvelle liste']);
         $v->render();
     }
