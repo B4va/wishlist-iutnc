@@ -32,8 +32,8 @@ class Item extends Model {
 
 
     /**
-     *  Récupère la Item en finction de l'id
-     *  @return object d'id $id
+     *  Récupère un Item en fonction de l'id
+     *  @return object d'id @param id
      */
     public static function getById($id) : object{
         return Item::where('id', '=',$id)->first();
@@ -41,8 +41,8 @@ class Item extends Model {
 
 
     /**
-     *  Créer un item avec un tableau associatif $tab
-     *  @return object item créer
+     *  Créer un item avec un tableau associatif @param tab
+     *  @return l'item créé
      */
     public static function create($tab) : object{
         $item = new Item;
@@ -55,7 +55,7 @@ class Item extends Model {
 
 
     /**
-     *  modifie une item avec un tableau associatif $tab
+     *  modifie un item avec un tableau associatif @param tab
      */
     public function edit($tab){
         foreach ($tab as $key => $value) {

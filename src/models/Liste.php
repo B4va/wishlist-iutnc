@@ -44,8 +44,8 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
-     *  Récupère la liste en finction de l'id
-     *  @return object d'id $id
+     *  Récupère la liste en fonction de @param id
+     *  @return object en fonction de son id
      */
     public static function getById($id) : object{
         return Liste::where('no', '=',$id)->first();
@@ -53,7 +53,7 @@ class Liste extends Model implements ModelOperations {
 
     /**
      *  Récupère la liste en finction de son token
-     *  @return object de token $token
+     *  @return object fonction @param token
      */
     public static function getByToken($token) : object{
         return Liste::where('token', '=',$token)->first();
@@ -61,7 +61,7 @@ class Liste extends Model implements ModelOperations {
 
 
     /**
-     *  Créer une liste avec un tableau associatif $tab
+     *  Créer une liste avec un tableau associatif @tab
      *  @return object Liste créer
      */
     public static function create($tab) : object{
