@@ -46,7 +46,7 @@ class ListController implements ControllerOperations {
     }
 
     /**
-     * Créé une vue affichant toutes les listes publiques
+     * Créé une vue affichant toutes les listes
      */
     public function displayObjects() : void {
         $ensemble = Liste::getAll();
