@@ -46,7 +46,7 @@ class ItemController implements ControllerOperations {
     }
 
     /**
-     * Créé une vue affichant tous les items publiques
+     * Créé une vue affichant tous les items
      */
     public function displayObjects() : void {
         $ensemble = Item::getAll();
