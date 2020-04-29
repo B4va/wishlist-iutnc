@@ -21,17 +21,17 @@ class ItemController implements ControllerOperations {
     /**
      * Créé une vue affichant le formulaire de création d'un item
      */
-    public function displayCreator($idList) : void {
-        $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item',  'idList' => $idList]);
+    public function displayCreator($idList = null) : void {
+        $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item', 'idList' => $idList]);
         $v->render();
     }
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un item
      */
-    public function displayEditor($id, $idList) : void {
+    public function displayEditor($id) : void {
         $item = Item::getById($id);
-        $v = new ItemView(EDIT_VIEW, ['title' => 'Edition de l\'item' . $item->nom, 'object' => $item, 'idList' => $idList]);
+        $v = new ItemView(EDIT_VIEW, ['title' => 'Edition de l\'item' . $item->nom, 'object' => $item]);
         $v->render();
     }
 

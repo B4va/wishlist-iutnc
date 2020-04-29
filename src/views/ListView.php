@@ -153,7 +153,7 @@ html;
         $l = $this->var['object'];
         $editorList = $slim->urlFor('editorList', ['token' => $l->token]);
         $deleteList = $slim->urlFor('deleteList', ['token' => $l->token]);
-        $creatorItem = $slim->urlFor('creatorItem');
+        $creatorItem = $slim->urlFor('creatorItem', ['idList' => $l->no]);
         $html = <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -177,7 +177,8 @@ html;
 html;
 
         foreach($this->var['items'] as $item){
-            $editItem = $slim->urlFor('editorItem', ["id" => $item->id, "idList" => $l->no]);
+            $editItem = $slim->urlFor('editorItem', ["idList" => $item->liste_id, "id" => $item->id]);
+            $deleteItem = $slim->urlFor('deleteItem', ["idList" => $item->liste_id, "id" => $item->id]);
             $html = $html . <<<html
                     <hr>
                     <div class="pl-4 mt-3 row">
@@ -186,7 +187,7 @@ html;
                         </div>
                         <div class="col">
                             <a href="$editItem"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
-                            <a href="#"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
+                            <a href="$deleteItem"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
                         </div>
                     </div>
 html
