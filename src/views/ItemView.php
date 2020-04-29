@@ -30,7 +30,7 @@ class ItemView extends View {
         $i = $this->var['object'];
         $editItem = $slim->urlFor('editItem', ['id' => $i->id]);
         $deleteItem = $slim->urlFor('deleteItem', ['id' => $i->id]);
-        $list = $slim->urlFor('list', ["id" => $this->var['listId']]);
+        $list = $slim->urlFor('list', ["id" => $this->var['idList']]);
         return <<<html
 
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -68,8 +68,8 @@ html;
      */
     protected function create() : string {
         $slim = \Slim\Slim::getInstance();
-        $createItem = $slim->urlFor('createItem', ['listId' => $this->var['listId']]);
-        $list = $slim->urlFor('list', ["id" => $this->var['listId']]);
+        $createItem = $slim->urlFor('createItem', ['listId' => $this->var['idList']]);
+        $list = $slim->urlFor('list', ["id" => $this->var['idList']]);
         return <<<html
 
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
