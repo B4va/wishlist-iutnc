@@ -63,15 +63,15 @@ class ItemController implements ControllerOperations {
     /**
      * Gère l'édition d'un item
      */
-    public function edit($token, $newAttr){
-        Item::getByToken($token)->edit($newAttr);
+    public function edit($id, $newAttr){
+        Item::getById($id)->edit($newAttr);
     }
 
     /**
      * Gère la suppression d'un item
      */
-    public function delete($token) : void {
-        Item::getByToken($token)->delete();
+    public function delete($id) : void {
+        Item::getById($id)->delete();
     }
 
     /*
