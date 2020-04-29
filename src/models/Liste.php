@@ -12,7 +12,7 @@ use \wishlist\models\ModelOperations;
 /**
  * Modèle de la table liste en bdd
  */
-class Liste extends Model implements modelOperations {
+class Liste extends Model implements ModelOperations {
 
     protected $table = 'liste';
     protected $primaryKey = 'no';

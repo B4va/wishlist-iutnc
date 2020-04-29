@@ -177,6 +177,7 @@ html;
 html;
 
         foreach($this->var['items'] as $item){
+            $editItem = $slim->urlFor('editorItem', ["id" => $item->id, "idList" => $l->no]);
             $html = $html . <<<html
                     <hr>
                     <div class="pl-4 mt-3 row">
@@ -184,7 +185,7 @@ html;
                             <p class="card-text font-weight-bold">$item->nom</p>
                         </div>
                         <div class="col">
-                            <a href="#"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
+                            <a href="$editItem"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
                             <a href="#"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
                         </div>
                     </div>

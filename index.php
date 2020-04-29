@@ -7,6 +7,8 @@ use \wishlist\models\Liste;
 use \wishlist\models\User;
 
 use wishlist\controllers\ListController;
+use wishlist\controllers\ItemController;
+use wishlist\controllers\UserController;
 
 
 $app = new \Slim\Slim();
@@ -103,9 +105,9 @@ $app->post('/list/:idList/item/create', function($idList){
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
-$app->get('/list/:idList/item/edit/:id', function($id, $idList){
+$app->get('/list/:idList/item/edit/:id', function($id){
     $c = new ItemController();
-    $c->displayEditor($id, $idList);
+    $c->displayEditor($id);
 })->name('editorItem');
 
 // Mise à jour d'un item
