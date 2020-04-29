@@ -30,7 +30,8 @@ class ItemView extends View {
         $i = $this->var['object'];
         $editItem = $slim->urlFor('editItem', ['id' => $i->id]);
         $deleteItem = $slim->urlFor('deleteItem', ['id' => $i->id]);
-        $list = $slim->urlFor('list', ["id" => $this->var['idList']]);
+        $idList = $this->var['idList'];
+        $list = $slim->urlFor('list', ["id" => $idList]);
         return <<<html
 
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -69,13 +70,15 @@ html;
     protected function create() : string {
         $slim = \Slim\Slim::getInstance();
         $createItem = $slim->urlFor('createItem', ['listId' => $this->var['idList']]);
-        $list = $slim->urlFor('list', ["id" => $this->var['idList']]);
+        $idList = $this->var['idList'];
+        $list = $slim->urlFor('list', ["id" => $idList]);
         return <<<html
 
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Ajouter un souhait</h1>
             <div class="card my-4 p-4">
                 <form method='post' action='$createItem'>
+                <input type='hidden' value='$idList' name='liste_id'>
                     <div class="form-group">
                         <label for="nom">Nom</label>
                         <input type="text" class="form-control" name='nom' id="nom" placeholder="Nom">
