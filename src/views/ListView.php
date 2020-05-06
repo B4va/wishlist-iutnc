@@ -180,6 +180,7 @@ html;
             $editItem = $slim->urlFor('editorItem', ["idList" => $item->liste_id, "id" => $item->id]);
             $deleteItem = $slim->urlFor('deleteItem', ["idList" => $item->liste_id, "id" => $item->id]);
             $html = $html . <<<html
+            
                     <hr>
                     <div class="pl-4 mt-3 row">
                         <div class="col-10">
