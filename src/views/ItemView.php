@@ -109,4 +109,10 @@ html;
      */
     protected function object() : string { }
 
+    /**
+     * Formatte un formulaire d'authentification
+     * @return string code html
+     */
+    protected function authenticate() : string { }
+
 }

@@ -10,6 +10,7 @@ define ('OBJECT_VIEW', 0);
 define ('OBJECTS_VIEW', 1);
 define ('EDIT_VIEW', 2);
 define ('CREATE_VIEW', 3);
+define ('AUTHENTICATE_VIEW', 4);
 
 /**
  * Gestion des vues
@@ -52,6 +53,10 @@ abstract class View{
                 $content = $this->edit();
                 break;
             }
+            case (AUTHENTICATE_VIEW) : {
+                $content = $this->authenticate();
+            break;
+            }
         }
         echo (
             HtmlLayout::header($this->var['title']) . 
@@ -83,5 +88,11 @@ abstract class View{
      * @return string code html
      */
     abstract protected function create() : string;
+
+    /**
+     * Formatte un formulaire d'authentification
+     * @return string code html
+     */
+    abstract protected function authenticate() : string;
 
 }
