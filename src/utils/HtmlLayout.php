@@ -19,6 +19,7 @@ class HtmlLayout {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
         $home = $slim->urlFor('home');
+        $logout = $slim->urlFor('logout');
         return <<<header
 <!DOCTYPE html>
 <html lang="fr" style="height: 100%;">
@@ -49,6 +50,9 @@ class HtmlLayout {
                         <!-- Vérifier si utilisateur conntecté -->
                         <li class="nav-item">
                             <a class="nav-link" href="#">Mes listes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="$logout">Déconnexion</a>
                         </li>
                     </ul>
                 </div>
