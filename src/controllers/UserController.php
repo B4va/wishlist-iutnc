@@ -41,7 +41,8 @@ class UserController implements ControllerOperations {
      */
     public function displayObject($id) : void {
         $user = User::getById($id);
-        $v = new UserView(OBJECT_VIEW, ['title' => 'User ' . $user->login, 'object' => $user]);
+        $lists = $user->getLists();
+        $v = new UserView(OBJECT_VIEW, ['title' => 'Utilisateur ' . $user->login, 'object' => $user, 'lists' => $lists]);
         $v->render();
     }
 
@@ -50,7 +51,7 @@ class UserController implements ControllerOperations {
      */
     public function displayObjects() : void {
         $ensemble = User::getAll();
-        $v = new UserView(OBJECTS_VIEW, ['title' => 'Users', 'objects' => $ensemble]);
+        $v = new UserView(OBJECTS_VIEW, ['title' => 'Utilisateurs', 'objects' => $ensemble]);
         $v->render();
     }
 
@@ -88,6 +89,11 @@ class UserController implements ControllerOperations {
         |   Fonctionnalités supplémentaires   |
         |_____________________________________|
     */
+
+    public function displayLogin(){
+        $v = new UserView(AUTHENTICATE_VIEW, ['title' => 'Auhtentification']);
+        $v->render();
+    }
 
 }
 
