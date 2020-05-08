@@ -90,9 +90,21 @@ class UserController implements ControllerOperations {
         |_____________________________________|
     */
 
+    /**
+     * Créé une vue d'authentification
+     */
     public function displayLogin(){
         $v = new UserView(AUTHENTICATE_VIEW, ['title' => 'Auhtentification']);
         $v->render();
+    }
+
+    /**
+     * Gère l'authentification
+     */
+    public function login($form){
+        $slim = \Slim\Slim::getInstance();
+        $home = $slim->urlFor('home');
+        setcookie('auth', User::login($form), time()+60*60*24*30, $home);
     }
 
 }
