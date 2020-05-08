@@ -85,7 +85,7 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
-     *  modifie une liste avec un tableau associatif $tab
+     *  modifie une liste avec un tableau associatif @param tab
      */
     public function edit($tab){
         foreach ($tab as $key => $value) {
