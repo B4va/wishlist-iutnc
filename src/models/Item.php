@@ -9,7 +9,7 @@ use \wishlist\models\ModelOperations;
 /**
  * Modèle de la table item en bdd
  */
-class Item extends Model {
+class Item extends Model implements ModelOperations {
 
     protected $table = 'item';
     protected $primaryKey = 'id';
