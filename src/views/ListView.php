@@ -218,6 +218,7 @@ html
 ;   
             }
         $html = $html . <<<html
+        
                     </div>
 html;
         }

@@ -128,9 +128,10 @@ footer;
         if (isset($_SESSION['slim.flash'])){
             foreach ($_SESSION['slim.flash'] as $key => $value){
                 $html = $html . <<<html
-                <div class="text-center col-6 offset-3 my-5 alert alert-$key" role="alert">
-                    $value
-                </div>
+
+        <div class="text-center col-6 offset-3 my-5 alert alert-$key" role="alert">
+            $value
+        </div>
 html;
             }
         }

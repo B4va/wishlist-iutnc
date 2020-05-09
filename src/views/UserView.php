@@ -26,17 +26,18 @@ class UserView extends View {
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Les utilisateurs</h1>
             <ul class="list-group mt-5">
-
 html;
 
         foreach($this->var['objects'] as $u){
             $user = $slim->urlFor('user', ['id' => $u->id]);
             $html = $html . <<<html
+
                 <li class="list-group-item"><a href='$user'>$u->firstname $u->lastname</a></li>
 html;
         }
 
         $html = $html . <<<html
+        
             </ul>
         </div>
 html;
@@ -134,7 +135,7 @@ html;
                     </div>
                     <div class="form-group mb-0">
                         <a href="$loginForm"><small class="text-center">Déja inscrit ? Se connecter.</small></a>
-                    </form>
+                    </div>
                 </form>
             </div>
         </div>
@@ -185,7 +186,6 @@ html;
             $nbLists ++;
             $list = $slim->urlFor('list', ['id' => $l->no]);
             $html = $html . <<<html
-
                     <a href="$list"><p class="card-text mb-3">$l->titre</p></a>
 html;
             if ($l->isExpired()) $html = $html . <<<html
@@ -193,6 +193,7 @@ html;
                     <p class = 'text-muted'>Expirée</p>
 html;
             $html = $html . <<<html
+
                     <hr>
 html;
         }
@@ -221,6 +222,7 @@ html;
         $login = $slim->urlFor('login');
         $creatorUser = $slim->urlFor('creatorUser');
         return <<<html
+        
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Se connecter</h1>
             <div class="card my-4 p-4">
@@ -239,7 +241,7 @@ html;
                     </div>
                     <div class="form-group mb-0">
                         <a href="$creatorUser"><small class="text-center">Pas encore inscrit ? S'inscrire</small></a>
-                    </form>
+                    </div>
                 </form>
             </div>
         </div>
