@@ -24,6 +24,8 @@ class ItemController extends Controller {
      */
     public function displayCreator($idList = null) : void {
         $this->authRequired();
+        $l = Liste::getById($idList);
+        $this->propRequired($l->user_id);
         $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item', 'idList' => $idList]);
         $v->render();
     }
