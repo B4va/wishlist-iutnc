@@ -162,10 +162,18 @@ html;
                         <div class="col-8">
                             <h3 class="m-0"><a href='#'>$u->firstname $u->lastname</a></h3>
                         </div>
+html;
+        if (View::isProperty($u->id)){
+            $html = $html . <<<html
+
                         <div class="col-4 d-flex justify-content-end align-items-center">
                             <a href="$editUser" class="btn btn-outline-primary">Modifier</a>
                             <a href="$deleteUser" class="btn btn-outline-danger ml-3">Supprimer</a>
                         </div>
+html;
+        }
+        $html = $html . <<<html
+
                     </div>
                 </div>
                 <div class="card-body py-4">
@@ -177,9 +185,11 @@ html;
             $nbLists ++;
             $list = $slim->urlFor('list', ['id' => $l->no]);
             $html = $html . <<<html
+
                     <a href="$list"><p class="card-text mb-3">$l->titre</p></a>
 html;
             if ($l->isExpired()) $html = $html . <<<html
+
                     <p class = 'text-muted'>Expirée</p>
 html;
             $html = $html . <<<html
@@ -188,9 +198,10 @@ html;
         }
 
         $html = $html . <<<html
+
                 </div>
                     <div class="card-footer">
-                    <p class="text-muted m-0">$nbLists listes</p>
+                    <p class="text-muted m-0">$nbLists liste(s)</p>
                 </div>
             </div>
         </div>
