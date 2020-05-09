@@ -216,6 +216,12 @@ $app->post('/login', function(){
     $slim->redirect('..');
 })->name('login');
 
+// Déconnexion utilisateur
+$app->get('/login', function(){
+    $c = new UserController();
+    $c->logout();
+})->name('logout');
+
 $app->run();
 
 ?>
