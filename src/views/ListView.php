@@ -22,6 +22,7 @@ class ListView extends View {
     protected function objects() : string{
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
+        $users = $slim->urlFor('users');
         $html = <<<html
 
         <div class="jumbotron">
@@ -29,6 +30,7 @@ class ListView extends View {
                 <h1 class='display-4'>Bienvenue sur Wishlist</h1>
                 <hr class="my-4">
                 <a href='$creatorList' class="btn btn-primary" id="btn">Créer une liste</a>
+                <a href='$users' class="btn btn-outline-secondary ml-3" id="btn">Tous les utilisateur</a>
             </div>
         </div>
         <h1 class="text-center text-primary mb-5">Les dernières listes</h1>
@@ -47,10 +49,18 @@ html;
                         <div class="col-8">
                             <h3 class="m-0"><a href='$list'>$l->titre</a></h3>
                         </div>
+html;
+            if (View::isProperty($l->user_id)){
+                $html = $html . <<<html
+
                         <div class="col-4 d-flex justify-content-end align-items-center">
                             <!-- Vérifier si liste de l'utilisateur conntecté ? -->
                             <a href="$editorList" class="btn btn-danger">Modifier</a>
                         </div>
+html;
+            }
+            $html = $html . <<<html
+
                     </div>
                 </div>
                 <div class="card-footer">
@@ -165,16 +175,23 @@ html;
                         <div class="col-8">
                             <h3 class="m-0"><a href='#'>$l->titre</a></h3>
                         </div>
+html;
+        if (View::isProperty($l->user_id)){
+            $html = $html . <<<html
+
                         <div class="col-4 d-flex justify-content-end align-items-center">
-                            <!-- Vérifier si liste de l'utilisateur conntecté ? -->
                             <a href="$editorList" class="btn btn-outline-primary">Modifier</a>
                             <a href="$deleteList" class="btn btn-outline-danger ml-3">Supprimer</a>
                         </div>
+html;
+        }
+        $u = $l->getUser()->firstname . ' ' . $l->getUser()->lastname;
+        $html = $html . <<<html
+
                     </div>
                 </div>
                 <div class="card-body py-4">
-                    <!-- insérer nom de l'auteur -->
-                    <p class="card-text text-muted">Auteur Delaliste</p>
+                    <p class="card-text text-muted">$u</p>
                     <p class="card-text mb-4">$l->description</p>
 html;
 
@@ -188,6 +205,10 @@ html;
                         <div class="col-10">
                             <p class="card-text font-weight-bold">$item->nom</p>
                         </div>
+html;
+            if (View::isProperty($l->user_id)){
+                $html = $html . <<<html
+
                         <div class="col">
                             <a href="$editItem"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
                             <a href="$deleteItem"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
@@ -195,23 +216,30 @@ html;
                     </div>
 html
 ;   
-
+            }
         }
-
         $html = $html . <<<html
+
                     <hr>
+html;
+        if (View::isProperty($l->user_id)){
+            $html = $html . <<<html
+
                     <a href='$creatorItem' class='btn btn-sm btn-outline-dark mt-2 ml-4'>
                         <span class='font-weight-bold'>Ajouter</span>
                     </a>
+html;
+        }
+        $html = $html . <<<html
+
                 </div>
-                    <div class="card-footer">
+                <div class="card-footer">
                     <p class="text-muted m-0">Expire le $l->expiration</p>
                 </div>
             </div>
         </div>
 
 html;
-
         return $html;
     }
 
