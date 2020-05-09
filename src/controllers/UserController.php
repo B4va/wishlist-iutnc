@@ -83,6 +83,7 @@ class UserController implements ControllerOperations {
      */
     public function delete($id) : void {
         User::getById($id)->delete();
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
     }
 
     /*
