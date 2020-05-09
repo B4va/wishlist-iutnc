@@ -4,11 +4,11 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-use \wishlist\controllers\ControllerOperations;
+use \wishlist\controllers\Controller;
 use \wishlist\models\Item;
 use \wishlist\views\ItemView;
 
-class ItemController implements ControllerOperations {
+class ItemController extends Controller {
 
 
     /* 
@@ -22,6 +22,7 @@ class ItemController implements ControllerOperations {
      * Créé une vue affichant le formulaire de création d'un item
      */
     public function displayCreator($idList = null) : void {
+        $this->authRequired();
         $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item', 'idList' => $idList]);
         $v->render();
     }
@@ -30,6 +31,8 @@ class ItemController implements ControllerOperations {
      * Créé une vue affichant le formulaire d'édition d'un item
      */
     public function displayEditor($id) : void {
+        $this->authRequired();
+        $this->propRequired($id);
         $item = Item::getById($id);
         $v = new ItemView(EDIT_VIEW, ['title' => 'Edition de l\'item' . $item->nom, 'object' => $item]);
         $v->render();
@@ -57,6 +60,7 @@ class ItemController implements ControllerOperations {
      * Gère la création d'un item
      */
     public function create($attr) : void {
+        $this->authRequired();
         Item::create($attr);
     }
 
@@ -64,6 +68,8 @@ class ItemController implements ControllerOperations {
      * Gère l'édition d'un item
      */
     public function edit($id, $newAttr){
+        $this->authRequired();
+        $this->propRequired($id);
         Item::getById($id)->edit($newAttr);
     }
 
@@ -71,6 +77,8 @@ class ItemController implements ControllerOperations {
      * Gère la suppression d'un item
      */
     public function delete($id) : void {
+        $this->authRequired();
+        $this->propRequired($id);
         Item::getById($id)->delete();
     }
 

@@ -20,6 +20,7 @@ class HtmlLayout {
         $creatorList = $slim->urlFor('creatorList');
         $home = $slim->urlFor('home');
         $logout = $slim->urlFor('logout');
+        $flash = HtmlLayout::flash();
         return <<<header
 <!DOCTYPE html>
 <html lang="fr" style="height: 100%;">
@@ -64,6 +65,8 @@ class HtmlLayout {
           
     <!-- Début contenu -->
 
+    $flash
+
 header;
 
     }
@@ -93,6 +96,20 @@ header;
 </html>
 footer;
 
+    }
+
+    public static function flash() : string {
+        $html = '';
+        if (isset($_SESSION['slim.flash'])){
+            foreach ($_SESSION['slim.flash'] as $key => $value){
+                $html = $html . <<<html
+                <div class="text-center col-6 offset-3 my-5 alert alert-$key" role="alert">
+                    $value
+                </div>
+html;
+            }
+        }
+        return $html;
     }
 
 }
