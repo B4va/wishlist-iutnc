@@ -151,7 +151,7 @@ $app->get('/users', function(){
 })->name('users');
 
 // Affichage du formulaire de création de compte utilisateur
-$app->get('/user/new', function(){
+$app->get('/users/new', function(){
     $c = new UserController();
     $c->displayCreator();
 })->name('creatorUser');
@@ -167,7 +167,7 @@ $app->post('/user/create', function(){
         'firstname' => $slim->request->post('firstname')
     ];
     $c->create($attr);
-    $slim->redirect('..');
+    $slim->redirect($slim->urlFor('home'));
 })->name('createUser');
 
 // Affichage du formulaire de modification d'un compte utilisateur
@@ -187,7 +187,7 @@ $app->post('/user/update/:id', function($id){
         'firstname' => $slim->request->post('firstname')
     ];
     $c->edit($id, $attr);
-    $slim->redirect('../..');
+    $slim->redirect($slim->urlFor('home'));
 })->name('editUser');
 
 // Suppression d'un compte utilisateur
@@ -212,14 +212,16 @@ $app->post('/login', function(){
         'login' => $slim->request->post('login'),
         'password' => $slim->request->post('password')
     ];
-    $c->login($attr);
-    $slim->redirect('..');
+    $c->loginUser($attr);
+    $slim->redirect($slim->urlFor('home'));
 })->name('login');
 
 // Déconnexion utilisateur
-$app->get('/login', function(){
+$app->get('/logout', function(){
     $c = new UserController();
     $c->logout();
+    $slim = \Slim\Slim::getInstance();
+    $slim->redirect($slim->urlFor('home'));
 })->name('logout');
 
 $app->run();

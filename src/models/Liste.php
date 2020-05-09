@@ -100,6 +100,11 @@ class Liste extends Model implements ModelOperations {
     public function delete(){
         Liste::where('token','=',$this->token)->delete();
     }
+
+    public function isExpired(){
+        $date = date("Y-m-d");
+        return $this->expiration < $date;
+    }
 }
 
 ?>

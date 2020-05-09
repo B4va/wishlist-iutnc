@@ -70,6 +70,10 @@ class Item extends Model implements ModelOperations {
     public function delete(){
         Item::where('id','=',$this->id)->delete();
     }
+
+    public static function getAll(){
+        return Item::get();
+    }
     
 }
 

@@ -154,7 +154,7 @@ html;
                 <div class="card-header bg-white">
                     <div class="row">
                         <div class="col-8">
-                            <h3 class="m-0"><a href='#'>Auteur Nomdauteur</a></h3>
+                            <h3 class="m-0"><a href='#'>$u->firstname $u->lastname</a></h3>
                         </div>
                         <div class="col-4 d-flex justify-content-end align-items-center">
                             <a href="$editUser" class="btn btn-outline-primary">Modifier</a>
@@ -169,7 +169,7 @@ html;
 html;
         foreach($this->var['lists'] as $l){
             $nbLists ++;
-            $list = $slim->urlFor('home', ['id' => $l->id]);
+            $list = $slim->urlFor('list', ['id' => $l->no]);
             $html = $html . <<<html
                     <a href="$list"><p class="card-text mb-3">$l->titre</p></a>
 html;
