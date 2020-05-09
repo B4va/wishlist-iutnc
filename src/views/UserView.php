@@ -167,8 +167,8 @@ html;
             $html = $html . <<<html
 
                         <div class="col-4 d-flex justify-content-end align-items-center">
-                            <a href="$editUser" class="btn btn-outline-primary">Modifier</a>
-                            <a href="$deleteUser" class="btn btn-outline-danger ml-3">Supprimer</a>
+                            <a href="$editUser" class="btn btn-sm btn-outline-primary">Modifier</a>
+                            <a href="$deleteUser" class="btn btn-sm btn-outline-danger ml-3">Supprimer</a>
                         </div>
 html;
         }
