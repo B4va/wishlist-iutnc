@@ -78,7 +78,8 @@ class UserController extends Controller {
         } else {
             unset($attr['password_conf']);
             User::create($attr);
-            $slim->redirect($slim->urlFor('home'));
+            $slim->flash('success', 'Vous pouvez à présent vous connecter');
+            $slim->redirect($slim->urlFor('loginForm'));
         }
     }
 

@@ -95,4 +95,16 @@ abstract class View{
      */
     abstract protected function authenticate() : string;
 
+    public static function isLogin(){
+        return isset($_COOKIE['user']);
+    }
+
+    public static function isProperty($userId) {
+        if (View::isLogin()){
+            return $userId = unserialize($_COOKIE['user'])->id == $userId;
+        } else {
+            return false;
+        }
+    }
+
 }

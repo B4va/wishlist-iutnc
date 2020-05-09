@@ -39,7 +39,7 @@ class Liste extends Model implements ModelOperations {
      * Récupère l'utilisateur auquel appartient la liste
      * @return object utilisateur propriétaire de la liste
      */
-    public static function getUser() : object {
+    public function getUser() : object {
         return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
 

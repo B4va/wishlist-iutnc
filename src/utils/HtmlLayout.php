@@ -4,6 +4,8 @@ namespace wishlist\utils;
 
 require_once 'vendor/autoload.php';
 
+use wishlist\views\View;
+
 /**
  * Classe utilitaire : template html
  */
@@ -19,9 +21,11 @@ class HtmlLayout {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
         $home = $slim->urlFor('home');
+        $login = $slim->urlFor('loginForm');
         $logout = $slim->urlFor('logout');
+        $signin = $slim->urlFor('creatorUser');
         $flash = HtmlLayout::flash();
-        return <<<header
+        $html = <<<html
 <!DOCTYPE html>
 <html lang="fr" style="height: 100%;">
 <head>
@@ -39,22 +43,41 @@ class HtmlLayout {
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="$home">Accueil<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="$home">Accueil</a>
                         </li>
+html;
+
+        if (View::isLogin()){
+            $user = unserialize($_COOKIE['user']);
+            $profil = $slim->urlFor('user', ['id' => $user->id]);
+            $html = $html . <<<html
+
                         <li class="nav-item">
                             <a class="nav-link" href="$creatorList">Créer une liste</a>
                         </li>
-                        <!-- Vérifier si utilisateur conntecté -->
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mes listes</a>
+                            <a class="nav-link" href="$profil">Mon profil</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="$logout">Déconnexion</a>
                         </li>
+html;
+        } else {
+            $html = $html . <<<html
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="$login">Se connecter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="$signin">S'inscrire</a>
+                        </li>
+html;
+        }
+        $html = $html . <<<html
+
                     </ul>
                 </div>
             </nav>
@@ -67,8 +90,8 @@ class HtmlLayout {
 
     $flash
 
-header;
-
+html;
+        return $html;
     }
 
     /**
@@ -79,6 +102,8 @@ header;
     public static function footer() : string {
         return <<<footer
 
+        
+        
     <!-- Fin contenu -->
 
     </div>
