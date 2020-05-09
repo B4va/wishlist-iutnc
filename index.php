@@ -14,6 +14,13 @@ use wishlist\controllers\UserController;
 $app = new \Slim\Slim();
 $db = ConnectionFactory::makeConnection();
 
+function authRequired() : void {
+    if (!isset($_COOKIE['user'])){
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('loginForm'));
+    }
+}
+
 /**
  * Général
  */
