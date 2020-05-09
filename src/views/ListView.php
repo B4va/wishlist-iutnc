@@ -213,18 +213,16 @@ html;
                             <a href="$editItem"><img src="../assets/img/edit.png" alt="edit" style="height: 20px;"></a>
                             <a href="$deleteItem"><img src="../assets/img/delete.png" alt="delete" style="height: 20px;"></a>
                         </div>
-                    </div>
 html
 ;   
             }
-        }
         $html = $html . <<<html
-
-                    <hr>
+                    </div>
 html;
+        }
         if (View::isProperty($l->user_id)){
             $html = $html . <<<html
-
+                    <hr>
                     <a href='$creatorItem' class='btn btn-sm btn-outline-dark mt-2 ml-4'>
                         <span class='font-weight-bold'>Ajouter</span>
                     </a>
