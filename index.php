@@ -35,7 +35,7 @@ $app->get('/list/:id', function($id){
 })->name('list');
 
 // Affichage du formulaire de création de liste
-$app->get('/lists/new', function(){
+$app->get('/list/new', function(){
     $c = new ListController();
     $c->displayCreator();
 })->name('creatorList');
@@ -133,6 +133,88 @@ $app->get('/list/:idList/item/delete/:id', function($idList, $id){
     $back = $slim->urlFor('list', ['id' => $idList]);
     $slim->redirect($back);
 })->name('deleteItem');
+
+/**
+ * Users
+ */
+
+// Affichage d'un utilisateur
+$app->get('/user/:id', function($id){
+    $c = new UserController();
+    $c->displayObject($id);
+})->name('user');
+
+// Affichage de tous les utilisateurs
+$app->get('/users', function(){
+    $c = new UserController();
+    $c->displayObjects();
+})->name('users');
+
+// Affichage du formulaire de création de compte utilisateur
+$app->get('/user/new', function(){
+    $c = new UserController();
+    $c->displayCreator();
+})->name('creatorUser');
+
+// Création d'un compte utilisateur
+$app->post('/user/create', function(){
+    $c = new UserController();
+    $slim = \Slim\Slim::getInstance();
+    $attr = [
+        'login' => $slim->request->post('login'),
+        'password' => $slim->request->post('password'),
+        'lastname' => $slim->request->post('lastname'),
+        'firstname' => $slim->request->post('firstname')
+    ];
+    $c->create($attr);
+    $slim->redirect('..');
+})->name('createUser');
+
+// Affichage du formulaire de modification d'un compte utilisateur
+$app->get('/user/edit/:id', function($id){
+    $c = new UserController();
+    $c->displayEditor($id);
+})->name('editorUser');
+
+// Mise à jour d'un compte utilisateur
+$app->post('/user/update/:id', function($id){
+    $c = new UserController();
+    $slim = \Slim\Slim::getInstance();
+    $attr = [
+        'login' => $slim->request->post('login'),
+        'password' => $slim->request->post('password'),
+        'lastname' => $slim->request->post('lastname'),
+        'firstname' => $slim->request->post('firstname')
+    ];
+    $c->edit($id, $attr);
+    $slim->redirect('../..');
+})->name('editUser');
+
+// Suppression d'un compte utilisateur
+$app->get('/user/delete/:id', function($id){
+    $c = new UserController();
+    $slim = \Slim\Slim::getInstance();
+    $c->delete($id);
+    $slim->redirect('../..');
+})->name('deleteUser');
+
+// Affichage du formulaire de connexion
+$app->get('/login', function(){
+    $c = new UserController();
+    $c->displayLogin();
+})->name('loginForm');
+
+// Connexion utilisateur
+$app->post('/login', function(){
+    $c = new UserController();
+    $slim = \Slim\Slim::getInstance();
+    $attr = [
+        'login' => $slim->request->post('login'),
+        'password' => $slim->request->post('password')
+    ];
+    $c->login($attr);
+    $slim->redirect('..');
+})->name('login');
 
 $app->run();
 

@@ -115,10 +115,6 @@ html;
                         <input type="password" class="form-control" name='password' id="password" placeholder="mot de passe">
                     </div>
                     <div class="form-group">
-                        <label for="passwordConf">Confirmation du mot de passe</label>
-                        <input type="password" class="form-control" name='passwordConf' id="passwordConf" placeholder="confirmer le mot de passe">
-                    </div>
-                    <div class="form-group">
                         <label for="lastname">Nom</label>
                         <input type="text" class="form-control" name='lastname' id="lastname" placeholder="nom">
                     </div>
@@ -175,8 +171,13 @@ html;
             $nbLists ++;
             $list = $slim->urlFor('home', ['id' => $l->id]);
             $html = $html . <<<html
-                    <a href="$list"><p class="card-text mb-3">$l->titre</p></a>                
-                    <hr>  
+                    <a href="$list"><p class="card-text mb-3">$l->titre</p></a>
+html;
+            if ($l->isExpired()) $html = $html . <<<html
+                    <p class = 'text-muted'>Expirée</p>
+html;
+            $html = $html . <<<html
+                    <hr>
 html;
         }
 
