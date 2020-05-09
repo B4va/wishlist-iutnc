@@ -26,8 +26,8 @@ class Item extends Model implements ModelOperations {
      * Récupère la liste à laquelle appartient l'item
      * @return Liste liste à laquelle appartient l'item
      */
-    public static function getListe() : Liste {
-        return $this->liste()->first();
+    public function getListe() : Liste {
+        return $this->belongsTo('\wishlist\models\Liste','liste_id')->first();
     }
 
 
