@@ -1,6 +1,6 @@
 <?php
 
-namespace wishlist\utils;
+namespace wishlist\views;
 
 require_once 'vendor/autoload.php';
 
