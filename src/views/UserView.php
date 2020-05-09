@@ -186,11 +186,11 @@ html;
             $nbLists ++;
             $list = $slim->urlFor('list', ['id' => $l->no]);
             $html = $html . <<<html
-                    <a href="$list"><p class="card-text mb-3">$l->titre</p></a>
+                    <a href="$list"><p class="card-text mb-0">$l->titre</p></a>
 html;
             if ($l->isExpired()) $html = $html . <<<html
 
-                    <p class = 'text-muted'>Expirée</p>
+                    <small class='text-muted'>Expirée</small>
 html;
             $html = $html . <<<html
 
@@ -222,7 +222,7 @@ html;
         $login = $slim->urlFor('login');
         $creatorUser = $slim->urlFor('creatorUser');
         return <<<html
-        
+
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Se connecter</h1>
             <div class="card my-4 p-4">
