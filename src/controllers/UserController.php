@@ -10,14 +10,6 @@ use \wishlist\views\UserView;
 
 class UserController extends Controller {
 
-
-    /* 
-             _______________________
-            |                       |
-            |    Gestion des vues   |
-            |_______________________|            
-    */
-
     /**
      * Créé une vue affichant le formulaire de création d'un user
      */
@@ -57,13 +49,6 @@ class UserController extends Controller {
         $v->render();
     }
 
-    /* 
-             _________________________
-            |                         |
-            |    Gestion de la bdd    |
-            |_________________________|              
-    */
-
     /**
      * Gère la création d'un user
      */
@@ -71,6 +56,9 @@ class UserController extends Controller {
         $slim = \Slim\Slim::getInstance();
         if ($attr['password'] != $attr['password_conf']) {
             $slim->flash('warning', 'Les mots de passes saisis sont différents');
+            $slim->redirect($slim->urlFor('creatorUser'));
+        } else if ($attr['password'] == null) {
+            $slim->flash('warning', 'Aucun mot de passe saisi');
             $slim->redirect($slim->urlFor('creatorUser'));
         } else if (User::getByLogin($attr['login']) !== null) {
             $slim->flash('warning', 'Le login saisi est déja utilisé');
@@ -89,11 +77,21 @@ class UserController extends Controller {
     public function edit($id, $newAttr){
         $this->authRequired();
         $this->propRequired($id);
-        User::getById($id)->edit($newAttr);
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
-        setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
         $slim = \Slim\Slim::getInstance();
-        $slim->redirect($slim->urlFor('home'));
+        if ($newAttr['password'] != $newAttr['password_conf']) {
+            $slim->flash('warning', 'Les mots de passes saisis sont différents');
+            $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
+        } else if ($newAttr['password'] == null){
+            $slim->flash('warning', 'Aucun mot de passe saisi');
+            $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
+        } else {
+            unset($newAttr['password_conf']);
+            User::getById($id)->edit($newAttr);
+            if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+            setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
+            $slim->flash('success', 'Le profil a été mis à jour');
+            $slim->redirect($slim->urlFor('user', ['id' => $id]));
+        }
     }
 
     /**
@@ -105,13 +103,6 @@ class UserController extends Controller {
         User::getById($id)->delete();
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
     }
-
-    /*
-         _____________________________________
-        |                                     |
-        |   Fonctionnalités supplémentaires   |
-        |_____________________________________|
-    */
 
     /**
      * Créé une vue d'authentification

@@ -173,7 +173,6 @@ $app->post('/user/update/:id', function($id){
     $c = new UserController();
     $slim = \Slim\Slim::getInstance();
     $attr = [
-        'login' => $slim->request->post('login'),
         'password' => $slim->request->post('password'),
         'password_conf' => $slim->request->post('password_conf'),
         'lastname' => $slim->request->post('lastname'),

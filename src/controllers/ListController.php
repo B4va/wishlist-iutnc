@@ -10,13 +10,6 @@ use \wishlist\views\ListView;
 
 class ListController extends Controller {
 
-    /* 
-             _______________________
-            |                       |
-            |    Gestion des vues   |
-            |_______________________|            
-    */
-
     /**
      * Créé une vue affichant le formulaire de création d'une liste
      */
@@ -57,13 +50,6 @@ class ListController extends Controller {
         $v->render();
     }
 
-    /* 
-             _________________________
-            |                         |
-            |    Gestion de la bdd    |
-            |_________________________|              
-    */
-
     /**
      * Gère la création d'une liste
      */
@@ -97,14 +83,6 @@ class ListController extends Controller {
         $slim = \Slim\Slim::getInstance();
         $slim->redirect($slim->urlFor('home'));
     }
-
-    /*
-         _____________________________________
-        |                                     |
-        |   Fonctionnalités supplémentaires   |
-        |_____________________________________|
-    */
-
 }
 
 

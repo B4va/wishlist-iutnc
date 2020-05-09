@@ -23,11 +23,12 @@ class ListView extends View {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
         $users = $slim->urlFor('users');
+        $welcome = View::isLogin() ? unserialize($_COOKIE['user'])->firstname : 'sur Wishlist';
         $html = <<<html
 
         <div class="jumbotron">
             <div class="container">
-                <h1 class='display-4'>Bienvenue sur Wishlist</h1>
+                <h1 class='display-4'>Bienvenue $welcome</h1>
                 <hr class="my-4">
                 <a href='$creatorList' class="btn btn-primary" id="btn">Créer une liste</a>
                 <a href='$users' class="btn btn-outline-secondary ml-3" id="btn">Tous les utilisateur</a>
