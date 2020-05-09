@@ -32,7 +32,7 @@ class ListController extends Controller {
     public function displayEditor($token) : void {
         $this->authRequired();
         $list = Liste::getByToken($token);
-        $this->propRequired($list['user_id']);
+        $this->propRequired($list->user_id);
         $v = new ListView(EDIT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
         $v->render();
     }
@@ -70,6 +70,8 @@ class ListController extends Controller {
     public function create($attr) : void {
         $this->authRequired();
         Liste::create($attr);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('home'));
     }
 
     /**
@@ -80,6 +82,8 @@ class ListController extends Controller {
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);
         $l->edit($newAttr);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
     /**
@@ -90,6 +94,8 @@ class ListController extends Controller {
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);
         $l->delete();
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('home'));
     }
 
     /*

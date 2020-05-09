@@ -6,6 +6,7 @@ require_once './vendor/autoload.php';
 
 use \wishlist\controllers\Controller;
 use \wishlist\models\Item;
+use \wishlist\models\Liste;
 use \wishlist\views\ItemView;
 
 class ItemController extends Controller {
@@ -32,8 +33,9 @@ class ItemController extends Controller {
      */
     public function displayEditor($id) : void {
         $this->authRequired();
-        $this->propRequired($id);
         $item = Item::getById($id);
+        $l = $item->getListe();
+        $this->propRequired($l->user_id);
         $v = new ItemView(EDIT_VIEW, ['title' => 'Edition de l\'item' . $item->nom, 'object' => $item]);
         $v->render();
     }
@@ -61,7 +63,11 @@ class ItemController extends Controller {
      */
     public function create($attr) : void {
         $this->authRequired();
+        $l = Liste::getById($attr['liste_id']);
+        $this->propRequired($l->user_id);
         Item::create($attr);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('list', ['id' => $attr['liste_id']]));
     }
 
     /**
@@ -69,8 +75,12 @@ class ItemController extends Controller {
      */
     public function edit($id, $newAttr){
         $this->authRequired();
-        $this->propRequired($id);
-        Item::getById($id)->edit($newAttr);
+        $i = Item::getById($id);
+        $l = $i->getListe();
+        $this->propRequired($l->user_id);
+        $i->edit($newAttr);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
     /**
@@ -78,8 +88,12 @@ class ItemController extends Controller {
      */
     public function delete($id) : void {
         $this->authRequired();
-        $this->propRequired($id);
-        Item::getById($id)->delete();
+        $i = Item::getById($id);
+        $l = $i->getListe();
+        $this->propRequired($l->user_id);
+        $i->delete();
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
     /*

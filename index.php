@@ -46,12 +46,13 @@ $app->post('/list/create', function(){
     $c = new ListController();
     $slim = \Slim\Slim::getInstance();
     $attr = [
+        'user_id' => $slim->request->post('user_id'),
         'titre' => $slim->request->post('titre'),
         'description' => $slim->request->post('description'),
         'expiration' => $slim->request->post('expiration')
     ];
     $c->create($attr);
-    $slim->redirect('..');
+    
 })->name('createList');
 
 // Affichage du formulaire d'édition de liste
@@ -70,15 +71,12 @@ $app->post('/list/update/:token', function($token){
         'expiration' => $slim->request->post('expiration')
     ];
     $c->edit($token, $attr);
-    $slim->redirect('../..');
 })->name('editList');
 
 // Suppression d'une liste
 $app->get('/list/delete/:token', function($token){
     $c = new ListController();
-    $slim = \Slim\Slim::getInstance();
     $c->delete($token);
-    $slim->redirect('../..');
 })->name('deleteList');
 
 /**
@@ -102,8 +100,6 @@ $app->post('/list/:idList/item/create', function($idList){
         'liste_id' => $slim->request->post('liste_id')
     ];
     $c->create($attr);
-    $back = $slim->urlFor('list', ['id' => $idList]);
-    $slim->redirect($back);
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
@@ -122,17 +118,12 @@ $app->post('/list/:idList/item/update/:id', function($idList, $id){
         'tarif' => $slim->request->post('tarif')
     ];
     $c->edit($id, $attr);
-    $back = $slim->urlFor('list', ['id' => $idList]);
-    $slim->redirect($back);
 })->name('editItem');
 
 // Suppression d'un item
 $app->get('/list/:idList/item/delete/:id', function($idList, $id){
     $c = new ItemController();
-    $slim = \Slim\Slim::getInstance();
     $c->delete($id);
-    $back = $slim->urlFor('list', ['id' => $idList]);
-    $slim->redirect($back);
 })->name('deleteItem');
 
 /**
@@ -169,7 +160,6 @@ $app->post('/user/create', function(){
         'firstname' => $slim->request->post('firstname')
     ];
     $c->create($attr);
-    $slim->redirect($slim->urlFor('home'));
 })->name('createUser');
 
 // Affichage du formulaire de modification d'un compte utilisateur
@@ -190,7 +180,6 @@ $app->post('/user/update/:id', function($id){
         'firstname' => $slim->request->post('firstname')
     ];
     $c->edit($id, $attr);
-    $slim->redirect($slim->urlFor('home'));
 })->name('editUser');
 
 // Suppression d'un compte utilisateur
@@ -216,15 +205,12 @@ $app->post('/login', function(){
         'password' => $slim->request->post('password')
     ];
     $c->loginUser($attr);
-    $slim->redirect($slim->urlFor('home'));
 })->name('login');
 
 // Déconnexion utilisateur
 $app->get('/logout', function(){
     $c = new UserController();
     $c->logout();
-    $slim = \Slim\Slim::getInstance();
-    $slim->redirect($slim->urlFor('home'));
 })->name('logout');
 
 $app->run();

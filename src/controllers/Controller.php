@@ -6,6 +6,9 @@ require_once './vendor/autoload.php';
 
 abstract class Controller {
 
+    /**
+     * Teste l'authentification d'un l'utilisateur
+     */
     public function authRequired() : void {
         if (!isset($_COOKIE['user'])){
             $slim = \Slim\Slim::getInstance();
@@ -14,6 +17,9 @@ abstract class Controller {
         }
     }
     
+    /**
+     * Teste l'authentification de l'utilisateur précisé
+     */
     public function propRequired($id){
         if ($id != unserialize($_COOKIE['user'])->id){
             $slim = \Slim\Slim::getInstance();

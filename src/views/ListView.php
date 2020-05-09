@@ -114,12 +114,14 @@ html;
         $slim = \Slim\Slim::getInstance();
         $createList = $slim->urlFor('createList');
         $home = $slim->urlFor('home');
+        $userId = unserialize($_COOKIE['user'])->id;
         return <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Créer une liste</h1>
             <div class="card my-4 p-4">
                 <form method='POST' action='$createList'>
+                    <input type='hidden' name='user_id' value='$userId'>
                     <div class="form-group mb-3">
                         <label for="list_name">Nom</label>
                         <input type="text" class="form-control" id="list_name" name='titre' placeholder="Nom de ma liste">

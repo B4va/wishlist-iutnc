@@ -78,6 +78,7 @@ class UserController extends Controller {
         } else {
             unset($attr['password_conf']);
             User::create($attr);
+            $slim->redirect($slim->urlFor('home'));
         }
     }
 
@@ -90,6 +91,8 @@ class UserController extends Controller {
         User::getById($id)->edit($newAttr);
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
         setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('home'));
     }
 
     /**
@@ -121,8 +124,14 @@ class UserController extends Controller {
      * Gère l'authentification
      */
     public function loginUser($form){
+        $slim = \Slim\Slim::getInstance();
         if(User::loginUser($form)){
+            $slim->flash('success', 'Vous êtes à présent connecté' );
             setcookie('user', serialize(User::getByLogin($form['login'])), time()+60*60*24*30);
+            $slim->redirect($slim->urlFor('home'));
+        } else {
+            $slim->flash('danger', 'Les informations de connexion sont erronées' );
+            $slim->redirect($slim->urlFor('loginForm'));
         }
     }
 
@@ -132,6 +141,8 @@ class UserController extends Controller {
     public function logout(){
         $this->authRequired();
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+        $slim = \Slim\Slim::getInstance();
+        $slim->redirect($slim->urlFor('home'));
     }
 
 }
