@@ -4,7 +4,7 @@ namespace wishlist\views;
 
 require_once 'vendor/autoload.php';
 
-use wishlist\utils\HtmlLayout;
+use wishlist\views\HtmlLayout;
 
 define ('OBJECT_VIEW', 0);
 define ('OBJECTS_VIEW', 1);
