@@ -64,12 +64,14 @@ html;
                         <input type="text" class="form-control" name='login' id="login" value="$u->login">
                     </div>
                     <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" class="form-control" name='password' id="password">
+                        <label class='mb-0' for="password">Nouveau mot de passe</label><br>
+                        <small class='text-muted'>Taper l'ancien mot de passe pour le conserver</small>
+                        <input type="password" class="form-control mt-2" name='password' id="password">
                     </div>
                     <div class="form-group">
-                        <label for="passwordConf">Confirmation du mot de passe</label>
-                        <input type="password" class="form-control" name='passwordConf' id="passwordConf">
+                        <label class='mb-0' for="passwordConf">Confirmation du nouveau mot de passe</label><br>
+                        <small class='text-muted'>Taper l'ancien mot de passe pour le conserver</small>
+                        <input type="password" class="form-control mt-2" name='passwordConf' id="passwordConf">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Nom</label>
@@ -113,6 +115,10 @@ html;
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" class="form-control" name='password' id="password" placeholder="mot de passe">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_conf">Confirmation du mot de passe</label>
+                        <input type="password" class="form-control" name='password_conf' id="password" placeholder="confirmer le mot de passe">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Nom</label>
@@ -203,9 +209,7 @@ html;
         $home = $slim->urlFor('home');
         $login = $slim->urlFor('login');
         $creatorUser = $slim->urlFor('creatorUser');
-
         return <<<html
-
         <div class="col-lg-4 offset-lg-4 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
             <h1 class="text-center text-primary">Se connecter</h1>
             <div class="card my-4 p-4">

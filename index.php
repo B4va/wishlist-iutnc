@@ -10,16 +10,10 @@ use wishlist\controllers\ListController;
 use wishlist\controllers\ItemController;
 use wishlist\controllers\UserController;
 
+session_start();
 
 $app = new \Slim\Slim();
 $db = ConnectionFactory::makeConnection();
-
-function authRequired() : void {
-    if (!isset($_COOKIE['user'])){
-        $slim = \Slim\Slim::getInstance();
-        $slim->redirect($slim->urlFor('loginForm'));
-    }
-}
 
 /**
  * Général
@@ -42,7 +36,7 @@ $app->get('/list/:id', function($id){
 })->name('list');
 
 // Affichage du formulaire de création de liste
-$app->get('/list/new', function(){
+$app->get('/lists/new', function(){
     $c = new ListController();
     $c->displayCreator();
 })->name('creatorList');
@@ -170,6 +164,7 @@ $app->post('/user/create', function(){
     $attr = [
         'login' => $slim->request->post('login'),
         'password' => $slim->request->post('password'),
+        'password_conf' => $slim->request->post('password_conf'),
         'lastname' => $slim->request->post('lastname'),
         'firstname' => $slim->request->post('firstname')
     ];
@@ -190,6 +185,7 @@ $app->post('/user/update/:id', function($id){
     $attr = [
         'login' => $slim->request->post('login'),
         'password' => $slim->request->post('password'),
+        'password_conf' => $slim->request->post('password_conf'),
         'lastname' => $slim->request->post('lastname'),
         'firstname' => $slim->request->post('firstname')
     ];

@@ -4,11 +4,11 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-use \wishlist\controllers\ControllerOperations;
+use \wishlist\controllers\Controller;
 use \wishlist\models\Liste;
 use \wishlist\views\ListView;
 
-class ListController implements ControllerOperations {
+class ListController extends Controller {
 
     /* 
              _______________________
@@ -21,6 +21,7 @@ class ListController implements ControllerOperations {
      * Créé une vue affichant le formulaire de création d'une liste
      */
     public function displayCreator($idList = null) : void {
+        $this->authRequired();
         $v = new ListView(CREATE_VIEW, ['title' => 'Nouvelle liste']);
         $v->render();
     }
@@ -29,7 +30,9 @@ class ListController implements ControllerOperations {
      * Créé une vue affichant le formulaire d'édition d'une liste
      */
     public function displayEditor($token) : void {
+        $this->authRequired();
         $list = Liste::getByToken($token);
+        $this->propRequired($list['user_id']);
         $v = new ListView(EDIT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
         $v->render();
     }
@@ -65,6 +68,7 @@ class ListController implements ControllerOperations {
      * Gère la création d'une liste
      */
     public function create($attr) : void {
+        $this->authRequired();
         Liste::create($attr);
     }
 
@@ -72,14 +76,20 @@ class ListController implements ControllerOperations {
      * Gère l'édition d'une liste
      */
     public function edit($token, $newAttr){
-        Liste::getByToken($token)->edit($newAttr);
+        $this->authRequired();
+        $l = Liste::getByToken($token);
+        $this->propRequired($l->user_id);
+        $l->edit($newAttr);
     }
 
     /**
      * Gère la suppression d'une liste
      */
     public function delete($token) : void {
-        Liste::getByToken($token)->delete();
+        $this->authRequired();
+        $l = Liste::getByToken($token);
+        $this->propRequired($l->user_id);
+        $l->delete();
     }
 
     /*

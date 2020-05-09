@@ -4,11 +4,11 @@ namespace wishlist\controllers;
 
 require_once './vendor/autoload.php';
 
-use \wishlist\controllers\ControllerOperations;
+use \wishlist\controllers\Controller;
 use \wishlist\models\User;
 use \wishlist\views\UserView;
 
-class UserController implements ControllerOperations {
+class UserController extends Controller {
 
 
     /* 
@@ -30,6 +30,8 @@ class UserController implements ControllerOperations {
      * Créé une vue affichant le formulaire d'édition d'un user
      */
     public function displayEditor($id) : void {
+        $this->authRequired();
+        $this->propRequired($id);
         $user = User::getById($id);
         $v = new UserView(EDIT_VIEW, ['title' => 'Edition de l\'user' . $user->login, 'object' => $user]);
         $v->render();
@@ -66,22 +68,36 @@ class UserController implements ControllerOperations {
      * Gère la création d'un user
      */
     public function create($attr) : void {
-        User::create($attr);
+        $slim = \Slim\Slim::getInstance();
+        if ($attr['password'] != $attr['password_conf']) {
+            $slim->flash('warning', 'Les mots de passes saisis sont différents');
+            $slim->redirect($slim->urlFor('creatorUser'));
+        } else if (User::getByLogin($attr['login']) !== null) {
+            $slim->flash('warning', 'Le login saisi est déja utilisé');
+            $slim->redirect($slim->urlFor('creatorUser'));
+        } else {
+            unset($attr['password_conf']);
+            User::create($attr);
+        }
     }
 
     /**
      * Gère l'édition d'un user
      */
     public function edit($id, $newAttr){
+        $this->authRequired();
+        $this->propRequired($id);
         User::getById($id)->edit($newAttr);
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
-        setcookie('user', User::getById($id), time()+60*60*24*30);
+        setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
     }
 
     /**
      * Gère la suppression d'un user
      */
     public function delete($id) : void {
+        $this->authRequired();
+        $this->propRequired($id);
         User::getById($id)->delete();
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
     }
@@ -106,7 +122,7 @@ class UserController implements ControllerOperations {
      */
     public function loginUser($form){
         if(User::loginUser($form)){
-            setcookie('user', User::getByLogin($form['login']), time()+60*60*24*30);
+            setcookie('user', serialize(User::getByLogin($form['login'])), time()+60*60*24*30);
         }
     }
 
@@ -114,6 +130,7 @@ class UserController implements ControllerOperations {
      * Gère la déconnexion
      */
     public function logout(){
+        $this->authRequired();
         if (isset($_COOKIE['user'])) setcookie('user', null, -1);
     }
 
