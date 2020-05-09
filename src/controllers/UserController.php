@@ -21,7 +21,7 @@ class UserController implements ControllerOperations {
     /**
      * Créé une vue affichant le formulaire de création d'un user
      */
-    public function displayCreator() : void {
+    public function displayCreator($id = null) : void {
         $v = new UserView(CREATE_VIEW, ['title' => 'Nouvel user']);
         $v->render();
     }
@@ -74,6 +74,8 @@ class UserController implements ControllerOperations {
      */
     public function edit($id, $newAttr){
         User::getById($id)->edit($newAttr);
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+        setcookie('user', User::getById($id), time()+60*60*24*30);
     }
 
     /**
@@ -101,17 +103,17 @@ class UserController implements ControllerOperations {
     /**
      * Gère l'authentification
      */
-    public function login($form){
-        $slim = \Slim\Slim::getInstance();
-        $home = $slim->urlFor('home');
-        setcookie('auth', User::login($form), time()+60*60*24*30);
+    public function loginUser($form){
+        if(User::loginUser($form)){
+            setcookie('user', User::getByLogin($form['login']), time()+60*60*24*30);
+        }
     }
 
     /**
      * Gère la déconnexion
      */
     public function logout(){
-        if (isset($_COOKIE['auth'])) unset($_COOKIE['auth']);
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
     }
 
 }

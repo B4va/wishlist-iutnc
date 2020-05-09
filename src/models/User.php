@@ -20,9 +20,17 @@ class User extends Model implements ModelOperations {
     public static function getById($id){
         return User::where('id', '=',$id)->first();
     }
+
+    public static function getByLogin($login){
+        return User::where('login', '=', $login)->first();
+    }
     
     public static function getAll(){
-        return $this->hasMany('\wishlist\models\User','user_id')->get();
+        return User::get();
+    }
+
+    public function getLists(){
+        return $this->hasMany('\wishlist\models\Liste','user_id')->get();
     }
 
 
@@ -32,9 +40,9 @@ class User extends Model implements ModelOperations {
      */
     public static function create($attributs): object{
         $User = new User;
-        foreach ($tab as $key => $value) {
-            if($User->$key=='password'){
-                $empreinte = hash('bcrypt', $value) ;
+        foreach ($attributs as $key => $value) {
+            if($key=='password'){
+                $empreinte = password_hash($value, PASSWORD_DEFAULT);
                 $User->$key = $empreinte;
             }
             else{
@@ -52,9 +60,9 @@ class User extends Model implements ModelOperations {
      *  @param attributs
      */
     public function edit($attributs){
-        foreach ($tab as $key => $value) {
-            if($this->$key=='password'){
-                $empreinte = hash('bcrypt', $value) ;
+        foreach ($attributs as $key => $value) {
+            if($key=='password'){
+                $empreinte = password_hash($value, PASSWORD_DEFAULT);
                 $this->$key = $empreinte;
             }
             else{
@@ -71,7 +79,14 @@ class User extends Model implements ModelOperations {
         User::where('id','=',$this->id)->delete();
     }
 
-
+    public function loginUser($form){
+        $user = User::where('login', '=', $form['login'])->first();
+        if($user == null){
+            return false;
+        } else {
+            return password_verify($form['password'], $user->password);
+        }
+    }
 }
 
 ?>
