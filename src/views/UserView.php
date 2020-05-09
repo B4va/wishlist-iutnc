@@ -61,7 +61,7 @@ html;
                 <form action="$editUser" method="post">
                     <div class="form-group">
                         <label for="login">Login</label>
-                        <input type="text" class="form-control" name='login' id="login" value="$u->login">
+                        <input type="text" class="form-control" disabled='true' name='login' id="login" value="$u->login">
                     </div>
                     <div class="form-group">
                         <label class='mb-0' for="password">Nouveau mot de passe</label><br>
@@ -69,9 +69,9 @@ html;
                         <input type="password" class="form-control mt-2" name='password' id="password">
                     </div>
                     <div class="form-group">
-                        <label class='mb-0' for="passwordConf">Confirmation du nouveau mot de passe</label><br>
+                        <label class='mb-0' for="password_conf">Confirmation du nouveau mot de passe</label><br>
                         <small class='text-muted'>Taper l'ancien mot de passe pour le conserver</small>
-                        <input type="password" class="form-control mt-2" name='passwordConf' id="passwordConf">
+                        <input type="password" class="form-control mt-2" name='password_conf' id="password_conf">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Nom</label>

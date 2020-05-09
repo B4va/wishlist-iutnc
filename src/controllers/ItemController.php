@@ -11,14 +11,6 @@ use \wishlist\views\ItemView;
 
 class ItemController extends Controller {
 
-
-    /* 
-             _______________________
-            |                       |
-            |    Gestion des vues   |
-            |_______________________|            
-    */
-
     /**
      * Créé une vue affichant le formulaire de création d'un item
      */
@@ -52,13 +44,6 @@ class ItemController extends Controller {
      * Créé une vue affichant tous les items
      */
     public function displayObjects() : void {}
-
-    /* 
-             _________________________
-            |                         |
-            |    Gestion de la bdd    |
-            |_________________________|              
-    */
 
     /**
      * Gère la création d'un item
@@ -97,13 +82,6 @@ class ItemController extends Controller {
         $slim = \Slim\Slim::getInstance();
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
-
-    /*
-         _____________________________________
-        |                                     |
-        |   Fonctionnalités supplémentaires   |
-        |_____________________________________|
-    */
 
 }
 
