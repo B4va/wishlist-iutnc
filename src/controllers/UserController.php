@@ -86,7 +86,6 @@ class UserController extends Controller {
         $this->authRequired();
         $this->propRequired($id);
         $slim = \Slim\Slim::getInstance();
-        $slim = \Slim\Slim::getInstance();
         $attr = [
             'login' => $slim->request->post('login'),
             'password' => $slim->request->post('password'),
@@ -101,8 +100,9 @@ class UserController extends Controller {
             $slim->flash('warning', 'Aucun mot de passe saisi');
             $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
         } else {
-            unset($newAttr['password_conf']);
-            User::getById($id)->edit($newAttr);
+            unset($attr['password_conf']);
+            $this->validate($attr, $slim->urlFor('editorUser', ['id' => $id]));
+            User::getById($id)->edit($attr);
             setcookie('user', serialize(User::getById($id)), time()+60*60*24*30, '/');
             $slim->flash('success', 'Le profil a été mis à jour');
             $slim->redirect($slim->urlFor('user', ['id' => $id]));
