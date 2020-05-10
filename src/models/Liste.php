@@ -10,7 +10,7 @@ use \wishlist\models\User;
 use \wishlist\models\ModelOperations;
 
 /**
- * Modèle de la table liste en bdd
+ * Modélisation d'une liste
  */
 class Liste extends Model implements ModelOperations {
 
@@ -21,50 +21,48 @@ class Liste extends Model implements ModelOperations {
     
     /**
      * Récupère tous les items associés à la liste
-     * @return array tableau des items associés à la liste
+     * @return array items associés à la liste
      */
-    public function getItems(){
+    public function getItems() {
         return $this->hasMany('\wishlist\models\Item','liste_id')->get();
-    }
-
-
-    /**
-     * Définit l'association avec User
-     */
-    public function user() {
-        return $this->belongsTo('\wishlist\models\User','user_id');
     }
 
     /**
      * Récupère l'utilisateur auquel appartient la liste
      * @return object utilisateur propriétaire de la liste
      */
-    public function getUser() : object {
+    public function getUser() {
         return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
 
     /**
-     *  Récupère la liste en fonction de @param id
-     *  @return object en fonction de son id
+     * Récupère la liste en fonction de son id
+     * @static
+     * @param int[$id] id de la liste
+     * @return Liste liste
      */
-    public static function getById($id) : object{
+    public static function getById($id) {
         return Liste::where('no', '=',$id)->first();
     }
 
     /**
-     *  Récupère la liste en finction de son token
-     *  @return object fonction @param token
+     * Récupère la liste en finction de son token
+     * @static
+     * @param string[$token] token de la liste
+     * @return Liste liste
      */
-    public static function getByToken($token) : object{
+    public static function getByToken($token) {
         return Liste::where('token', '=',$token)->first();
     }
 
 
     /**
-     *  Créer une liste avec un tableau associatif @tab
-     *  @return object Liste créer
+     * Crée une liste
+     * @static
+     * @param array[$tab] attributs de la liste
+     * @return Liste Liste créée
      */
-    public static function create($tab) : object{
+    public static function create($tab) {
         $liste = new Liste;
         foreach ($tab as $key => $value) {
             $liste->$key = $value;
@@ -76,8 +74,9 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
-     *  Récupère les listes non expirées
-     *  @return array non expirées
+     * Récupère les listes non expirées
+     * @static
+     * @return array listes non expirées
      */
     public static function getAll(){
         $date = date("Y-m-d");
@@ -85,7 +84,8 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
-     *  modifie une liste avec un tableau associatif @param tab
+     * Modifie une liste
+     * @param array[$tab] attributs de la liste
      */
     public function edit($tab){
         foreach ($tab as $key => $value) {
@@ -95,12 +95,16 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
-     * Supprime une liste en fonction de son token
+     * Supprime une liste
      */
     public function delete(){
         Liste::where('token','=',$this->token)->delete();
     }
 
+    /**
+     * Indique si une liste est expirée
+     * @return bool true si la liste est expirée
+     */
     public function isExpired(){
         $date = date("Y-m-d");
         return $this->expiration < $date;

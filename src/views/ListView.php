@@ -19,7 +19,7 @@ class ListView extends View {
      * Formate l'affichage d'un ensemble de listes
      * @return string code html
      */
-    protected function objects() : string{
+    protected function objects() {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
         $users = $slim->urlFor('users');
@@ -80,7 +80,7 @@ html;
      * Formatte un formulaire d'édition de liste
      * @return string code html
      */
-    protected function edit() : string {
+    protected function edit() {
         $slim = \Slim\Slim::getInstance();
         $l = $this->var['object'];
         $editList = $slim->urlFor('editList', ['token' => $l->token]);
@@ -121,7 +121,7 @@ html;
      * Formatte un formulaire de création de liste
      * @return string code html
      */
-    protected function create() : string {
+    protected function create() {
         $slim = \Slim\Slim::getInstance();
         $createList = $slim->urlFor('createList');
         $home = $slim->urlFor('home');
@@ -161,7 +161,7 @@ html;
      * Formatte l'affichage d'une liste en particulier
      * @return string code html
      */
-    protected function object() : string {
+    protected function object() {
         $slim = \Slim\Slim::getInstance();
         $l = $this->var['object'];
         $editorList = $slim->urlFor('editorList', ['token' => $l->token]);
@@ -247,6 +247,6 @@ html;
      * Formatte un formulaire d'authentification
      * @return string code html
      */
-    protected function authenticate() : string { }
+    protected function authenticate() { }
 
 }

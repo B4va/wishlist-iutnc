@@ -19,7 +19,7 @@ class UserView extends View {
      * Formate l'affichage d'un ensemble d'utilisateurs
      * @return string code html
      */
-    protected function objects() : string{
+    protected function objects() {
         $slim = \Slim\Slim::getInstance();
         $html = <<<html
 
@@ -49,7 +49,7 @@ html;
      * Formatte un formulaire d'édition d'utilisateur
      * @return string code html
      */
-    protected function edit() : string {
+    protected function edit() {
         $slim = \Slim\Slim::getInstance();
         $u = $this->var['object'];
         $user = $slim->urlFor('user', ['id' => $u->id]);
@@ -97,7 +97,7 @@ html;
      * Formatte un formulaire de création d'utilisateur
      * @return string code html
      */
-    protected function create() : string {
+    protected function create() {
         $slim = \Slim\Slim::getInstance();
         $createUser = $slim->urlFor('createUser');
         $home = $slim->urlFor('home');
@@ -148,7 +148,7 @@ html;
      * Formatte l'affichage d'un utilisateur en particulier
      * @return string code html
      */
-    protected function object() : string {
+    protected function object() {
         $slim = \Slim\Slim::getInstance();
         $u = $this->var['object'];
         $editUser = $slim->urlFor('editorUser', ['id' => $u->id]);
@@ -216,7 +216,7 @@ html;
      * Formatte un formulaire d'authentification
      * @return string code html
      */
-    protected function authenticate() : string {
+    protected function authenticate() {
         $slim = \Slim\Slim::getInstance();
         $home = $slim->urlFor('home');
         $login = $slim->urlFor('login');

@@ -35,7 +35,7 @@ abstract class View{
     /**
      * Affiche la vue en fonction du sélecteur
      */
-    public function render() : void {
+    public function render() {
         switch ($this->selector){
             case (OBJECT_VIEW) : {
                 $content = $this->object();
@@ -69,36 +69,45 @@ abstract class View{
      * Formatte l'affichage d'un modèle en particulier
      * @return string code html
      */
-    abstract protected function object() : string;
+    abstract protected function object();
 
     /**
      * Formate l'affichage d'un ensemble de modèles
      * @return string code html
      */
-    abstract protected function objects() : string;
+    abstract protected function objects();
 
     /**
      * Formatte un formulaire d'édition du modèle
      * @return string code html
      */
-    abstract protected function edit() : string;
+    abstract protected function edit();
 
     /**
      * Formatte un formulaire de création du modèle
      * @return string code html
      */
-    abstract protected function create() : string;
+    abstract protected function create();
 
     /**
      * Formatte un formulaire d'authentification
      * @return string code html
      */
-    abstract protected function authenticate() : string;
+    abstract protected function authenticate();
 
+    /**
+     * Indique si un utilisateur est connecté
+     * @return bool true si un utilisateur est connecté
+     */
     public static function isLogin(){
         return isset($_COOKIE['user']);
     }
 
+    /**
+     * Indique si l'utilisateur connecté correspond à l'id
+     * @param int[$id] id à tester
+     * @return bool true si l'utilisateur correspond
+     */
     public static function isProperty($userId) {
         if (View::isLogin()){
             return $userId = unserialize($_COOKIE['user'])->id == $userId;
