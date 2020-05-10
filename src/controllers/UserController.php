@@ -101,11 +101,9 @@ class UserController extends Controller {
             $slim->flash('warning', 'Aucun mot de passe saisi');
             $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
         } else {
-            unset($attr['password_conf']);
-            $this->validate($attr, $slim->urlFor('editorUser', ['id' => $id]));
-            User::getById($id)->edit($attr);
-            if (isset($_COOKIE['user'])) setcookie('user', null, -1);
-            setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
+            unset($newAttr['password_conf']);
+            User::getById($id)->edit($newAttr);
+            setcookie('user', serialize(User::getById($id)), time()+60*60*24*30, '/');
             $slim->flash('success', 'Le profil a été mis à jour');
             $slim->redirect($slim->urlFor('user', ['id' => $id]));
         }
@@ -118,7 +116,7 @@ class UserController extends Controller {
         $this->authRequired();
         $this->propRequired($id);
         User::getById($id)->delete();
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
     }
 
     /**
@@ -140,7 +138,7 @@ class UserController extends Controller {
         ];
         if(User::loginUser($attr)){
             $slim->flash('success', 'Vous êtes à présent connecté' );
-            setcookie('user', serialize(User::getByLogin($attr['login'])), time()+60*60*24*30);
+            setcookie('user', serialize(User::getByLogin($attr['login'])), time()+60*60*24*30, '/');
             $slim->redirect($slim->urlFor('home'));
         } else {
             $slim->flash('danger', 'Les informations de connexion sont erronées' );
@@ -153,7 +151,7 @@ class UserController extends Controller {
      */
     public function logout(){
         $this->authRequired();
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
         $slim = \Slim\Slim::getInstance();
         $slim->flash('success', 'Vous êtes déconnecté' );
         $slim->redirect($slim->urlFor('home'));
