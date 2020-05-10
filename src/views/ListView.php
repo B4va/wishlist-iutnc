@@ -31,7 +31,7 @@ class ListView extends View {
                 <h1 class='display-4'>Bienvenue $welcome</h1>
                 <hr class="my-4">
                 <a href='$creatorList' class="btn btn-primary" id="btn">Créer une liste</a>
-                <a href='$users' class="btn btn-outline-secondary ml-3" id="btn">Tous les utilisateur</a>
+                <a href='$users' class="btn btn-outline-secondary ml-3" id="btn">Tous les utilisateurs</a>
             </div>
         </div>
         <h1 class="text-center text-primary mb-5">Les dernières listes</h1>
