@@ -48,25 +48,38 @@ class ItemController extends Controller {
     /**
      * Gère la création d'un item
      */
-    public function create($attr) : void {
+    public function create() : void {
         $this->authRequired();
+        $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'nom' => $slim->request->post('nom'),
+            'descr' => $slim->request->post('description'),
+            'tarif' => $slim->request->post('tarif'),
+            'liste_id' => $slim->request->post('liste_id')
+        ];
         $l = Liste::getById($attr['liste_id']);
+        $this->validate($attr, $slim->urlFor('creatorItem', ['idList' => $attr['liste_id']]));
         $this->propRequired($l->user_id);
         Item::create($attr);
-        $slim = \Slim\Slim::getInstance();
         $slim->redirect($slim->urlFor('list', ['id' => $attr['liste_id']]));
     }
 
     /**
      * Gère l'édition d'un item
      */
-    public function edit($id, $newAttr){
+    public function edit($id){
         $this->authRequired();
         $i = Item::getById($id);
         $l = $i->getListe();
         $this->propRequired($l->user_id);
-        $i->edit($newAttr);
         $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'nom' => $slim->request->post('nom'),
+            'descr' => $slim->request->post('description'),
+            'tarif' => $slim->request->post('tarif')
+        ];
+        $this->validate($attr, $slim->urlFor('editorItem', ['id' => $id]));
+        $i->edit($attr);
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
