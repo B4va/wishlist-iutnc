@@ -17,7 +17,7 @@ class HtmlLayout {
      * @param string[$titre] titre de la page
      * @return string code htlm
      */
-    public static function header(string $titre) : string {
+    public static function header(string $titre) {
         $slim = \Slim\Slim::getInstance();
         $creatorList = $slim->urlFor('creatorList');
         $home = $slim->urlFor('home');
@@ -99,7 +99,7 @@ html;
      * @static
      * @return string code htlm
      */
-    public static function footer() : string {
+    public static function footer() {
         return <<<footer
 
         
@@ -123,7 +123,12 @@ footer;
 
     }
 
-    public static function flash() : string {
+    /**
+     * Génère un footer html
+     * @static
+     * @return string code htlm
+     */
+    public static function flash() {
         $html = '';
         if (isset($_SESSION['slim.flash'])){
             foreach ($_SESSION['slim.flash'] as $key => $value){

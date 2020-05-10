@@ -8,12 +8,16 @@ use \wishlist\controllers\Controller;
 use \wishlist\models\Liste;
 use \wishlist\views\ListView;
 
+/**
+ * Controleur associé à la gestion des listes
+ */
 class ListController extends Controller {
 
     /**
      * Créé une vue affichant le formulaire de création d'une liste
+     * @param int[$id] id de l'objet parent, null par défaut
      */
-    public function displayCreator($idList = null) : void {
+    public function displayCreator($idList = null) {
         $this->authRequired();
         $v = new ListView(CREATE_VIEW, ['title' => 'Nouveau']);
         $v->render();
@@ -21,30 +25,31 @@ class ListController extends Controller {
 
     /**
      * Créé une vue affichant le formulaire d'édition d'une liste
+     * @param int[$token] token de l'objet à éditer
      */
-    public function displayEditor($token) : void {
+    public function displayEditor($token) {
         $this->authRequired();
         $list = Liste::getByToken($token);
         $this->propRequired($list->user_id);
-        $v = new ListView(EDIT_VIEW, ['title' => $list->nom, 'object' => $list]);
+        $v = new ListView(EDIT_VIEW, ['title' => $list->titre, 'object' => $list]);
         $v->render();
     }
 
     /**
      * Créé une vue affichant une liste choisie par son id
-     * @param [$id] identifiant de l'objet
+     * @param int[$id] identifiant de l'objet
      */
-    public function displayObject($id) : void {
+    public function displayObject($id) {
         $list = Liste::getById($id);
         $items = $list->getItems();
-        $v = new ListView(OBJECT_VIEW, ['title' => $list->nom, 'object' => $list, 'items' => $items]);
+        $v = new ListView(OBJECT_VIEW, ['title' => $list->titre, 'object' => $list, 'items' => $items]);
         $v->render();
     }
 
     /**
      * Créé une vue affichant toutes les listes
      */
-    public function displayObjects() : void {
+    public function displayObjects() {
         $ensemble = Liste::getAll();
         $v = new ListView(OBJECTS_VIEW, ['title' => 'Listes', 'objects' => $ensemble]);
         $v->render();
@@ -53,7 +58,7 @@ class ListController extends Controller {
     /**
      * Gère la création d'une liste
      */
-    public function create() : void {
+    public function create() {
         $this->authRequired();
         $slim = \Slim\Slim::getInstance();
         $attr = [
@@ -69,6 +74,7 @@ class ListController extends Controller {
 
     /**
      * Gère l'édition d'une liste
+     * @param int[$token] token de l'objet
      */
     public function edit($token){
         $this->authRequired();
@@ -87,8 +93,9 @@ class ListController extends Controller {
 
     /**
      * Gère la suppression d'une liste
+     * @param int[$token] token de l'objet à supprimer
      */
-    public function delete($token) : void {
+    public function delete($token) {
         $this->authRequired();
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);

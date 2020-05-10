@@ -8,7 +8,7 @@ use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Liste;
 
 /**
- * Modèle de l'objet user en bdd
+ * Modélisation d'un utilisateur
  */
 class User extends Model implements ModelOperations {
 
@@ -16,29 +16,50 @@ class User extends Model implements ModelOperations {
     protected $primaryKey = 'id';
     public $timestamps = false;  
 
-
-    public static function getById($id){
+    /**
+	 * Récupère un utilisateur à partir de son id
+     * @static
+	 * @param int[$id] id de l'utilisateur
+	 * @return User utilisateur
+	 */
+    public static function getById($id) {
         return User::where('id', '=',$id)->first();
     }
 
-    public static function getByLogin($login){
+    /**
+	 * Récupère un utilisateur à partir de son login
+     * @static
+	 * @param string[$login] id de l'utilisateur
+	 * @return User utilisateur
+	 */
+    public static function getByLogin($login) {
         return User::where('login', '=', $login)->first();
     }
     
-    public static function getAll(){
+    /**
+	 * Retourne tous les utilisateurs
+     * @static
+	 * @return array utilisateurs
+	 */
+    public static function getAll() {
         return User::get();
     }
 
-    public function getLists(){
+    /**
+	 * Retourne les listes de l'utilisateur
+	 * @return array listes
+	 */
+    public function getLists() {
         return $this->hasMany('\wishlist\models\Liste','user_id')->get();
     }
 
-
     /**
-     *  Créer un utilisatuer avec un tableau associatif @param tab
-     *  @return object User créer
+     * Crée un utilisatuer
+     * @static
+     * @param array[$attributs] attributs de l'utilisateur
+     * @return User utilisateur créé
      */
-    public static function create($attributs): object{
+    public static function create($attributs) {
         $User = new User;
         foreach ($attributs as $key => $value) {
             if($key=='password'){
@@ -53,11 +74,9 @@ class User extends Model implements ModelOperations {
         return $User;
     }
 
-
-
     /**
-     *  modifie un utilisateur avec un tableau associatif  
-     *  @param attributs
+     * Modifie un utilisateur
+     * @param array[$attributs] attributs de l'utilisateur
      */
     public function edit($attributs){
         foreach ($attributs as $key => $value) {
@@ -73,12 +92,17 @@ class User extends Model implements ModelOperations {
     }
 
     /**
-     * Supprime un utilisateur en fonction de son id
+     * Supprime un utilisateur
      */
     public function delete(){
         User::where('id','=',$this->id)->delete();
     }
 
+    /**
+     * Teste la connexion d'un utilisateur
+     * @param array[$form] login et mot de passe
+     * @return bool true si la connexion est valide
+     */
     public function loginUser($form){
         $user = User::where('login', '=', $form['login'])->first();
         if($user == null){

@@ -8,20 +8,25 @@ use \wishlist\controllers\Controller;
 use \wishlist\models\User;
 use \wishlist\views\UserView;
 
+/**
+ * Controleur associé à la gestion des utilisateurs
+ */
 class UserController extends Controller {
 
     /**
      * Créé une vue affichant le formulaire de création d'un user
+     * @param int[$id] id de l'objet parent, null par défaut
      */
-    public function displayCreator($id = null) : void {
+    public function displayCreator($id = null) {
         $v = new UserView(CREATE_VIEW, ['title' => 'Nouveau']);
         $v->render();
     }
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un user
+     * @param int[$id] id de l'objet à éditer
      */
-    public function displayEditor($id) : void {
+    public function displayEditor($id) {
         $this->authRequired();
         $this->propRequired($id);
         $user = User::getById($id);
@@ -31,9 +36,9 @@ class UserController extends Controller {
 
     /**
      * Créé une vue affichant un user choisi par son id
-     * @param [$id] identifiant de l'objet
+     * @param int[$id] identifiant de l'objet
      */
-    public function displayObject($id) : void {
+    public function displayObject($id) {
         $user = User::getById($id);
         $lists = $user->getLists();
         $v = new UserView(OBJECT_VIEW, ['title' => $user->login, 'object' => $user, 'lists' => $lists]);
@@ -43,7 +48,7 @@ class UserController extends Controller {
     /**
      * Créé une vue affichant tous les users
      */
-    public function displayObjects() : void {
+    public function displayObjects() {
         $ensemble = User::getAll();
         $v = new UserView(OBJECTS_VIEW, ['title' => 'Utilisateurs', 'objects' => $ensemble]);
         $v->render();
@@ -52,7 +57,7 @@ class UserController extends Controller {
     /**
      * Gère la création d'un user
      */
-    public function create() : void {
+    public function create() {
         $slim = \Slim\Slim::getInstance();
         $attr = [
             'login' => $slim->request->post('login'),
@@ -81,8 +86,9 @@ class UserController extends Controller {
 
     /**
      * Gère l'édition d'un user
+     * @param int[$id] identifiant de l'objet
      */
-    public function edit($id){
+    public function edit($id) {
         $this->authRequired();
         $this->propRequired($id);
         $slim = \Slim\Slim::getInstance();
@@ -111,8 +117,9 @@ class UserController extends Controller {
 
     /**
      * Gère la suppression d'un user
+     * @param int[$id] id de l'objet à supprimer
      */
-    public function delete($id) : void {
+    public function delete($id) {
         $this->authRequired();
         $this->propRequired($id);
         User::getById($id)->delete();
@@ -122,7 +129,7 @@ class UserController extends Controller {
     /**
      * Créé une vue d'authentification
      */
-    public function displayLogin(){
+    public function displayLogin() {
         $v = new UserView(AUTHENTICATE_VIEW, ['title' => 'Auhtentification']);
         $v->render();
     }
@@ -130,7 +137,7 @@ class UserController extends Controller {
     /**
      * Gère l'authentification
      */
-    public function loginUser(){
+    public function loginUser() {
         $slim = \Slim\Slim::getInstance();
         $attr = [
             'login' => $slim->request->post('login'),
@@ -149,7 +156,7 @@ class UserController extends Controller {
     /**
      * Gère la déconnexion
      */
-    public function logout(){
+    public function logout() {
         $this->authRequired();
         if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
         $slim = \Slim\Slim::getInstance();

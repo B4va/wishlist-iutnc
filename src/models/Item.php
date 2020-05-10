@@ -7,7 +7,7 @@ use \wishlist\models\Liste;
 use \wishlist\models\ModelOperations;
 
 /**
- * Modèle de la table item en bdd
+ * Modélisation d'un item inclu dans une liste
  */
 class Item extends Model implements ModelOperations {
 
@@ -16,35 +16,30 @@ class Item extends Model implements ModelOperations {
     public $timestamps = false;
 
     /**
-     * Définit l'association avec Liste
-     */
-    public function liste() {
-        return $this->belongsTo('\wishlist\models\Liste','liste_id');
-    }
-
-    /**
      * Récupère la liste à laquelle appartient l'item
      * @return Liste liste à laquelle appartient l'item
      */
-    public function getListe() : Liste {
+    public function getListe() {
         return $this->belongsTo('\wishlist\models\Liste','liste_id')->first();
     }
 
-
     /**
-     *  Récupère un Item en fonction de l'id
-     *  @return object d'id @param id
+     * Récupère un Item en fonction de l'id
+     * @static
+     * @param int[$id] id de l'item
+     * @return Item item
      */
-    public static function getById($id) : object{
+    public static function getById($id) {
         return Item::where('id', '=',$id)->first();
     }
 
-
     /**
-     *  Créer un item avec un tableau associatif @param tab
-     *  @return l'item créé
+     * Crée un item 
+     * @static
+     * @param array[$tab] attributs de l'item
+     * @return Item item créé
      */
-    public static function create($tab) : object{
+    public static function create($tab) {
         $item = new Item;
         foreach ($tab as $key => $value) {
             $item->$key = $value;
@@ -53,9 +48,9 @@ class Item extends Model implements ModelOperations {
         return $item;
     }
 
-
     /**
-     *  modifie un item avec un tableau associatif @param tab
+     * Modifie un item
+     * @param array[$tab] attributs de l'item
      */
     public function edit($tab){
         foreach ($tab as $key => $value) {
@@ -65,12 +60,17 @@ class Item extends Model implements ModelOperations {
     }
 
     /**
-     * Supprime une liste en fonction de son token
+     * Supprime une liste
      */
     public function delete(){
         Item::where('id','=',$this->id)->delete();
     }
 
+    /**
+     * Retourne toutes les listes
+     * @static
+     * @return array listes
+     */
     public static function getAll(){
         return Item::get();
     }

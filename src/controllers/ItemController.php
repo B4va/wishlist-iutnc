@@ -9,12 +9,16 @@ use \wishlist\models\Item;
 use \wishlist\models\Liste;
 use \wishlist\views\ItemView;
 
+/**
+ * Controleur associé à la gestion des item
+ */
 class ItemController extends Controller {
 
     /**
      * Créé une vue affichant le formulaire de création d'un item
+     * @param int[$id] id de l'objet parent, null par défaut
      */
-    public function displayCreator($idList = null) : void {
+    public function displayCreator($idList = null) {
         $this->authRequired();
         $l = Liste::getById($idList);
         $this->propRequired($l->user_id);
@@ -24,8 +28,9 @@ class ItemController extends Controller {
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un item
+     * @param int[$id] id de l'objet à éditer
      */
-    public function displayEditor($id) : void {
+    public function displayEditor($id) {
         $this->authRequired();
         $item = Item::getById($id);
         $l = $item->getListe();
@@ -36,19 +41,19 @@ class ItemController extends Controller {
 
     /**
      * Créé une vue affichant un item choisi par son id
-     * @param [$id] identifiant de l'objet
+     * @param int[$id] identifiant de l'objet
      */
-    public function displayObject($id) : void {}
+    public function displayObject($id) {}
 
     /**
      * Créé une vue affichant tous les items
      */
-    public function displayObjects() : void {}
+    public function displayObjects() {}
 
     /**
      * Gère la création d'un item
      */
-    public function create() : void {
+    public function create() {
         $this->authRequired();
         $slim = \Slim\Slim::getInstance();
         $attr = [
@@ -66,6 +71,7 @@ class ItemController extends Controller {
 
     /**
      * Gère l'édition d'un item
+     * @param int[$id] id de l'objet à modifier
      */
     public function edit($id){
         $this->authRequired();
@@ -85,8 +91,9 @@ class ItemController extends Controller {
 
     /**
      * Gère la suppression d'un item
+     * @param int[$id] id de l'objet à supprimer
      */
-    public function delete($id) : void {
+    public function delete($id) {
         $this->authRequired();
         $i = Item::getById($id);
         $l = $i->getListe();

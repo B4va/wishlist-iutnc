@@ -19,13 +19,13 @@ class ItemView extends View {
      * Formate l'affichage d'un ensemble d'item [vide]
      * @return string code html
      */
-    protected function objects() : string{ }
+    protected function objects(){ }
 
     /**
      * Formatte un formulaire d'édition d'item
      * @return string code html
      */
-    protected function edit() : string {
+    protected function edit() {
         $slim = \Slim\Slim::getInstance();
         $i = $this->var['object'];
         $idList = $i->liste_id;
@@ -67,7 +67,7 @@ html;
      * Formatte un formulaire de création d'item
      * @return string code html
      */
-    protected function create() : string {
+    protected function create() {
         $slim = \Slim\Slim::getInstance();
         $idList = $this->var['idList'];
         $createItem = $slim->urlFor('createItem', ['idList' => $idList]);
@@ -107,12 +107,12 @@ html;
      * Formatte l'affichage d'un item en particulier [vide]
      * @return string code html
      */
-    protected function object() : string { }
+    protected function object() { }
 
     /**
      * Formatte un formulaire d'authentification
      * @return string code html
      */
-    protected function authenticate() : string { }
+    protected function authenticate() { }
 
 }
