@@ -52,8 +52,15 @@ class UserController extends Controller {
     /**
      * Gère la création d'un user
      */
-    public function create($attr) : void {
+    public function create() : void {
         $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'login' => $slim->request->post('login'),
+            'password' => $slim->request->post('password'),
+            'password_conf' => $slim->request->post('password_conf'),
+            'lastname' => $slim->request->post('lastname'),
+            'firstname' => $slim->request->post('firstname')
+        ];
         if ($attr['password'] != $attr['password_conf']) {
             $slim->flash('warning', 'Les mots de passes saisis sont différents');
             $slim->redirect($slim->urlFor('creatorUser'));
@@ -65,6 +72,7 @@ class UserController extends Controller {
             $slim->redirect($slim->urlFor('creatorUser'));
         } else {
             unset($attr['password_conf']);
+            $this->validate($attr, $slim->urlFor('creatorUser'));
             User::create($attr);
             $slim->flash('success', 'Vous pouvez à présent vous connecter');
             $slim->redirect($slim->urlFor('loginForm'));
@@ -74,19 +82,28 @@ class UserController extends Controller {
     /**
      * Gère l'édition d'un user
      */
-    public function edit($id, $newAttr){
+    public function edit($id){
         $this->authRequired();
         $this->propRequired($id);
         $slim = \Slim\Slim::getInstance();
-        if ($newAttr['password'] != $newAttr['password_conf']) {
+        $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'login' => $slim->request->post('login'),
+            'password' => $slim->request->post('password'),
+            'password_conf' => $slim->request->post('password_conf'),
+            'lastname' => $slim->request->post('lastname'),
+            'firstname' => $slim->request->post('firstname')
+        ];
+        if ($attr['password'] != $attr['password_conf']) {
             $slim->flash('warning', 'Les mots de passes saisis sont différents');
             $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
-        } else if ($newAttr['password'] == null){
+        } else if ($attr['password'] == null){
             $slim->flash('warning', 'Aucun mot de passe saisi');
             $slim->redirect($slim->urlFor('editorUser', ['id' => $id]));
         } else {
-            unset($newAttr['password_conf']);
-            User::getById($id)->edit($newAttr);
+            unset($attr['password_conf']);
+            $this->validate($attr, $slim->urlFor('editorUser', ['id' => $id]));
+            User::getById($id)->edit($attr);
             if (isset($_COOKIE['user'])) setcookie('user', null, -1);
             setcookie('user', serialize(User::getById($id)), time()+60*60*24*30);
             $slim->flash('success', 'Le profil a été mis à jour');
@@ -115,11 +132,15 @@ class UserController extends Controller {
     /**
      * Gère l'authentification
      */
-    public function loginUser($form){
+    public function loginUser(){
         $slim = \Slim\Slim::getInstance();
-        if(User::loginUser($form)){
+        $attr = [
+            'login' => $slim->request->post('login'),
+            'password' => $slim->request->post('password')
+        ];
+        if(User::loginUser($attr)){
             $slim->flash('success', 'Vous êtes à présent connecté' );
-            setcookie('user', serialize(User::getByLogin($form['login'])), time()+60*60*24*30);
+            setcookie('user', serialize(User::getByLogin($attr['login'])), time()+60*60*24*30);
             $slim->redirect($slim->urlFor('home'));
         } else {
             $slim->flash('danger', 'Les informations de connexion sont erronées' );

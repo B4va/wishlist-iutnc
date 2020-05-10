@@ -53,22 +53,35 @@ class ListController extends Controller {
     /**
      * Gère la création d'une liste
      */
-    public function create($attr) : void {
+    public function create() : void {
         $this->authRequired();
-        Liste::create($attr);
         $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'user_id' => $slim->request->post('user_id'),
+            'titre' => $slim->request->post('titre'),
+            'description' => $slim->request->post('description'),
+            'expiration' => $slim->request->post('expiration')
+        ];
+        $this->validate($attr, $slim->urlFor('creatorList'));
+        Liste::create($attr);
         $slim->redirect($slim->urlFor('home'));
     }
 
     /**
      * Gère l'édition d'une liste
      */
-    public function edit($token, $newAttr){
+    public function edit($token){
         $this->authRequired();
+        $slim = \Slim\Slim::getInstance();
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);
-        $l->edit($newAttr);
-        $slim = \Slim\Slim::getInstance();
+        $attr = [
+            'titre' => $slim->request->post('titre'),
+            'description' => $slim->request->post('description'),
+            'expiration' => $slim->request->post('expiration')
+        ];
+        $this->validate($attr, $slim->urlFor('editorList', ['token' => $token]));
+        $l->edit($attr);
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 

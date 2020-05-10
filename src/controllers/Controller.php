@@ -28,6 +28,18 @@ abstract class Controller {
         }
     }
 
+    public function validate($attr, $redirectionUrl){
+        $valid = true;
+        foreach($attr as $a){
+            if ($a == null) $valid = false;
+        }
+        if (!$valid){
+            $slim = \Slim\Slim::getInstance();
+            $slim->flash('warning', 'Saisie invalide : tous les champs doivent être remplis');
+            $slim->redirect($redirectionUrl);
+        }
+    }
+
     /**
      * Créé une vue affichant le formulaire de création d'un objet
      */
@@ -53,12 +65,12 @@ abstract class Controller {
     /**
      * Gère la création d'un objet
      */
-    public abstract function create($attr) : void;
+    public abstract function create() : void;
 
     /**
      * Gère l'édition d'un objet
      */
-    public abstract function edit($id, $attr);
+    public abstract function edit($id);
 
     /**
      * Gère la suppression d'un objet
