@@ -157,7 +157,7 @@ class UserController extends Controller {
      */
     public function logout() {
         $this->authRequired();
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
         $slim = \Slim\Slim::getInstance();
         $slim->flash('success', 'Vous êtes déconnecté' );
         $slim->redirect($slim->urlFor('home'));
