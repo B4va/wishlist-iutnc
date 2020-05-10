@@ -144,7 +144,7 @@ class UserController extends Controller {
         ];
         if(User::loginUser($attr)){
             $slim->flash('success', 'Vous êtes à présent connecté' );
-            setcookie('user', serialize(User::getByLogin($attr['login'])), time()+60*60*24*30);
+            setcookie('user', serialize(User::getByLogin($attr['login'])), time()+60*60*24*30, '/');
             $slim->redirect($slim->urlFor('home'));
         } else {
             $slim->flash('danger', 'Les informations de connexion sont erronées' );
@@ -157,7 +157,7 @@ class UserController extends Controller {
      */
     public function logout() {
         $this->authRequired();
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1);
+        if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
         $slim = \Slim\Slim::getInstance();
         $slim->flash('success', 'Vous êtes déconnecté' );
         $slim->redirect($slim->urlFor('home'));
