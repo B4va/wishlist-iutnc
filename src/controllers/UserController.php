@@ -14,7 +14,7 @@ class UserController extends Controller {
      * Créé une vue affichant le formulaire de création d'un user
      */
     public function displayCreator($id = null) : void {
-        $v = new UserView(CREATE_VIEW, ['title' => 'Nouvel user']);
+        $v = new UserView(CREATE_VIEW, ['title' => 'Nouveau']);
         $v->render();
     }
 
@@ -25,7 +25,7 @@ class UserController extends Controller {
         $this->authRequired();
         $this->propRequired($id);
         $user = User::getById($id);
-        $v = new UserView(EDIT_VIEW, ['title' => 'Edition de l\'user' . $user->login, 'object' => $user]);
+        $v = new UserView(EDIT_VIEW, ['title' => $user->login, 'object' => $user]);
         $v->render();
     }
 
@@ -36,7 +36,7 @@ class UserController extends Controller {
     public function displayObject($id) : void {
         $user = User::getById($id);
         $lists = $user->getLists();
-        $v = new UserView(OBJECT_VIEW, ['title' => 'Utilisateur ' . $user->login, 'object' => $user, 'lists' => $lists]);
+        $v = new UserView(OBJECT_VIEW, ['title' => $user->login, 'object' => $user, 'lists' => $lists]);
         $v->render();
     }
 
