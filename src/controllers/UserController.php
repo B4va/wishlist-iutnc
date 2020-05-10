@@ -122,7 +122,7 @@ class UserController extends Controller {
         $this->authRequired();
         $this->propRequired($id);
         User::getById($id)->delete();
-        if (isset($_COOKIE['user'])) setcookie('user', null, -1, '/');
+        $this->logout();
     }
 
     /**
