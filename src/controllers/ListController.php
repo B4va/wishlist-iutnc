@@ -15,7 +15,7 @@ class ListController extends Controller {
      */
     public function displayCreator($idList = null) : void {
         $this->authRequired();
-        $v = new ListView(CREATE_VIEW, ['title' => 'Nouvelle liste']);
+        $v = new ListView(CREATE_VIEW, ['title' => 'Nouveau']);
         $v->render();
     }
 
@@ -26,7 +26,7 @@ class ListController extends Controller {
         $this->authRequired();
         $list = Liste::getByToken($token);
         $this->propRequired($list->user_id);
-        $v = new ListView(EDIT_VIEW, ['title' => 'Edition de liste ' . $list->nom, 'object' => $list]);
+        $v = new ListView(EDIT_VIEW, ['title' => $list->nom, 'object' => $list]);
         $v->render();
     }
 
@@ -37,7 +37,7 @@ class ListController extends Controller {
     public function displayObject($id) : void {
         $list = Liste::getById($id);
         $items = $list->getItems();
-        $v = new ListView(OBJECT_VIEW, ['title' => 'Liste ' . $list->nom, 'object' => $list, 'items' => $items]);
+        $v = new ListView(OBJECT_VIEW, ['title' => $list->nom, 'object' => $list, 'items' => $items]);
         $v->render();
     }
 

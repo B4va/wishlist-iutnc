@@ -18,7 +18,7 @@ class ItemController extends Controller {
         $this->authRequired();
         $l = Liste::getById($idList);
         $this->propRequired($l->user_id);
-        $v = new ItemView(CREATE_VIEW, ['title' => 'Nouvel item', 'idList' => $idList]);
+        $v = new ItemView(CREATE_VIEW, ['title' => 'Nouveau', 'idList' => $idList]);
         $v->render();
     }
 
@@ -30,7 +30,7 @@ class ItemController extends Controller {
         $item = Item::getById($id);
         $l = $item->getListe();
         $this->propRequired($l->user_id);
-        $v = new ItemView(EDIT_VIEW, ['title' => 'Edition de l\'item' . $item->nom, 'object' => $item]);
+        $v = new ItemView(EDIT_VIEW, ['title' => $item->nom, 'object' => $item]);
         $v->render();
     }
 
