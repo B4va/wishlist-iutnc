@@ -210,7 +210,7 @@ html;
             if ($item->isReserved()){
                 $u = $slim->urlFor('user', ['id' => $item->user_id]);
                 $user = $item->getUser();
-                if ($item->user_id == unserialize($_COOKIE['user'])->id){
+                if (View::isProperty($item->user_id)){
                     $html = $html . <<<html
 
                             <small>Réservé par <a href='$u'>$user->firstname $user->lastname</a> (<a href='$res'>annuler la réservation</a>)</small>
