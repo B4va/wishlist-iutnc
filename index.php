@@ -77,31 +77,31 @@ $app->get('/list/:idList/item/new', function($idList){
 })->name('creatorItem');
 
 // Création d'un item
-$app->post('/list/:idList/item/create', function($idList){
+$app->post('/list/item/create', function(){
     $itemController = new ItemController();
     $itemController->create();
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
-$app->get('/list/:idList/item/edit/:id', function($idList, $id){
+$app->get('/list/item/edit/:id', function($id){
     $itemController = new ItemController();
     $itemController->displayEditor($id);
 })->name('editorItem');
 
 // Mise à jour d'un item
-$app->post('/list/:idList/item/update/:id', function($idList, $id){
+$app->post('/list/item/update/:id', function($id){
     $itemController = new ItemController();
     $itemController->edit($id);
 })->name('editItem');
 
 // Suppression d'un item
-$app->get('/list/:idList/item/delete/:id', function($idList, $id){
+$app->get('/list/item/delete/:id', function($id){
     $itemController = new ItemController();
     $itemController->delete($id);
 })->name('deleteItem');
 
 // Réservation d'un item
-$app->get('/list/:idList/item/reserve/:id', function($idList, $id){
+$app->get('/list/item/reserve/:id', function($id){
     $itemController = new ItemController();
     $itemController->reserve($id);
 })->name('reserveItem');

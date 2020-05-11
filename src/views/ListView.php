@@ -197,9 +197,9 @@ html;
 html;
 
         foreach($this->var['items'] as $item){
-            $editItem = $slim->urlFor('editorItem', ["idList" => $item->liste_id, "id" => $item->id]);
-            $deleteItem = $slim->urlFor('deleteItem', ["idList" => $item->liste_id, "id" => $item->id]);
-            $res = $slim->urlFor('reserveItem', ["idList" => $item->liste_id, "id" => $item->id]);
+            $editItem = $slim->urlFor('editorItem', ["id" => $item->id]);
+            $deleteItem = $slim->urlFor('deleteItem', ["id" => $item->id]);
+            $res = $slim->urlFor('reserveItem', ["id" => $item->id]);
             $html = $html . <<<html
             
                     <hr>

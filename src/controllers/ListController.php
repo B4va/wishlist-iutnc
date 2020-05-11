@@ -69,6 +69,7 @@ class ListController extends Controller {
         ];
         $this->validate($attr, $slim->urlFor('creatorList'));
         Liste::create($attr);
+        $slim->flash('success', 'La liste a été créée');
         $slim->redirect($slim->urlFor('home'));
     }
 
@@ -88,6 +89,7 @@ class ListController extends Controller {
         ];
         $this->validate($attr, $slim->urlFor('editorList', ['token' => $token]));
         $l->edit($attr);
+        $slim->flash('success', 'La liste a été modifiée');
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
@@ -102,6 +104,7 @@ class ListController extends Controller {
         foreach($l->getItems() as $i) $i->delete();
         $l->delete();
         $slim = \Slim\Slim::getInstance();
+        $slim->flash('success', 'La liste a été supprimée');
         $slim->redirect($slim->urlFor('home'));
     }
 }
