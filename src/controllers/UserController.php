@@ -127,6 +127,8 @@ class UserController extends Controller {
             $l->delete();
         }
         $user->delete();
+        $slim = \Slim\Slim::getInstance();
+        $slim->flash('warning', 'Le compte a été supprimé');
         $this->logout();
     }
 
