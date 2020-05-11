@@ -38,6 +38,14 @@ class Message extends Model implements ModelOperations {
         return Liste::where('id', '=',$this->list_id)->first();
     }
 
+     /**
+	 * Retourne tous les Message
+     * @static
+	 * @return array Message
+	 */
+    public static function getAll() {
+        return Message::get();
+    }
 
 
     /**
