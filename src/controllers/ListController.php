@@ -99,6 +99,7 @@ class ListController extends Controller {
         $this->authRequired();
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);
+        foreach($l->getItems() as $i) $i->delete();
         $l->delete();
         $slim = \Slim\Slim::getInstance();
         $slim->redirect($slim->urlFor('home'));
