@@ -121,7 +121,12 @@ class UserController extends Controller {
     public function delete($id) {
         $this->authRequired();
         $this->propRequired($id);
-        User::getById($id)->delete();
+        $user = User::getById($id);
+        foreach($user->getLists() as $l){
+            foreach($l->getItems() as $i) $i->delete();
+            $l->delete();
+        }
+        $user->delete();
         $this->logout();
     }
 
