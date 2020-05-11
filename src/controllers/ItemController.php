@@ -119,8 +119,11 @@ class ItemController extends Controller {
         $i = Item::getById($id);
         $user_id = unserialize($_COOKIE['user'])->id;
         if($i->user_id == null || $i->user_id == $user_id){
-            $i->reserve($user_id);
-            $slim->flash('success', 'L\'item a été réservé');
+            if ($i->reserve($user_id)){
+                $slim->flash('success', 'L\'item a été réservé');
+            } else {
+                $slim->flash('success', 'La réservation a été annulée');
+            }
         } else {
             $slim->flash('warning', 'L\'item est déjà réservé');
         }
