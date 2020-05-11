@@ -41,6 +41,8 @@ html;
         foreach($this->var['objects'] as $l){
             $list = $slim->urlFor('list', ['id' => $l->no]);
             $editorList = $slim->urlFor('editorList', ['token' => $l->token]);
+            $author = $l->getUser();
+            $user = $slim->urlFor('user', ['id' => $author->id]);
             $html = $html . <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -49,6 +51,7 @@ html;
                     <div class="row">
                         <div class="col-8">
                             <h3 class="m-0"><a href='$list'>$l->titre</a></h3>
+                            <small><a class='text-muted' href='$user'>$author->firstname $author->lastname</a></small>
                         </div>
 html;
             if (View::isProperty($l->user_id)){
