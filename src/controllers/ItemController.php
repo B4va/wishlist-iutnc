@@ -92,6 +92,7 @@ class ItemController extends Controller {
         ];
         $this->validate($attr, $slim->urlFor('editorItem', ['id' => $id]));
         $i->edit($attr);
+        $slim->flash('success', 'L\'item a été modifié');
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
@@ -106,6 +107,7 @@ class ItemController extends Controller {
         $this->propRequired($l->user_id);
         $i->delete();
         $slim = \Slim\Slim::getInstance();
+        $slim->flash('success', 'L\'item a été supprimé');
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
