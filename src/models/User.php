@@ -25,6 +25,16 @@ class User extends Model implements ModelOperations {
     public static function getById($id) {
         return User::where('id', '=',$id)->first();
     }
+
+    /**
+	 * Récupère un utilisateur à partir de son login
+     * @static
+	 * @param string[$login] id de l'utilisateur
+	 * @return User utilisateur
+	 */
+    public static function getByLogin($login) {
+        return User::where('login', '=', $login)->first();
+    }
     
     /**
 	 * Retourne tous les utilisateurs
