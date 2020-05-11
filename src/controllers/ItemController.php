@@ -113,7 +113,7 @@ class ItemController extends Controller {
 
     /**
      * Gère la réservation d'un item
-     * @param int[$id] id de l'objet à réserver
+     * @param int[$id] id de l'item à réserver
      */
     public function reserve($id){
         $slim = \Slim\Slim::getInstance();

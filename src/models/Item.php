@@ -60,24 +60,23 @@ class Item extends Model implements ModelOperations {
     }
 
     /**
-     * Supprime une liste
+     * Supprime un item
      */
     public function delete(){
         Item::where('id','=',$this->id)->delete();
     }
 
     /**
-     * Retourne toutes les listes
+     * Retourne tous les item
      * @static
-     * @return array listes
+     * @return array items
      */
     public static function getAll(){
         return Item::get();
     }
 
     /**
-     * Réserve un item à un utilisateur
-     * ou le "déréserve s'il en était déjà propriétaire
+     * Réserve un item à un utilisateur ou le "déréserve"
      * @param int[$user_id] l'id de l'utilisateur concerné
      * @return bool true si réservation, false si annulation
      */
@@ -95,6 +94,7 @@ class Item extends Model implements ModelOperations {
 
     /**
      * Vérifie l'état de réservation de l'item
+     * @return bool true si l'item est réservé
      */
     public function isReserved(){
         return $this->user_id != null;
