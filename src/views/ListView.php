@@ -199,14 +199,37 @@ html;
         foreach($this->var['items'] as $item){
             $editItem = $slim->urlFor('editorItem', ["idList" => $item->liste_id, "id" => $item->id]);
             $deleteItem = $slim->urlFor('deleteItem', ["idList" => $item->liste_id, "id" => $item->id]);
+            $res = $slim->urlFor('reserveItem', ["idList" => $item->liste_id, "id" => $item->id]);
             $html = $html . <<<html
             
                     <hr>
                     <div class="pl-4 mt-3 row">
                         <div class="col-10">
-                            <p class="card-text font-weight-bold">$item->nom</p>
+                            <p class="card-text font-weight-bold m-0">$item->nom</p>
+html;
+            if ($item->isReserved()){
+                $u = $slim->urlFor('user', ['id' => $item->user_id]);
+                $user = $item->getUser();
+                if ($item->user_id == unserialize($_COOKIE['user'])->id){
+                    $html = $html . <<<html
+
+                            <small>Réservé par <a href='$u'>$user->firstname $user->lastname</a> (<a href='$res'>annuler la réservation</a>)</small>
                         </div>
 html;
+                } else {
+                    $html = $html . <<<html
+
+                            <small>Réservé par <a href='$u'>$user->firstname $user->lastname</a></small>
+                        </div>
+html;
+                }
+            } else {
+                $html = $html . <<<html
+
+                            <small><a href='$res'>Réserver</a></small>
+                        </div>
+html;
+            }
             if (View::isProperty($l->user_id)){
                 $html = $html . <<<html
 

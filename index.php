@@ -100,6 +100,12 @@ $app->get('/list/:idList/item/delete/:id', function($idList, $id){
     $itemController->delete($id);
 })->name('deleteItem');
 
+// Réservation d'un item
+$app->get('/list/:idList/item/reserve/:id', function($idList, $id){
+    $itemController = new ItemController();
+    $itemController->reserve($id);
+})->name('reserveItem');
+
 /**
  * Users
  */

@@ -79,14 +79,18 @@ class Item extends Model implements ModelOperations {
      * Réserve un item à un utilisateur
      * ou le "déréserve s'il en était déjà propriétaire
      * @param int[$user_id] l'id de l'utilisateur concerné
+     * @return bool true si réservation, false si annulation
      */
     public function reserve($user_id){
         if($this->user_id == null){
             $this->user_id = $user_id;
+            $this->update();
+            return true;
         } else {
             $this->user_id = null;
+            $this->update();
+            return false;
         }
-        $this->update();
     }
 
     /**
@@ -94,6 +98,18 @@ class Item extends Model implements ModelOperations {
      */
     public function isReserved(){
         return $this->user_id != null;
+    }
+
+    /**
+     * Récupère l'utilisateur ayant réservé l'item
+     * @return object utilisateur ayant réservé l'item
+     */
+    public function getUser() {
+        if ($this->isReserved()){
+            return $this->belongsTo('\wishlist\models\User','user_id')->first();
+        } else {
+            return null;
+        }
     }
     
 }
