@@ -65,8 +65,14 @@ class ItemController extends Controller {
         $l = Liste::getById($attr['liste_id']);
         $this->validate($attr, $slim->urlFor('creatorItem', ['idList' => $attr['liste_id']]));
         $this->propRequired($l->user_id);
-        Item::create($attr);
-        $slim->redirect($slim->urlFor('list', ['id' => $attr['liste_id']]));
+        if($attr['tarif'] < 10000 && $attr['tarif'] >= 0){
+            Item::create($attr);
+            $slim->flash('success', 'L\'item a été créé');
+            $slim->redirect($slim->urlFor('list', ['id' => $attr['liste_id']]));
+        } else {
+            $slim->flash('warning', 'Le tarif doit être compris entre 0 et 10000');
+            $slim->redirect($slim->urlFor('creatorItem', ['idList' => $l->no]));
+        }
     }
 
     /**
@@ -101,6 +107,20 @@ class ItemController extends Controller {
         $i->delete();
         $slim = \Slim\Slim::getInstance();
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
+    }
+
+    public function reserve($id){
+        $slim = \Slim\Slim::getInstance();
+        $this->authRequired();
+        $i = Item::getById($id);
+        $user_id = unserialize($_COOKIE['user'])->id;
+        if($i->user_id == null || $i->user_id == $user_id){
+            $i->reserve($user_id);
+            $slim->flash('success', 'L\'item a été réservé');
+        } else {
+            $slim->flash('warning', 'L\'item est déjà réservé');
+        }
+        $slim->redirect($slim->urlFor('list', ['id' => $i->getListe()->no]));
     }
 
 }

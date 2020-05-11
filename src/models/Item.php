@@ -74,6 +74,15 @@ class Item extends Model implements ModelOperations {
     public static function getAll(){
         return Item::get();
     }
+
+    public function reserve($user_id){
+        if($this->user_id == null){
+            $this->user_id = $user_id;
+        } else {
+            $this->user_id = null;
+        }
+        $this->update();
+    }
     
 }
 
