@@ -7,7 +7,7 @@ use \wishlist\models\Liste;
 use \wishlist\models\ModelOperations;
 
 /**
- * Modélisation d'un item inclu dans une liste
+ * Modélisation d'un item inclus dans une liste
  */
 class Item extends Model implements ModelOperations {
 
@@ -75,6 +75,11 @@ class Item extends Model implements ModelOperations {
         return Item::get();
     }
 
+    /**
+     * Réserve un item à un utilisateur
+     * ou le "déréserve s'il en était déjà propriétaire
+     * @param int[$user_id] l'id de l'utilisateur concerné
+     */
     public function reserve($user_id){
         if($this->user_id == null){
             $this->user_id = $user_id;
@@ -82,6 +87,13 @@ class Item extends Model implements ModelOperations {
             $this->user_id = null;
         }
         $this->update();
+    }
+
+    /**
+     * Vérifie l'état de réservation de l'item
+     */
+    public function isReserved(){
+        return $this->user_id != null;
     }
     
 }
