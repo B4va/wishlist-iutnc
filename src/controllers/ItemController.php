@@ -109,6 +109,10 @@ class ItemController extends Controller {
         $slim->redirect($slim->urlFor('list', ['id' => $l->no]));
     }
 
+    /**
+     * Gère la réservation d'un item
+     * @param int[$id] id de l'objet à réserver
+     */
     public function reserve($id){
         $slim = \Slim\Slim::getInstance();
         $this->authRequired();
