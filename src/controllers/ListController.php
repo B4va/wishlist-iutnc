@@ -70,7 +70,9 @@ class ListController extends Controller {
         $this->validate($attr, $slim->urlFor('creatorList'));
         Liste::create($attr);
         $slim->flash('success', 'La liste a été créée');
-        $slim->redirect($slim->urlFor('home'));
+        $lists = unserialize($_COOKIE['user'])->getLists();
+        $list = $lists[count($lists)- 1];
+        $slim->redirect($slim->urlFor('list', ['id' => $list->no]));
     }
 
     /**
