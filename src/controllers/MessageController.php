@@ -12,25 +12,25 @@ use \wishlist\models\Message;
  */
 class MessageController extends Controller {
     /**
-     * Créé une vue affichant le formulaire de création d'un objet
+     * Créé une vue affichant le formulaire de création d'un message
      * @param int[$id] id de l'objet parent, null par défaut
      */
     public function displayCreator($id = null){}
 
     /**
-     * Créé une vue affichant le formulaire d'édition d'un objet
-     * @param int[$id] identifiant de l'objet
+     * Créé une vue affichant le formulaire d'édition d'un message
+     * @param int[$id] identifiant du message
      */
     public function displayEditor($id){}
 
     /**
-     * Créé une vue affichant un objet choisi par son id
-     * @param int[$id] identifiant de l'objet
+     * Créé une vue affichant le message choisi par son id
+     * @param int[$id] identifiant du message
      */
     public function displayObject($id){}
 
     /**
-     * Créé une vue affichant tous les objets
+     * Créé une vue affichant tous les messages
      */
     public function displayObjects(){}
 
@@ -51,14 +51,14 @@ class MessageController extends Controller {
     }
 
     /**
-     * Gère l'édition d'un objet
-     * @param int[$id] id de l'objet à modifier
+     * Gère l'édition d'un message
+     * @param int[$id] id du message à modifier
      */
     public function edit($id){}
 
     /**
      * Gère la suppression d'un message
-     * @param int[$id] id de l'objet à supprimer
+     * @param int[$id] id du message à supprimer
      */
     public function delete($id){
         $this->authRequired();

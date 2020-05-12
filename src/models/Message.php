@@ -6,6 +6,9 @@ require_once './vendor/autoload.php';
 
 use \Illuminate\Database\Eloquent\Model;
 
+/**
+ * Modélisation d'un message
+ */
 class Message extends Model implements ModelOperations {
 
 	protected $table = 'message';
@@ -14,9 +17,9 @@ class Message extends Model implements ModelOperations {
 
 
     /**
-	 * Récupère un Message à partir de son id
+	 * Récupère un message à partir de son id
      * @static
-	 * @param int[$id] id du Message
+	 * @param int[$id] id du message
 	 * @return Message 
 	 */
     public static function getById($id) {
@@ -32,7 +35,7 @@ class Message extends Model implements ModelOperations {
     }
 
     /**
-	 * Récupère la liste associé au message
+	 * Récupère la liste associée au message
 	 * @return Liste liste
 	 */
     public function getList() {
@@ -40,9 +43,9 @@ class Message extends Model implements ModelOperations {
     }
 
      /**
-	 * Retourne tous les Message
+	 * Retourne tous les messages
      * @static
-	 * @return array Message
+	 * @return array messages
 	 */
     public static function getAll() {
         return Message::get();
@@ -50,10 +53,10 @@ class Message extends Model implements ModelOperations {
 
 
     /**
-     * Crée un Message
+     * Crée un message
      * @static
-     * @param array[$attributs] attributs du Message
-     * @return msg Message créé
+     * @param array[$attributs] attributs du message
+     * @return object message créé
      */
     public static function create($attributs) {
         $msg = new Message;
@@ -65,8 +68,8 @@ class Message extends Model implements ModelOperations {
     }
 
      /**
-     * Modifie un Message
-     * @param array[$attributs] attributs du Message
+     * Modifie un message
+     * @param array[$attributs] attributs du message
      */
     public function edit($attributs){
         foreach ($attributs as $key => $value) {
@@ -76,7 +79,7 @@ class Message extends Model implements ModelOperations {
     }
 
     /**
-     * Supprime un Message
+     * Supprime un message
      */
     public function delete(){
         Message::where('id','=',$this->id)->delete();
