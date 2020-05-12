@@ -4,6 +4,7 @@ namespace wishlist\models;
 
 require_once './vendor/autoload.php';
 
+use \Illuminate\Database\Eloquent\Model;
 
 class Message extends Model implements ModelOperations {
 
@@ -27,7 +28,7 @@ class Message extends Model implements ModelOperations {
 	 * @return User utilisateur
 	 */
     public function getUser() {
-        return User::where('id', '=',$this->user_id)->first();
+        return $this->belongsTo('\wishlist\models\User','user_id')->first();
     }
 
     /**
@@ -35,7 +36,7 @@ class Message extends Model implements ModelOperations {
 	 * @return Liste liste
 	 */
     public function getList() {
-        return Liste::where('id', '=',$this->list_id)->first();
+        return $this->belongsTo('\wishlist\models\Liste','list_id')->first();
     }
 
      /**

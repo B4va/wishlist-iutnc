@@ -10,12 +10,12 @@ use \wishlist\models\Message;
 /**
  * Controleur associé à la gestion des messages
  */
-abstract class MessageController {
+class MessageController extends Controller {
     /**
      * Créé une vue affichant le formulaire de création d'un objet
      * @param int[$id] id de l'objet parent, null par défaut
      */
-    public abstract function displayCreator($id = null);
+    public function displayCreator($id = null){}
 
     /**
      * Créé une vue affichant le formulaire d'édition d'un objet
@@ -47,7 +47,7 @@ abstract class MessageController {
         ];
         Message::create($attr);
         $slim->flash('success', 'Le message a été ajouté');
-        $slim->redirect($slim->urlFor('list', ['id' => $list->no]));
+        $slim->redirect($slim->urlFor('list', ['id' => $attr['list_id']]));
     }
 
     /**
@@ -61,10 +61,10 @@ abstract class MessageController {
      * @param int[$id] id de l'objet à supprimer
      */
     public function delete($id){
-        $message = Message::getById($id);
-        $list = $message->getList();
         $this->authRequired();
+        $message = Message::getById($id);
         $this->propRequired($message->user_id);
+        $list = $message->getList();
         $message->delete();
         $slim = \Slim\Slim::getInstance();
         $slim->flash('success', 'Le message a été supprimé');

@@ -9,6 +9,7 @@ use \wishlist\models\User;
 use wishlist\controllers\ListController;
 use wishlist\controllers\ItemController;
 use wishlist\controllers\UserController;
+use wishlist\controllers\MessageController;
 
 session_start();
 
@@ -170,6 +171,23 @@ $app->get('/logout', function(){
     $userController = new UserController();
     $userController->logout();
 })->name('logout');
+
+
+/**
+ * Messages
+ */
+
+ // Création d'un message
+ $app->post('/message/create', function(){
+    $messageController = new MessageController();
+    $messageController->create();
+})->name('createMessage');
+
+// Suppression d'un message
+$app->get('/message/delete/:id', function($id){
+    $messageController = new MessageController();
+    $messageController->delete($id);
+})->name('deleteMessage');
 
 $app->run();
 
