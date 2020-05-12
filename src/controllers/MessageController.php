@@ -35,18 +35,19 @@ abstract class MessageController {
     public function displayObjects(){}
 
     /**
-     * Gère la création d'un objet
+     * Gère la création d'un message
      */
     public function create(){
         $this->authRequired();
         $slim = \Slim\Slim::getInstance();
         $attr = [
-            'id' => $slim->request->post('id'),
             'user_id' => unserialize($_COOKIE['user'])->id,
             'list_id' => $slim->request->post('list_id'),
             'content' => $slim->request->post('content')
         ];
         Message::create($attr);
+        $slim->flash('success', 'Le message a été ajouté');
+        $slim->redirect($slim->urlFor('list', ['id' => $list->no]));
     }
 
     /**
@@ -56,7 +57,7 @@ abstract class MessageController {
     public function edit($id){}
 
     /**
-     * Gère la suppression d'un objet
+     * Gère la suppression d'un message
      * @param int[$id] id de l'objet à supprimer
      */
     public function delete($id){
@@ -66,6 +67,7 @@ abstract class MessageController {
         $this->propRequired($message->user_id);
         $message->delete();
         $slim = \Slim\Slim::getInstance();
+        $slim->flash('success', 'Le message a été supprimé');
         $slim->redirect($slim->urlFor('list', ['id' => $list->no]));
     }
 }

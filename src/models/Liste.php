@@ -28,6 +28,14 @@ class Liste extends Model implements ModelOperations {
     }
 
     /**
+     * Récupère tous les messages associés à la liste
+     * @return array messages associés à la liste
+     */
+    public function getMessages(){
+        return $this->hasMany('\wishlist\models\Messages','list_id')->get();
+    }
+
+    /**
      * Récupère l'utilisateur auquel appartient la liste
      * @return object utilisateur propriétaire de la liste
      */
