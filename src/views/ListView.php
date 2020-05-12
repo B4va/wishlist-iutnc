@@ -278,7 +278,7 @@ html;
                 $html = $html . <<<html
 
             <p>
-                <small><a href='#'>$sender->firstname $sender->lastname</a></small>
+                <small><a href='$senderUrl'>$sender->firstname $sender->lastname</a></small>
 html;
                 if (View::isProperty ($message->user_id)){
                     $html = $html . " <small>(<a href='$deleteMessage'>supprimer</a>)</small>";
