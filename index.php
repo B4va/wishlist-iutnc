@@ -13,9 +13,17 @@ use wishlist\controllers\MessageController;
 
 session_start();
 
+/**
+ * Initialisation
+ */
 $app = new \Slim\Slim();
 $db = ConnectionFactory::makeConnection();
 
+/**
+ * 
+ * ROUTES
+ * 
+ */
 
 /**
  * Général
@@ -171,7 +179,6 @@ $app->get('/logout', function(){
     $userController = new UserController();
     $userController->logout();
 })->name('logout');
-
 
 /**
  * Messages
