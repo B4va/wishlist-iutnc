@@ -42,7 +42,8 @@ class ListController extends Controller {
     public function displayObject($id) {
         $list = Liste::getById($id);
         $items = $list->getItems();
-        $v = new ListView(OBJECT_VIEW, ['title' => $list->titre, 'object' => $list, 'items' => $items]);
+        $messages = $list->getMessages();
+        $v = new ListView(OBJECT_VIEW, ['title' => $list->titre, 'object' => $list, 'items' => $items, 'messages' => $messages]);
         $v->render();
     }
 
