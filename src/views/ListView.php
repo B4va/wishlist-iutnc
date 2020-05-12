@@ -265,6 +265,20 @@ html;
             </div>
         </div>
 
+        <h3>Messages</h3>
+        <form method='post' action='#'>
+            <input type='hidden' name='user_id' value=''>
+            <input type='hidden' name='list_id' value=''>
+            <div class="form-group mb-3">
+                <!-- Insérer l'ancienne description de la liste -->
+                <textarea class="form-control" name='content' rows="6" style="resize: none;" placeholder="Message"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </div>
+        </form>
+
+
 html;
         return $html;
     }
