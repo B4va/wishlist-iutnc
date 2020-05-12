@@ -170,6 +170,7 @@ html;
         $editorList = $slim->urlFor('editorList', ['token' => $l->token]);
         $deleteList = $slim->urlFor('deleteList', ['token' => $l->token]);
         $creatorItem = $slim->urlFor('creatorItem', ['idList' => $l->no]);
+        $createMessage = $slim->urlFor('createMessage');
         $html = <<<html
 
         <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1 my-5">
@@ -263,21 +264,56 @@ html;
                     <p class="text-muted m-0">Expire le $l->expiration</p>
                 </div>
             </div>
+        
+            <h3 class='h4'>Messages</h3>
+            <hr>
+
+html;
+
+        if (count($this->var['messages']) > 0){
+            foreach ($this->var['messages'] as $message){
+                $sender = $message->getUser();
+                $senderUrl = $slim->urlFor('user', ['id' => $sender->id]);
+                $deleteMessage = $slim->urlFor('deleteMessage', ['id' => $message->id]);
+                $html = $html . <<<html
+
+            <p>
+                <small><a href='#'>$sender->firstname $sender->lastname</a></small>
+html;
+                if (View::isProperty ($message->user_id)){
+                    $html = $html . " <small>(<a href='$deleteMessage'>supprimer</a>)</small>";
+                }
+
+                $html = $html . <<<html
+
+                <br>
+                $message->content
+            <p>
+            <hr>
+html
+;                
+            }
+        } else {
+            $html = $html . <<<html
+
+            <p class='font-italic text-muted'>Aucun message<p>
+html;
+        }
+
+        $html = $html . <<<html
+
+            <form method='post' action='$createMessage'>
+                <input type='hidden' name='list_id' value='$l->no'>
+                <div class="form-group mb-3">
+                    <!-- Insérer l'ancienne description de la liste -->
+                    <textarea class="form-control" name='content' rows="4" style="resize: none;" placeholder="Message"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-sm btn-outline-primary">Envoyer</button>
+                </div>
+            </form>
+
         </div>
-
-        <h3>Messages</h3>
-        <form method='post' action='#'>
-            <input type='hidden' name='user_id' value=''>
-            <input type='hidden' name='list_id' value=''>
-            <div class="form-group mb-3">
-                <!-- Insérer l'ancienne description de la liste -->
-                <textarea class="form-control" name='content' rows="6" style="resize: none;" placeholder="Message"></textarea>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </div>
-        </form>
-
 
 html;
         return $html;

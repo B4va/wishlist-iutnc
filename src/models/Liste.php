@@ -7,6 +7,7 @@ require_once './vendor/autoload.php';
 use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Item;
 use \wishlist\models\User;
+use \wishlist\models\Message;
 use \wishlist\models\ModelOperations;
 
 /**
@@ -32,7 +33,7 @@ class Liste extends Model implements ModelOperations {
      * @return array messages associés à la liste
      */
     public function getMessages(){
-        return $this->hasMany('\wishlist\models\Messages','list_id')->get();
+        return $this->hasMany('\wishlist\models\Message','list_id')->get();
     }
 
     /**
