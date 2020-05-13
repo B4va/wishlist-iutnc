@@ -8,7 +8,7 @@ use \wishlist\controllers\Controller;
 use \wishlist\models\Message;
 
 /**
- * Controleur associé à la gestion des messages
+ * Contrôleur associé à la gestion des messages
  */
 class MessageController extends Controller {
     /**
@@ -71,3 +71,6 @@ class MessageController extends Controller {
         $slim->redirect($slim->urlFor('list', ['id' => $list->no]));
     }
 }
+
+
+?>

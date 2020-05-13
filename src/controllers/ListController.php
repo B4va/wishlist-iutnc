@@ -9,7 +9,7 @@ use \wishlist\models\Liste;
 use \wishlist\views\ListView;
 
 /**
- * Controleur associé à la gestion des listes
+ * Contrôleur associé à la gestion des listes
  */
 class ListController extends Controller {
 

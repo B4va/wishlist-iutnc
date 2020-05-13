@@ -6,10 +6,12 @@ require_once './vendor/autoload.php';
 
 use \wishlist\controllers\Controller;
 use \wishlist\models\User;
+use \wishlist\models\Item;
+use \wishlist\models\Message;
 use \wishlist\views\UserView;
 
 /**
- * Controleur associé à la gestion des utilisateurs
+ * Contrôleur associé à la gestion des utilisateurs
  */
 class UserController extends Controller {
 
