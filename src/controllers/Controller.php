@@ -5,7 +5,7 @@ namespace wishlist\controllers;
 require_once './vendor/autoload.php';
 
 /**
- * Gère les opération sur les modèles et l'affichage de l'interface utilisateur
+ * Regroupe les fonctions communes aux contrôleurs
  */
 abstract class Controller {
 
@@ -89,3 +89,6 @@ abstract class Controller {
      */
     public abstract function delete($id);
 }
+
+
+?>

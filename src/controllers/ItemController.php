@@ -10,7 +10,7 @@ use \wishlist\models\Liste;
 use \wishlist\views\ItemView;
 
 /**
- * Controleur associé à la gestion des items
+ * Contrôleur associé à la gestion des items
  */
 class ItemController extends Controller {
 
