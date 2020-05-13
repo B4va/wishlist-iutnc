@@ -105,6 +105,7 @@ class ListController extends Controller {
         $l = Liste::getByToken($token);
         $this->propRequired($l->user_id);
         foreach($l->getItems() as $i) $i->delete();
+        foreach($l->getMessages() as $m) $m->delete();
         $l->delete();
         $slim = \Slim\Slim::getInstance();
         $slim->flash('success', 'La liste a été supprimée');
