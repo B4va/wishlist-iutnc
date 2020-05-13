@@ -11,13 +11,13 @@ use wishlist\controllers\ItemController;
 use wishlist\controllers\UserController;
 use wishlist\controllers\MessageController;
 
-session_start();
-
 /**
  * Initialisation
  */
+session_start();
 $app = new \Slim\Slim();
 $db = ConnectionFactory::makeConnection();
+
 
 /**
  * 
@@ -25,8 +25,9 @@ $db = ConnectionFactory::makeConnection();
  * 
  */
 
+
 /**
- * Général
+ * Listes
  */
 
 // Affichage de toutes les listes publiques non expirées
@@ -34,10 +35,6 @@ $app->get('/', function(){
     $listController = new ListController();
     $listController->displayObjects();
 })->name('home');
-
-/**
- * Listes
- */
 
 // Affichage d'une liste
 $app->get('/list/:id', function($id){
@@ -86,31 +83,31 @@ $app->get('/list/:idList/item/new', function($idList){
 })->name('creatorItem');
 
 // Création d'un item
-$app->post('/list/item/create', function(){
+$app->post('/item/create', function(){
     $itemController = new ItemController();
     $itemController->create();
 })->name('createItem');
 
 // Affichage du formulaire d'édition d'item
-$app->get('/list/item/edit/:id', function($id){
+$app->get('/item/edit/:id', function($id){
     $itemController = new ItemController();
     $itemController->displayEditor($id);
 })->name('editorItem');
 
 // Mise à jour d'un item
-$app->post('/list/item/update/:id', function($id){
+$app->post('/item/update/:id', function($id){
     $itemController = new ItemController();
     $itemController->edit($id);
 })->name('editItem');
 
 // Suppression d'un item
-$app->get('/list/item/delete/:id', function($id){
+$app->get('/item/delete/:id', function($id){
     $itemController = new ItemController();
     $itemController->delete($id);
 })->name('deleteItem');
 
 // Réservation d'un item
-$app->get('/list/item/reserve/:id', function($id){
+$app->get('/item/reserve/:id', function($id){
     $itemController = new ItemController();
     $itemController->reserve($id);
 })->name('reserveItem');
