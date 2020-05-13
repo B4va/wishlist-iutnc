@@ -6,6 +6,7 @@ require_once './vendor/autoload.php';
 
 use \Illuminate\Database\Eloquent\Model;
 use \wishlist\models\Liste;
+use \wishlist\models\Message;
 
 /**
  * Modélisation d'un utilisateur
@@ -51,6 +52,14 @@ class User extends Model implements ModelOperations {
 	 */
     public function getLists() {
         return $this->hasMany('\wishlist\models\Liste','user_id')->get();
+    }
+
+    /**
+     * Récupère tous les messages associés à l'utilisateur
+     * @return array messages associés à l'utilisateur
+     */
+    public function getMessages(){
+        return $this->hasMany('\wishlist\models\Message','user_id')->get();
     }
 
     /**

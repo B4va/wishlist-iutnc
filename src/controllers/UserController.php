@@ -122,9 +122,13 @@ class UserController extends Controller {
         $this->authRequired();
         $this->propRequired($id);
         $user = User::getById($id);
+        foreach($user->getMessages() as $m) $m->delete();
         foreach($user->getLists() as $l){
             foreach($l->getItems() as $i) $i->delete();
             $l->delete();
+        }
+        foreach(Item::getAll() as $i) {
+            if($i->getUser() == $user) $i->reserve($id);
         }
         $user->delete();
         $slim = \Slim\Slim::getInstance();
